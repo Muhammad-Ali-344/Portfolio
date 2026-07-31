@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MUHAMMAD ALI PORTFOLIO - LIGHT COOL & CALM SCRIPT
+   MUHAMMAD ALI PORTFOLIO - WARM LIGHT BROWN & ESPRESSO SCRIPT
    Interactive Light Canvas, WebAudio SFX, Mini-Game, Modal & Filters
    ========================================================================== */
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. LIGHT COOL AMBIENT PARTICLE CANVAS
+   1. WARM LIGHT AMBIENT PARTICLE CANVAS
    ========================================================================== */
 function initBgCanvas() {
     const canvas = document.getElementById('bg-canvas');
@@ -50,12 +50,12 @@ function initBgCanvas() {
             this.radius = Math.random() * 2.5 + 1;
             this.vx = (Math.random() - 0.5) * 0.5;
             this.vy = -(Math.random() * 0.4 + 0.1);
-            this.alpha = Math.random() * 0.4 + 0.15;
+            this.alpha = Math.random() * 0.35 + 0.15;
             this.maxAlpha = this.alpha;
             this.pulse = Math.random() * 0.02 + 0.005;
             this.pulseDir = 1;
-            // Cool tranquil teal or slate blue
-            this.color = Math.random() > 0.4 ? '2, 132, 199' : '13, 148, 136';
+            // Warm Mocha or Golden Tan
+            this.color = Math.random() > 0.4 ? '140, 94, 60' : '166, 116, 73';
         }
 
         update() {
@@ -112,7 +112,7 @@ function initBgCanvas() {
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(2, 132, 199, ${0.1 * (1 - dist / 100)})`;
+                    ctx.strokeStyle = `rgba(140, 94, 60, ${0.1 * (1 - dist / 100)})`;
                     ctx.lineWidth = 0.6;
                     ctx.stroke();
                 }
@@ -337,7 +337,7 @@ function initProjectModals() {
                 <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
                 
                 <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(244,246,249,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(245,239,230,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                     ${data.specs.map(s => `
                         <div>
                             <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
@@ -447,7 +447,7 @@ function initArcadeGame() {
         playTone(750, 'sine', 0.05, 0.07);
     }
 
-    function spawnExplosion(x, y, color = '#38bdf8') {
+    function spawnExplosion(x, y, color = '#e5a95d') {
         for (let i = 0; i < 15; i++) {
             particles.push({
                 x, y,
@@ -462,10 +462,10 @@ function initArcadeGame() {
     function animateGame() {
         if (!gameRunning) return;
 
-        ctx.fillStyle = '#020617';
+        ctx.fillStyle = '#170d06';
         ctx.fillRect(0, 0, width, height);
 
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
+        ctx.strokeStyle = 'rgba(229, 169, 93, 0.08)';
         ctx.lineWidth = 1;
         for (let x = 0; x < width; x += 30) {
             ctx.beginPath();
@@ -478,8 +478,8 @@ function initArcadeGame() {
         if (keys['KeyD'] || keys['ArrowRight']) player.x += player.speed;
         player.x = Math.max(0, Math.min(width - player.w, player.x));
 
-        ctx.fillStyle = '#38bdf8';
-        ctx.shadowColor = '#38bdf8';
+        ctx.fillStyle = '#e5a95d';
+        ctx.shadowColor = '#e5a95d';
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.moveTo(player.x + player.w / 2, player.y);
@@ -491,7 +491,7 @@ function initArcadeGame() {
 
         bullets.forEach((b, index) => {
             b.y -= b.speed;
-            ctx.fillStyle = '#38bdf8';
+            ctx.fillStyle = '#f4c47f';
             ctx.fillRect(b.x, b.y, b.w, b.h);
 
             if (b.y < -10) bullets.splice(index, 1);
@@ -510,8 +510,8 @@ function initArcadeGame() {
 
         enemies.forEach((e, eIndex) => {
             e.y += e.speed;
-            ctx.fillStyle = '#2dd4bf';
-            ctx.shadowColor = '#2dd4bf';
+            ctx.fillStyle = '#8c5e3c';
+            ctx.shadowColor = '#8c5e3c';
             ctx.shadowBlur = 8;
             ctx.fillRect(e.x, e.y, e.w, e.h);
             ctx.shadowBlur = 0;
@@ -581,7 +581,7 @@ function initContactForm() {
 
         setTimeout(() => {
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Transmission Received!';
-            submitBtn.style.background = 'linear-gradient(135deg, #0d9488, #0284c7)';
+            submitBtn.style.background = 'linear-gradient(135deg, #8c5e3c, #3d2817)';
             playTone(700, 'sine', 0.2, 0.15);
             form.reset();
 
