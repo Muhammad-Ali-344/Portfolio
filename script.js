@@ -1,5 +1,6 @@
 /* ==========================================================================
-   AEXIS GAME DEVELOPER PORTFOLIO - CORE INTERACTIVE ENGINE SCRIPT
+   MUHAMMAD ALI PORTFOLIO - CINEMATIC ATMOSPHERIC SCRIPT
+   Interactive Canvas, WebAudio SFX, Mini-Game, Modal & Filters
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. BACKGROUND NODE MESH CANVAS
+   1. BACKGROUND AMBIENT FIREFLY / DUST EMBER CANVAS
    ========================================================================== */
 function initBgCanvas() {
     const canvas = document.getElementById('bg-canvas');
@@ -29,32 +30,50 @@ function initBgCanvas() {
     });
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(width / 20), 70);
+    const particleCount = Math.min(Math.floor(width / 18), 65);
 
-    let mouse = { x: null, y: null, radius: 150 };
+    let mouse = { x: null, y: null, radius: 180 };
 
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
     });
 
-    class Particle {
+    class EmberParticle {
         constructor() {
+            this.reset();
+        }
+
+        reset() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.8;
-            this.vy = (Math.random() - 0.5) * 0.8;
-            this.radius = Math.random() * 2 + 1;
+            this.radius = Math.random() * 2.5 + 1;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = -(Math.random() * 0.5 + 0.2); // Gentle upward drift like fireflies/embers
+            this.alpha = Math.random() * 0.5 + 0.2;
+            this.maxAlpha = this.alpha;
+            this.pulse = Math.random() * 0.02 + 0.005;
+            this.pulseDir = 1;
+            // Warm amber or calm sage color
+            this.color = Math.random() > 0.3 ? '229, 169, 93' : '123, 158, 135';
         }
 
         update() {
             this.x += this.vx;
             this.y += this.vy;
 
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
+            // Pulse opacity
+            this.alpha += this.pulse * this.pulseDir;
+            if (this.alpha >= this.maxAlpha || this.alpha <= 0.1) {
+                this.pulseDir *= -1;
+            }
 
-            // Mouse interact
+            // Wrap edges gently
+            if (this.y < -10) this.y = height + 10;
+            if (this.x < -10) this.x = width + 10;
+            if (this.x > width + 10) this.x = -10;
+
+            // Soft mouse repulsion
             if (mouse.x !== null) {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
@@ -62,8 +81,8 @@ function initBgCanvas() {
                 if (dist < mouse.radius) {
                     const angle = Math.atan2(dy, dx);
                     const force = (mouse.radius - dist) / mouse.radius;
-                    this.x -= Math.cos(angle) * force * 2;
-                    this.y -= Math.sin(angle) * force * 2;
+                    this.x -= Math.cos(angle) * force * 1.5;
+                    this.y -= Math.sin(angle) * force * 1.5;
                 }
             }
         }
@@ -71,13 +90,16 @@ function initBgCanvas() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0, 243, 255, 0.6)';
+            ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+            ctx.shadowColor = `rgba(${this.color}, ${this.alpha})`;
+            ctx.shadowBlur = 8;
             ctx.fill();
+            ctx.shadowBlur = 0;
         }
     }
 
     for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+        particles.push(new EmberParticle());
     }
 
     function animate() {
@@ -87,17 +109,18 @@ function initBgCanvas() {
             particles[i].update();
             particles[i].draw();
 
+            // Soft faint connecting glow between close fireflies
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
                 const dy = particles[i].y - particles[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 120) {
+                if (dist < 100) {
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(0, 243, 255, ${0.25 * (1 - dist / 120)})`;
-                    ctx.lineWidth = 0.8;
+                    ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - dist / 100)})`;
+                    ctx.lineWidth = 0.6;
                     ctx.stroke();
                 }
             }
@@ -108,7 +131,7 @@ function initBgCanvas() {
 }
 
 /* ==========================================================================
-   2. WEB AUDIO SYNTHESIZER (UI & ARCADE SFX)
+   2. WEB AUDIO SYNTHESIZER (WARM UI & ARCADE SFX)
    ========================================================================== */
 let audioCtx = null;
 let soundEnabled = true;
@@ -125,26 +148,25 @@ function initWebAudio() {
         if (soundEnabled) {
             icon.className = 'fa-solid fa-volume-high';
             span.textContent = 'SFX ON';
-            playTone(600, 'sine', 0.1);
+            playTone(520, 'sine', 0.1);
         } else {
             icon.className = 'fa-solid fa-volume-xmark';
             span.textContent = 'SFX OFF';
         }
     });
 
-    // Add hover sound to buttons
     const btns = document.querySelectorAll('.btn, .nav-link, .filter-btn, .game-card');
     btns.forEach(btn => {
         btn.addEventListener('mouseenter', () => {
-            if (soundEnabled) playTone(440, 'triangle', 0.03, 0.05);
+            if (soundEnabled) playTone(380, 'sine', 0.04, 0.04);
         });
         btn.addEventListener('click', () => {
-            if (soundEnabled) playTone(880, 'sine', 0.08, 0.1);
+            if (soundEnabled) playTone(650, 'sine', 0.08, 0.08);
         });
     });
 }
 
-function playTone(freq, type = 'sine', duration = 0.1, vol = 0.1) {
+function playTone(freq, type = 'sine', duration = 0.1, vol = 0.08) {
     if (!soundEnabled) return;
     try {
         if (!audioCtx) {
@@ -168,7 +190,7 @@ function playTone(freq, type = 'sine', duration = 0.1, vol = 0.1) {
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        // Audio fallback ignore
+        // Fallback ignore
     }
 }
 
@@ -244,41 +266,41 @@ function initPortfolioFilters() {
 const projectData = {
     'neon-eclipse': {
         title: 'Neon Eclipse',
-        subtitle: '3D Cyberpunk Action RPG',
-        engine: 'Unreal Engine 5 (C++ / HLSL)',
+        subtitle: '3D Action RPG & Combat Prototype',
+        engine: 'Unity 3D (C# / HDRP)',
         image: 'assets/cyberpunk.png',
-        desc: 'Neon Eclipse is an immersive third-person action RPG set in a dystopian futuristic metropolis. The game showcases modular character abilities, real-time lumen dynamic illumination, dynamic weather states, and complex C++ AI behavior trees.',
+        desc: 'An immersive action RPG built in Unity featuring dynamic character state machine combat, fluid parkour system, real-time lighting, and custom gameplay C# architectures.',
         specs: [
-            { label: 'Role', val: 'Lead Game Developer & Architect' },
-            { label: 'Engine', val: 'Unreal Engine 5.3' },
-            { label: 'Language', val: 'C++ & HLSL Shaders' },
-            { label: 'Features', val: 'Fluid Parkour, AI Behavior Trees, Procedural Destruction' }
+            { label: 'Role', val: 'Game Developer & Mechanics Architect' },
+            { label: 'Engine', val: 'Unity 2022 LTS' },
+            { label: 'Platforms', val: 'PC & Console' },
+            { label: 'Features', val: 'Fluid Movement, State Machines, Custom Shader Graphs' }
         ]
     },
     'valley-eternity': {
         title: 'Valley of Eternity',
-        subtitle: '3D Stylized Fantasy Platformer',
-        engine: 'Unity 3D (C# / URP)',
+        subtitle: '3D Fantasy VR & Platforming Experience',
+        engine: 'Unity VR / URP',
         image: 'assets/platformer.png',
-        desc: 'A visually breathtaking 3D platformer featuring custom non-Euclidean gravity zones, interactive foliage displacement shaders, and boss encounters built with state-pattern enemy AI.',
+        desc: 'A visually engaging 3D VR & platformer title with spherical gravity zones, immersive hand interaction mechanics, and optimized rendering for Quest & PC VR.',
         specs: [
-            { label: 'Role', val: 'Solo Game Developer & Technical Artist' },
-            { label: 'Engine', val: 'Unity 2022 LTS (URP)' },
-            { label: 'Language', val: 'C# & Custom Shader Graph' },
-            { label: 'Features', val: 'Spherical Gravity, Interactive Physics, Boss Phases' }
+            { label: 'Role', val: 'VR Gameplay Developer' },
+            { label: 'Engine', val: 'Unity OpenXR / URP' },
+            { label: 'Platforms', val: 'Meta Quest, SteamVR, PC' },
+            { label: 'Features', val: 'Physics Hand Grabbing, VR Locomotion, Optimization' }
         ]
     },
     'aether-vfx': {
         title: 'Aether Shader Suite',
-        subtitle: 'Real-time Graphics & VFX Library',
-        engine: 'Technical Art (HLSL / Niagara)',
+        subtitle: 'Real-time Shaders & VFX Library',
+        engine: 'Technical Art (HLSL / Shader Graph)',
         image: 'assets/vfx.png',
-        desc: 'A suite of production-grade volumetric shaders including water refraction, dynamic portal energy fields, toon outline shaders, and GPU-driven particle simulations.',
+        desc: 'A collection of optimized real-time volumetric energy shaders, water displacement nodes, dissolve effects, and particle system blueprints for Unity.',
         specs: [
-            { label: 'Role', val: 'Technical Shader Artist' },
-            { label: 'Tech Stack', val: 'HLSL, GLSL, Unreal Niagara, Unity VFX Graph' },
-            { label: 'Performance', val: 'Sub-millisecond render time per pass' },
-            { label: 'Features', val: 'Raymarched Volumetrics, Multi-pass Bloom' }
+            { label: 'Role', val: 'Technical Artist' },
+            { label: 'Tech Stack', val: 'HLSL, Unity Shader Graph, VFX Graph' },
+            { label: 'Performance', val: 'Sub-millisecond render pass' },
+            { label: 'Features', val: 'Volumetric Fog, Dissolve Effects, Multi-pass Bloom' }
         ]
     },
     'cyber-defender': {
@@ -286,12 +308,12 @@ const projectData = {
         subtitle: 'Retro Canvas Arcade Shooter',
         engine: 'Native HTML5 Canvas & WebAudio API',
         image: 'assets/spaceshooter.png',
-        desc: 'Built completely from scratch without external libraries! Features object pooling for bullet particles, spatial collision detection grid, procedural retro sound synthesis, and local storage high score tracking.',
+        desc: 'Built completely from scratch without external libraries! Features object pooling for bullet particles, spatial collision grid, procedural sound synthesis, and local storage high score tracking.',
         specs: [
             { label: 'Role', val: 'Game Programmer' },
-            { label: 'Framework', val: 'Vanilla JavaScript & HTML5 Canvas' },
+            { label: 'Framework', val: 'Vanilla JavaScript & Canvas' },
             { label: 'Audio', val: 'WebAudio API Procedural Synthesizer' },
-            { label: 'Performance', val: 'Locked 60 FPS Canvas Render Loop' }
+            { label: 'Performance', val: 'Locked 60 FPS Render Loop' }
         ]
     }
 };
@@ -311,7 +333,7 @@ function initProjectModals() {
             modalBody.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
-                        <span style="color:var(--cyan-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
+                        <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
                         <h2 style="font-size:2.2rem; color:#fff;">${data.title}</h2>
                         <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
                     </div>
@@ -322,17 +344,17 @@ function initProjectModals() {
                 <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
                 
                 <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem;">Technical Breakdown</h4>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(7,9,14,0.6); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(17,20,24,0.6); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                     ${data.specs.map(s => `
                         <div>
                             <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
-                            <strong style="color:var(--cyan-primary); font-size:0.95rem;">${s.val}</strong>
+                            <strong style="color:var(--amber-primary); font-size:0.95rem;">${s.val}</strong>
                         </div>
                     `).join('')}
                 </div>
                 
                 <div style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
-                    <a href="#arcade" onclick="document.getElementById('modal-backdrop').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play Demo / Prototype</a>
+                    <a href="#arcade" onclick="document.getElementById('project-modal').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play Demo / Prototype</a>
                     <button class="btn btn-outline" onclick="document.getElementById('project-modal').classList.remove('active')"><i class="fa-solid fa-check"></i> Close Details</button>
                 </div>
             `;
@@ -353,7 +375,7 @@ function initProjectModals() {
 }
 
 /* ==========================================================================
-   6. PLAYABLE ARCADE MINI-GAME (CYBER-DEFENDER)
+   6. PLAYABLE ARCADE MINI-GAME (ATMOSPHERIC RETRO SHOOTER)
    ========================================================================== */
 function initArcadeGame() {
     const canvas = document.getElementById('arcade-canvas');
@@ -379,14 +401,12 @@ function initArcadeGame() {
         }
     });
 
-    // Player
     const player = {
         x: width / 2 - 20,
         y: height - 50,
         w: 40,
         h: 30,
-        speed: 7,
-        dx: 0
+        speed: 7
     };
 
     let bullets = [];
@@ -394,7 +414,6 @@ function initArcadeGame() {
     let particles = [];
     let lastEnemySpawn = 0;
 
-    // Controls
     const keys = {};
 
     window.addEventListener('keydown', (e) => {
@@ -432,10 +451,10 @@ function initArcadeGame() {
             h: 15,
             speed: 10
         });
-        playTone(900, 'square', 0.05, 0.08);
+        playTone(750, 'sine', 0.05, 0.07);
     }
 
-    function spawnExplosion(x, y, color = '#ff0055') {
+    function spawnExplosion(x, y, color = '#e5a95d') {
         for (let i = 0; i < 15; i++) {
             particles.push({
                 x, y,
@@ -450,11 +469,11 @@ function initArcadeGame() {
     function animateGame() {
         if (!gameRunning) return;
 
-        ctx.fillStyle = '#050811';
+        ctx.fillStyle = '#090b0e';
         ctx.fillRect(0, 0, width, height);
 
-        // Grid lines effect
-        ctx.strokeStyle = 'rgba(0, 243, 255, 0.05)';
+        // Soft subtle grid lines
+        ctx.strokeStyle = 'rgba(229, 169, 93, 0.05)';
         ctx.lineWidth = 1;
         for (let x = 0; x < width; x += 30) {
             ctx.beginPath();
@@ -463,14 +482,14 @@ function initArcadeGame() {
             ctx.stroke();
         }
 
-        // Handle Player Movement
+        // Player Movement
         if (keys['KeyA'] || keys['ArrowLeft']) player.x -= player.speed;
         if (keys['KeyD'] || keys['ArrowRight']) player.x += player.speed;
         player.x = Math.max(0, Math.min(width - player.w, player.x));
 
-        // Draw Player Ship
-        ctx.fillStyle = '#00f3ff';
-        ctx.shadowColor = '#00f3ff';
+        // Draw Player Ship (Amber Glow)
+        ctx.fillStyle = '#e5a95d';
+        ctx.shadowColor = '#e5a95d';
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.moveTo(player.x + player.w / 2, player.y);
@@ -483,7 +502,7 @@ function initArcadeGame() {
         // Bullets
         bullets.forEach((b, index) => {
             b.y -= b.speed;
-            ctx.fillStyle = '#ff0055';
+            ctx.fillStyle = '#f4c47f';
             ctx.fillRect(b.x, b.y, b.w, b.h);
 
             if (b.y < -10) bullets.splice(index, 1);
@@ -501,11 +520,11 @@ function initArcadeGame() {
             lastEnemySpawn = Date.now();
         }
 
-        // Update & Draw Enemies
+        // Enemies (Sage Green Glow)
         enemies.forEach((e, eIndex) => {
             e.y += e.speed;
-            ctx.fillStyle = '#9d4edd';
-            ctx.shadowColor = '#9d4edd';
+            ctx.fillStyle = '#7b9e87';
+            ctx.shadowColor = '#7b9e87';
             ctx.shadowBlur = 8;
             ctx.fillRect(e.x, e.y, e.w, e.h);
             ctx.shadowBlur = 0;
@@ -518,7 +537,7 @@ function initArcadeGame() {
                     bullets.splice(bIndex, 1);
                     score += 100;
                     scoreEl.textContent = score.toString().padStart(4, '0');
-                    playTone(250, 'sawtooth', 0.1, 0.15);
+                    playTone(280, 'sine', 0.1, 0.12);
 
                     if (score > highScore) {
                         highScore = score;
@@ -528,7 +547,7 @@ function initArcadeGame() {
                 }
             });
 
-            // Collision with Player or Bottom
+            // Collision with Player
             if (e.y + e.h >= player.y && e.x < player.x + player.w && e.x + e.w > player.x) {
                 gameOver();
             } else if (e.y > height) {
@@ -554,7 +573,7 @@ function initArcadeGame() {
 
     function gameOver() {
         gameRunning = false;
-        playTone(120, 'sawtooth', 0.4, 0.2);
+        playTone(140, 'sine', 0.4, 0.18);
         overlay.style.display = 'flex';
         overlay.querySelector('h3').textContent = 'MISSION FAILED';
         overlay.querySelector('p').textContent = `Final Score: ${score} points! Can you defend the core again?`;
@@ -564,7 +583,7 @@ function initArcadeGame() {
 
 /* ==========================================================================
    7. CONTACT FORM HANDLER
-   ========================================================================== */
+   ========================================================================= */
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
@@ -578,8 +597,8 @@ function initContactForm() {
 
         setTimeout(() => {
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Transmission Received!';
-            submitBtn.style.background = 'linear-gradient(135deg, #00ff87, #60efff)';
-            playTone(800, 'sine', 0.2, 0.2);
+            submitBtn.style.background = 'linear-gradient(135deg, #7b9e87, #e5a95d)';
+            playTone(700, 'sine', 0.2, 0.15);
             form.reset();
 
             setTimeout(() => {
