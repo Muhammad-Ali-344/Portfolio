@@ -1,22 +1,456 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>My First Website</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of a Senior Game Developer & Technical Game Designer specializing in Unreal Engine 5, Unity, C++, Shader Programming, and Gameplay Mechanics.">
+    <title>AEXIS | Game Developer & Designer Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Press+Start+2P&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <h1>Welcome to My Website</h1>
+    <!-- Background Dynamic Particle Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-    <p>I made this using Notepad!</p>
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="nav-logo">
+                <div class="nav-logo-icon">A</div>
+                <div class="nav-logo-text">AEXIS<span>.DEV</span></div>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#games" class="nav-link">Games & Work</a></li>
+                <li><a href="#arcade" class="nav-link">Play Arcade</a></li>
+                <li><a href="#skills" class="nav-link">Tech & Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
 
-    <button onclick="hello()">Click Me</button>
+            <div class="nav-actions">
+                <button class="sound-toggle-btn" id="sound-toggle" title="Toggle UI Sound Effects">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <span>SFX ON</span>
+                </button>
+                <a href="#contact" class="btn btn-primary">Hire Me</a>
+            </div>
+        </div>
+    </header>
 
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span class="pulse-dot"></span>
+                        Available for Studio Roles & Lead Game Contracts
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Designing <span class="text-gradient-cyan">Worlds.</span><br>
+                        Coding <span class="text-gradient-magenta">Experiences.</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Senior Game Developer & Technical Designer specializing in Unreal Engine 5, C++, HLSL Shader Programming, and immersive gameplay mechanics. Turning creative visions into shipped AAA & Indie titles.
+                    </p>
+                    
+                    <div class="hero-cta">
+                        <a href="#games" class="btn btn-primary"><i class="fa-solid fa-gamepad"></i> Explore Shipped Games</a>
+                        <a href="#arcade" class="btn btn-outline"><i class="fa-solid fa-play"></i> Play Mini-Game</a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>12+</h3>
+                            <p>Shipped Titles</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>6+ Yrs</h3>
+                            <p>Engine Mastery</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>4x</h3>
+                            <p>Game Jam Winner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="hero-card-frame neon-glow-cyan">
+                        <img src="assets/cyberpunk.png" alt="Neon Eclipse Gameplay" class="hero-card-img">
+                        <div class="hero-card-badge">
+                            <span class="badge-tag">FEATURED ENGINE PROJECT</span>
+                            <h3 class="badge-title">NEON ECLIPSE (UE5)</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Arcade Section -->
+        <section class="section game-section" id="arcade">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt; INTERACTIVE PLAYGROUND &gt;</span>
+                    <h2 class="section-title">Playable Arcade <span class="text-gradient-cyan">Mini-Game</span></h2>
+                    <p class="section-subtitle">Experience custom real-time canvas physics and shooter mechanics coded directly in JavaScript!</p>
+                </div>
+                
+                <div class="arcade-cabinet">
+                    <div class="arcade-header">
+                        <div class="arcade-title">
+                            <i class="fa-solid fa-rocket"></i> CYBER-DEFENDER 2099
+                        </div>
+                        <div class="arcade-scores">
+                            <div>SCORE: <span class="score-val" id="arcade-score">0000</span></div>
+                            <div>HIGH SCORE: <span class="score-val" id="arcade-high-score">1500</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="canvas-wrapper">
+                        <canvas id="arcade-canvas"></canvas>
+                        
+                        <div class="arcade-overlay" id="arcade-overlay">
+                            <h3>CYBER-DEFENDER 2099</h3>
+                            <p>Defend the core against incoming neon enemy drones! Destroy enemies to score points and stay alive.</p>
+                            <button class="btn btn-magenta" id="start-game-btn"><i class="fa-solid fa-play"></i> START MISSION</button>
+                            
+                            <div class="arcade-controls-hint">
+                                <span><span class="key-badge">A</span> / <span class="key-badge">D</span> Move Left/Right</span>
+                                <span><span class="key-badge">SPACE</span> Fire Lasers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Showcase Section -->
+        <section class="section" id="games">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt; PORTFOLIO SHOWCASE &gt;</span>
+                    <h2 class="section-title">Featured <span class="text-gradient-cyan">Projects & Games</span></h2>
+                    <p class="section-subtitle">A curated collection of shipped indie titles, engine prototypes, and real-time graphics showcases.</p>
+                </div>
+                
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="3d">3D Games</button>
+                    <button class="filter-btn" data-filter="2d">2D & Mobile</button>
+                    <button class="filter-btn" data-filter="vfx">Shaders & VFX</button>
+                </div>
+                
+                <div class="games-grid" id="games-grid">
+                    <!-- Game Card 1 -->
+                    <div class="glass-panel game-card" data-category="3d">
+                        <div class="game-thumb-wrapper">
+                            <img src="assets/cyberpunk.png" alt="Neon Eclipse" class="game-thumb">
+                            <span class="game-engine-tag">UNREAL ENGINE 5</span>
+                        </div>
+                        <div class="game-info">
+                            <span class="game-category">3D Action RPG</span>
+                            <h3 class="game-title">Neon Eclipse</h3>
+                            <p class="game-desc">High-octane third-person cyberpunk action title featuring custom combat abilities, fluid parkour system, and Lumen lighting.</p>
+                            <div class="game-tags">
+                                <span class="game-tag-pill">C++</span>
+                                <span class="game-tag-pill">Blueprints</span>
+                                <span class="game-tag-pill">HLSL</span>
+                                <span class="game-tag-pill">Lumen</span>
+                            </div>
+                            <button class="btn btn-outline btn-inspect" data-game="neon-eclipse"><i class="fa-solid fa-eye"></i> View Game Specs</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 2 -->
+                    <div class="glass-panel game-card" data-category="3d">
+                        <div class="game-thumb-wrapper">
+                            <img src="assets/platformer.png" alt="Valley of Eternity" class="game-thumb">
+                            <span class="game-engine-tag">UNITY 3D</span>
+                        </div>
+                        <div class="game-info">
+                            <span class="game-category">3D Stylized Platformer</span>
+                            <h3 class="game-title">Valley of Eternity</h3>
+                            <p class="game-desc">Charming fantasy adventure game with dynamic custom gravity mechanics, interactive foliage shaders, and boss battles.</p>
+                            <div class="game-tags">
+                                <span class="game-tag-pill">C#</span>
+                                <span class="game-tag-pill">Shader Graph</span>
+                                <span class="game-tag-pill">URP</span>
+                                <span class="game-tag-pill">Level Design</span>
+                            </div>
+                            <button class="btn btn-outline btn-inspect" data-game="valley-eternity"><i class="fa-solid fa-eye"></i> View Game Specs</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 3 -->
+                    <div class="glass-panel game-card" data-category="vfx">
+                        <div class="game-thumb-wrapper">
+                            <img src="assets/vfx.png" alt="Aether Shader Suite" class="game-thumb">
+                            <span class="game-engine-tag">TECHNICAL ART</span>
+                        </div>
+                        <div class="game-info">
+                            <span class="game-category">Real-time Shaders & VFX</span>
+                            <h3 class="game-title">Aether Shader Suite</h3>
+                            <p class="game-desc">A suite of production-ready real-time volumetric energy shaders, water reflection nodes, and particle system blueprints.</p>
+                            <div class="game-tags">
+                                <span class="game-tag-pill">HLSL</span>
+                                <span class="game-tag-pill">Niagara</span>
+                                <span class="game-tag-pill">GLSL</span>
+                                <span class="game-tag-pill">Raytracing</span>
+                            </div>
+                            <button class="btn btn-outline btn-inspect" data-game="aether-vfx"><i class="fa-solid fa-eye"></i> View Game Specs</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Card 4 -->
+                    <div class="glass-panel game-card" data-category="2d">
+                        <div class="game-thumb-wrapper">
+                            <img src="assets/spaceshooter.png" alt="Cyber Defender 2099" class="game-thumb">
+                            <span class="game-engine-tag">HTML5 / JS</span>
+                        </div>
+                        <div class="game-info">
+                            <span class="game-category">Retro Arcade Shooter</span>
+                            <h3 class="game-title">Cyber Defender 2099</h3>
+                            <p class="game-desc">Fast-paced retro space arcade game built with native JavaScript canvas renderer, custom WebAudio synthesizer, and particle pooler.</p>
+                            <div class="game-tags">
+                                <span class="game-tag-pill">JavaScript</span>
+                                <span class="game-tag-pill">HTML5 Canvas</span>
+                                <span class="game-tag-pill">WebAudio</span>
+                            </div>
+                            <button class="btn btn-outline btn-inspect" data-game="cyber-defender"><i class="fa-solid fa-eye"></i> View Game Specs</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Tech Matrix -->
+        <section class="section" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt; CAPABILITIES & TOOLKIT &gt;</span>
+                    <h2 class="section-title">Technical <span class="text-gradient-cyan">Skills Matrix</span></h2>
+                    <p class="section-subtitle">Core expertise across game engines, system programming languages, graphics shaders, and game design pipelines.</p>
+                </div>
+                
+                <div class="skills-grid">
+                    <!-- Card 1: Engines -->
+                    <div class="glass-panel skill-category-card">
+                        <div class="skill-cat-header">
+                            <div class="skill-cat-icon"><i class="fa-solid fa-cubes"></i></div>
+                            <h3 class="skill-cat-title">Game Engines</h3>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>Unreal Engine 5 (C++/Blueprints)</span><span>95%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>Unity 3D (C# / URP / HDRP)</span><span>90%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>Godot Engine</span><span>80%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 80%;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Languages -->
+                    <div class="glass-panel skill-category-card">
+                        <div class="skill-cat-header">
+                            <div class="skill-cat-icon"><i class="fa-solid fa-code"></i></div>
+                            <h3 class="skill-cat-title">Programming & Shaders</h3>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>C++ / Memory Management</span><span>92%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 92%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>C# & System Architecture</span><span>95%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>HLSL / GLSL Shader Coding</span><span>85%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 85%;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Design & Art -->
+                    <div class="glass-panel skill-category-card">
+                        <div class="skill-cat-header">
+                            <div class="skill-cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h3 class="skill-cat-title">Art & Game Design</h3>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>Level & Combat Design</span><span>90%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>Blender 3D Modeling & Rigging</span><span>82%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 82%;"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-meta"><span>UI / UX & Figma Prototyping</span><span>88%</span></div>
+                            <div class="skill-progress-bg"><div class="skill-progress-bar" style="width: 88%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Game Jams Timeline -->
+        <section class="section" id="experience">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt; CAREER MILESTONES &gt;</span>
+                    <h2 class="section-title">Studio & Industry <span class="text-gradient-cyan">Experience</span></h2>
+                    <p class="section-subtitle">Track record of shipped games, studio engineering roles, and game jam achievements.</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="glass-panel timeline-content">
+                            <span class="timeline-date">2023 - PRESENT</span>
+                            <h3 class="timeline-role">Lead Gameplay Programmer</h3>
+                            <div class="timeline-company">CyberVerse Studios • Unreal Engine 5</div>
+                            <p>Spearheaded gameplay C++ systems, character movement state machines, and multiplayer replication for an upcoming AAA Sci-Fi action RPG.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="glass-panel timeline-content">
+                            <span class="timeline-date">2021 - 2023</span>
+                            <h3 class="timeline-role">Senior Game Developer & Tech Artist</h3>
+                            <div class="timeline-company">Aura Games • Unity 3D</div>
+                            <p>Designed procedural environment shaders, volumetric lighting assets, and optimized mobile performance across 3 shipped indie titles.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="glass-panel timeline-content">
+                            <span class="timeline-date">GLOBAL GAME JAM 2022</span>
+                            <h3 class="timeline-role">1st Place Winner - Best Gameplay</h3>
+                            <div class="timeline-company">Game Jam Project: "Chronos Rebound"</div>
+                            <p>Built a time-loop puzzle mechanics prototype in 48 hours using Unity C# and custom physics callback routines.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Commissions -->
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt; GET IN TOUCH &gt;</span>
+                    <h2 class="section-title">Let's Build <span class="text-gradient-cyan">Something Legendary</span></h2>
+                    <p class="section-subtitle">Interested in hiring me for your game studio, freelance project, or technical consultation?</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="glass-panel contact-info-card">
+                        <h3 style="font-size: 1.6rem; margin-bottom: 1.5rem;">Contact Information</h3>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="contact-text">
+                                <h4>Direct Email</h4>
+                                <p>aexis.gamedev@example.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="contact-text">
+                                <h4>Location & Relocation</h4>
+                                <p>Remote Worldwide / Open to Studio Relocation</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon"><i class="fa-brands fa-discord"></i></div>
+                            <div class="contact-text">
+                                <h4>Discord Handle</h4>
+                                <p>AexisDev#0001</p>
+                            </div>
+                        </div>
+
+                        <h4 style="margin-top: 2rem; margin-bottom: 0.8rem; font-family: var(--font-heading);">Connect on Game Platforms:</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="social-btn" title="ArtStation"><i class="fa-brands fa-artstation"></i></a>
+                            <a href="#" class="social-btn" title="itch.io"><i class="fa-brands fa-italic"></i></a>
+                            <a href="#" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <form class="glass-panel contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name / Studio Name</label>
+                            <input type="text" id="name" class="form-input" placeholder="e.g. Marcus Vance (Epic Games)" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-input" placeholder="e.g. marcus@studio.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Project Type / Inquiry</label>
+                            <select id="subject" class="form-select">
+                                <option value="fulltime">Full-Time Studio Lead Role</option>
+                                <option value="freelance">Freelance Gameplay/C++ Dev</option>
+                                <option value="shader">Shader & VFX Contracting</option>
+                                <option value="other">General Inquiry</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message Details</label>
+                            <textarea id="message" class="form-textarea" rows="4" placeholder="Tell me about your project or role..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Dialog for Detailed Game Specs -->
+    <div class="modal-backdrop" id="project-modal">
+        <div class="glass-panel modal-content">
+            <button class="modal-close-btn" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body" id="modal-body">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AEXIS GAME DEV & DESIGN. Crafted with passion, C++, and HTML5 Canvas.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Script -->
     <script src="script.js"></script>
-
 </body>
-
 </html>

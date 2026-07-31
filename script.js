@@ -1,4 +1,592 @@
-function hello()
-{
-    alert("Hello!");
+/* ==========================================================================
+   AEXIS GAME DEVELOPER PORTFOLIO - CORE INTERACTIVE ENGINE SCRIPT
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    initBgCanvas();
+    initWebAudio();
+    initNavbarScroll();
+    initPortfolioFilters();
+    initProjectModals();
+    initArcadeGame();
+    initContactForm();
+});
+
+/* ==========================================================================
+   1. BACKGROUND NODE MESH CANVAS
+   ========================================================================== */
+function initBgCanvas() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const particleCount = Math.min(Math.floor(width / 20), 70);
+
+    let mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.radius = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+
+            // Mouse interact
+            if (mouse.x !== null) {
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouse.radius) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (mouse.radius - dist) / mouse.radius;
+                    this.x -= Math.cos(angle) * force * 2;
+                    this.y -= Math.sin(angle) * force * 2;
+                }
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 243, 255, 0.6)';
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(0, 243, 255, ${0.25 * (1 - dist / 120)})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+/* ==========================================================================
+   2. WEB AUDIO SYNTHESIZER (UI & ARCADE SFX)
+   ========================================================================== */
+let audioCtx = null;
+let soundEnabled = true;
+
+function initWebAudio() {
+    const soundToggle = document.getElementById('sound-toggle');
+    if (!soundToggle) return;
+
+    soundToggle.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        const icon = soundToggle.querySelector('i');
+        const span = soundToggle.querySelector('span');
+
+        if (soundEnabled) {
+            icon.className = 'fa-solid fa-volume-high';
+            span.textContent = 'SFX ON';
+            playTone(600, 'sine', 0.1);
+        } else {
+            icon.className = 'fa-solid fa-volume-xmark';
+            span.textContent = 'SFX OFF';
+        }
+    });
+
+    // Add hover sound to buttons
+    const btns = document.querySelectorAll('.btn, .nav-link, .filter-btn, .game-card');
+    btns.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            if (soundEnabled) playTone(440, 'triangle', 0.03, 0.05);
+        });
+        btn.addEventListener('click', () => {
+            if (soundEnabled) playTone(880, 'sine', 0.08, 0.1);
+        });
+    });
+}
+
+function playTone(freq, type = 'sine', duration = 0.1, vol = 0.1) {
+    if (!soundEnabled) return;
+    try {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {
+        // Audio fallback ignore
+    }
+}
+
+/* ==========================================================================
+   3. NAVBAR SCROLL & ACTIVE SECTIONS
+   ========================================================================== */
+function initNavbarScroll() {
+    const navbar = document.getElementById('navbar');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+/* ==========================================================================
+   4. PORTFOLIO FILTERING SYSTEM
+   ========================================================================== */
+function initPortfolioFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const gameCards = document.querySelectorAll('.game-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            gameCards.forEach(card => {
+                const category = card.dataset.category;
+                if (filter === 'all' || category === filter) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 250);
+                }
+            });
+        });
+    });
+}
+
+/* ==========================================================================
+   5. PROJECT SPECS MODAL MANAGER
+   ========================================================================== */
+const projectData = {
+    'neon-eclipse': {
+        title: 'Neon Eclipse',
+        subtitle: '3D Cyberpunk Action RPG',
+        engine: 'Unreal Engine 5 (C++ / HLSL)',
+        image: 'assets/cyberpunk.png',
+        desc: 'Neon Eclipse is an immersive third-person action RPG set in a dystopian futuristic metropolis. The game showcases modular character abilities, real-time lumen dynamic illumination, dynamic weather states, and complex C++ AI behavior trees.',
+        specs: [
+            { label: 'Role', val: 'Lead Game Developer & Architect' },
+            { label: 'Engine', val: 'Unreal Engine 5.3' },
+            { label: 'Language', val: 'C++ & HLSL Shaders' },
+            { label: 'Features', val: 'Fluid Parkour, AI Behavior Trees, Procedural Destruction' }
+        ]
+    },
+    'valley-eternity': {
+        title: 'Valley of Eternity',
+        subtitle: '3D Stylized Fantasy Platformer',
+        engine: 'Unity 3D (C# / URP)',
+        image: 'assets/platformer.png',
+        desc: 'A visually breathtaking 3D platformer featuring custom non-Euclidean gravity zones, interactive foliage displacement shaders, and boss encounters built with state-pattern enemy AI.',
+        specs: [
+            { label: 'Role', val: 'Solo Game Developer & Technical Artist' },
+            { label: 'Engine', val: 'Unity 2022 LTS (URP)' },
+            { label: 'Language', val: 'C# & Custom Shader Graph' },
+            { label: 'Features', val: 'Spherical Gravity, Interactive Physics, Boss Phases' }
+        ]
+    },
+    'aether-vfx': {
+        title: 'Aether Shader Suite',
+        subtitle: 'Real-time Graphics & VFX Library',
+        engine: 'Technical Art (HLSL / Niagara)',
+        image: 'assets/vfx.png',
+        desc: 'A suite of production-grade volumetric shaders including water refraction, dynamic portal energy fields, toon outline shaders, and GPU-driven particle simulations.',
+        specs: [
+            { label: 'Role', val: 'Technical Shader Artist' },
+            { label: 'Tech Stack', val: 'HLSL, GLSL, Unreal Niagara, Unity VFX Graph' },
+            { label: 'Performance', val: 'Sub-millisecond render time per pass' },
+            { label: 'Features', val: 'Raymarched Volumetrics, Multi-pass Bloom' }
+        ]
+    },
+    'cyber-defender': {
+        title: 'Cyber Defender 2099',
+        subtitle: 'Retro Canvas Arcade Shooter',
+        engine: 'Native HTML5 Canvas & WebAudio API',
+        image: 'assets/spaceshooter.png',
+        desc: 'Built completely from scratch without external libraries! Features object pooling for bullet particles, spatial collision detection grid, procedural retro sound synthesis, and local storage high score tracking.',
+        specs: [
+            { label: 'Role', val: 'Game Programmer' },
+            { label: 'Framework', val: 'Vanilla JavaScript & HTML5 Canvas' },
+            { label: 'Audio', val: 'WebAudio API Procedural Synthesizer' },
+            { label: 'Performance', val: 'Locked 60 FPS Canvas Render Loop' }
+        ]
+    }
+};
+
+function initProjectModals() {
+    const modal = document.getElementById('project-modal');
+    const modalBody = document.getElementById('modal-body');
+    const closeBtn = document.getElementById('modal-close');
+    const inspectBtns = document.querySelectorAll('.btn-inspect');
+
+    inspectBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const gameKey = btn.dataset.game;
+            const data = projectData[gameKey];
+            if (!data) return;
+
+            modalBody.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <span style="color:var(--cyan-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
+                        <h2 style="font-size:2.2rem; color:#fff;">${data.title}</h2>
+                        <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
+                    </div>
+                </div>
+                
+                <img src="${data.image}" alt="${data.title}" class="modal-img">
+                
+                <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
+                
+                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem;">Technical Breakdown</h4>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(7,9,14,0.6); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                    ${data.specs.map(s => `
+                        <div>
+                            <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
+                            <strong style="color:var(--cyan-primary); font-size:0.95rem;">${s.val}</strong>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                    <a href="#arcade" onclick="document.getElementById('modal-backdrop').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play Demo / Prototype</a>
+                    <button class="btn btn-outline" onclick="document.getElementById('project-modal').classList.remove('active')"><i class="fa-solid fa-check"></i> Close Details</button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+}
+
+/* ==========================================================================
+   6. PLAYABLE ARCADE MINI-GAME (CYBER-DEFENDER)
+   ========================================================================== */
+function initArcadeGame() {
+    const canvas = document.getElementById('arcade-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const overlay = document.getElementById('arcade-overlay');
+    const startBtn = document.getElementById('start-game-btn');
+    const scoreEl = document.getElementById('arcade-score');
+    const highScoreEl = document.getElementById('arcade-high-score');
+
+    let gameRunning = false;
+    let score = 0;
+    let highScore = localStorage.getItem('cyber_defender_hs') || 1500;
+    highScoreEl.textContent = highScore.toString().padStart(4, '0');
+
+    let width = canvas.width = canvas.parentElement.clientWidth;
+    let height = canvas.height = canvas.parentElement.clientHeight;
+
+    window.addEventListener('resize', () => {
+        if (canvas.parentElement) {
+            width = canvas.width = canvas.parentElement.clientWidth;
+            height = canvas.height = canvas.parentElement.clientHeight;
+        }
+    });
+
+    // Player
+    const player = {
+        x: width / 2 - 20,
+        y: height - 50,
+        w: 40,
+        h: 30,
+        speed: 7,
+        dx: 0
+    };
+
+    let bullets = [];
+    let enemies = [];
+    let particles = [];
+    let lastEnemySpawn = 0;
+
+    // Controls
+    const keys = {};
+
+    window.addEventListener('keydown', (e) => {
+        keys[e.code] = true;
+        if (e.code === 'Space' && gameRunning) {
+            shootBullet();
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        keys[e.code] = false;
+    });
+
+    startBtn.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        resetGame();
+        gameRunning = true;
+        animateGame();
+    });
+
+    function resetGame() {
+        score = 0;
+        scoreEl.textContent = '0000';
+        player.x = width / 2 - 20;
+        bullets = [];
+        enemies = [];
+        particles = [];
+    }
+
+    function shootBullet() {
+        bullets.push({
+            x: player.x + player.w / 2 - 3,
+            y: player.y,
+            w: 6,
+            h: 15,
+            speed: 10
+        });
+        playTone(900, 'square', 0.05, 0.08);
+    }
+
+    function spawnExplosion(x, y, color = '#ff0055') {
+        for (let i = 0; i < 15; i++) {
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 0.5) * 6,
+                life: 1,
+                color
+            });
+        }
+    }
+
+    function animateGame() {
+        if (!gameRunning) return;
+
+        ctx.fillStyle = '#050811';
+        ctx.fillRect(0, 0, width, height);
+
+        // Grid lines effect
+        ctx.strokeStyle = 'rgba(0, 243, 255, 0.05)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < width; x += 30) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+
+        // Handle Player Movement
+        if (keys['KeyA'] || keys['ArrowLeft']) player.x -= player.speed;
+        if (keys['KeyD'] || keys['ArrowRight']) player.x += player.speed;
+        player.x = Math.max(0, Math.min(width - player.w, player.x));
+
+        // Draw Player Ship
+        ctx.fillStyle = '#00f3ff';
+        ctx.shadowColor = '#00f3ff';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.moveTo(player.x + player.w / 2, player.y);
+        ctx.lineTo(player.x, player.y + player.h);
+        ctx.lineTo(player.x + player.w, player.y + player.h);
+        ctx.closePath();
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Bullets
+        bullets.forEach((b, index) => {
+            b.y -= b.speed;
+            ctx.fillStyle = '#ff0055';
+            ctx.fillRect(b.x, b.y, b.w, b.h);
+
+            if (b.y < -10) bullets.splice(index, 1);
+        });
+
+        // Spawn Enemies
+        if (Date.now() - lastEnemySpawn > 900) {
+            enemies.push({
+                x: Math.random() * (width - 30),
+                y: -30,
+                w: 30,
+                h: 25,
+                speed: 2 + Math.random() * 2
+            });
+            lastEnemySpawn = Date.now();
+        }
+
+        // Update & Draw Enemies
+        enemies.forEach((e, eIndex) => {
+            e.y += e.speed;
+            ctx.fillStyle = '#9d4edd';
+            ctx.shadowColor = '#9d4edd';
+            ctx.shadowBlur = 8;
+            ctx.fillRect(e.x, e.y, e.w, e.h);
+            ctx.shadowBlur = 0;
+
+            // Collision with Bullets
+            bullets.forEach((b, bIndex) => {
+                if (b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
+                    spawnExplosion(e.x + e.w / 2, e.y + e.h / 2);
+                    enemies.splice(eIndex, 1);
+                    bullets.splice(bIndex, 1);
+                    score += 100;
+                    scoreEl.textContent = score.toString().padStart(4, '0');
+                    playTone(250, 'sawtooth', 0.1, 0.15);
+
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('cyber_defender_hs', highScore);
+                        highScoreEl.textContent = highScore.toString().padStart(4, '0');
+                    }
+                }
+            });
+
+            // Collision with Player or Bottom
+            if (e.y + e.h >= player.y && e.x < player.x + player.w && e.x + e.w > player.x) {
+                gameOver();
+            } else if (e.y > height) {
+                enemies.splice(eIndex, 1);
+            }
+        });
+
+        // Particles
+        particles.forEach((p, pIndex) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.life -= 0.04;
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillRect(p.x, p.y, 4, 4);
+            ctx.globalAlpha = 1;
+
+            if (p.life <= 0) particles.splice(pIndex, 1);
+        });
+
+        requestAnimationFrame(animateGame);
+    }
+
+    function gameOver() {
+        gameRunning = false;
+        playTone(120, 'sawtooth', 0.4, 0.2);
+        overlay.style.display = 'flex';
+        overlay.querySelector('h3').textContent = 'MISSION FAILED';
+        overlay.querySelector('p').textContent = `Final Score: ${score} points! Can you defend the core again?`;
+        startBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> RESTART MISSION';
+    }
+}
+
+/* ==========================================================================
+   7. CONTACT FORM HANDLER
+   ========================================================================== */
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Transmitting...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Transmission Received!';
+            submitBtn.style.background = 'linear-gradient(135deg, #00ff87, #60efff)';
+            playTone(800, 'sine', 0.2, 0.2);
+            form.reset();
+
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
+                submitBtn.style.background = '';
+                submitBtn.disabled = false;
+            }, 3000);
+        }, 1200);
+    });
 }
