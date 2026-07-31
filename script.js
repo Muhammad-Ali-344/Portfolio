@@ -1,6 +1,6 @@
 /* ==========================================================================
-   MUHAMMAD ALI PORTFOLIO - CINEMATIC ATMOSPHERIC SCRIPT
-   Interactive Canvas, WebAudio SFX, Mini-Game, Modal & Filters
+   MUHAMMAD ALI PORTFOLIO - LIGHT COOL & CALM SCRIPT
+   Interactive Light Canvas, WebAudio SFX, Mini-Game, Modal & Filters
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. BACKGROUND AMBIENT FIREFLY / DUST EMBER CANVAS
+   1. LIGHT COOL AMBIENT PARTICLE CANVAS
    ========================================================================== */
 function initBgCanvas() {
     const canvas = document.getElementById('bg-canvas');
@@ -39,7 +39,7 @@ function initBgCanvas() {
         mouse.y = e.clientY;
     });
 
-    class EmberParticle {
+    class LightParticle {
         constructor() {
             this.reset();
         }
@@ -48,32 +48,29 @@ function initBgCanvas() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
             this.radius = Math.random() * 2.5 + 1;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = -(Math.random() * 0.5 + 0.2); // Gentle upward drift like fireflies/embers
-            this.alpha = Math.random() * 0.5 + 0.2;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = -(Math.random() * 0.4 + 0.1);
+            this.alpha = Math.random() * 0.4 + 0.15;
             this.maxAlpha = this.alpha;
             this.pulse = Math.random() * 0.02 + 0.005;
             this.pulseDir = 1;
-            // Warm amber or calm sage color
-            this.color = Math.random() > 0.3 ? '229, 169, 93' : '123, 158, 135';
+            // Cool tranquil teal or slate blue
+            this.color = Math.random() > 0.4 ? '2, 132, 199' : '13, 148, 136';
         }
 
         update() {
             this.x += this.vx;
             this.y += this.vy;
 
-            // Pulse opacity
             this.alpha += this.pulse * this.pulseDir;
             if (this.alpha >= this.maxAlpha || this.alpha <= 0.1) {
                 this.pulseDir *= -1;
             }
 
-            // Wrap edges gently
             if (this.y < -10) this.y = height + 10;
             if (this.x < -10) this.x = width + 10;
             if (this.x > width + 10) this.x = -10;
 
-            // Soft mouse repulsion
             if (mouse.x !== null) {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
@@ -91,15 +88,12 @@ function initBgCanvas() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-            ctx.shadowColor = `rgba(${this.color}, ${this.alpha})`;
-            ctx.shadowBlur = 8;
             ctx.fill();
-            ctx.shadowBlur = 0;
         }
     }
 
     for (let i = 0; i < particleCount; i++) {
-        particles.push(new EmberParticle());
+        particles.push(new LightParticle());
     }
 
     function animate() {
@@ -109,7 +103,6 @@ function initBgCanvas() {
             particles[i].update();
             particles[i].draw();
 
-            // Soft faint connecting glow between close fireflies
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
                 const dy = particles[i].y - particles[j].y;
@@ -119,7 +112,7 @@ function initBgCanvas() {
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(229, 169, 93, ${0.12 * (1 - dist / 100)})`;
+                    ctx.strokeStyle = `rgba(2, 132, 199, ${0.1 * (1 - dist / 100)})`;
                     ctx.lineWidth = 0.6;
                     ctx.stroke();
                 }
@@ -131,7 +124,7 @@ function initBgCanvas() {
 }
 
 /* ==========================================================================
-   2. WEB AUDIO SYNTHESIZER (WARM UI & ARCADE SFX)
+   2. WEB AUDIO SYNTHESIZER
    ========================================================================== */
 let audioCtx = null;
 let soundEnabled = true;
@@ -158,7 +151,7 @@ function initWebAudio() {
     const btns = document.querySelectorAll('.btn, .nav-link, .filter-btn, .game-card');
     btns.forEach(btn => {
         btn.addEventListener('mouseenter', () => {
-            if (soundEnabled) playTone(380, 'sine', 0.04, 0.04);
+            if (soundEnabled) playTone(400, 'sine', 0.04, 0.04);
         });
         btn.addEventListener('click', () => {
             if (soundEnabled) playTone(650, 'sine', 0.08, 0.08);
@@ -190,7 +183,7 @@ function playTone(freq, type = 'sine', duration = 0.1, vol = 0.08) {
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
     } catch (e) {
-        // Fallback ignore
+        // Ignore fallback
     }
 }
 
@@ -334,7 +327,7 @@ function initProjectModals() {
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
                         <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
-                        <h2 style="font-size:2.2rem; color:#fff;">${data.title}</h2>
+                        <h2 style="font-size:2.2rem; color:var(--text-main);">${data.title}</h2>
                         <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
                     </div>
                 </div>
@@ -343,8 +336,8 @@ function initProjectModals() {
                 
                 <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
                 
-                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem;">Technical Breakdown</h4>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(17,20,24,0.6); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(244,246,249,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                     ${data.specs.map(s => `
                         <div>
                             <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
@@ -375,7 +368,7 @@ function initProjectModals() {
 }
 
 /* ==========================================================================
-   6. PLAYABLE ARCADE MINI-GAME (ATMOSPHERIC RETRO SHOOTER)
+   6. PLAYABLE ARCADE MINI-GAME
    ========================================================================== */
 function initArcadeGame() {
     const canvas = document.getElementById('arcade-canvas');
@@ -454,7 +447,7 @@ function initArcadeGame() {
         playTone(750, 'sine', 0.05, 0.07);
     }
 
-    function spawnExplosion(x, y, color = '#e5a95d') {
+    function spawnExplosion(x, y, color = '#38bdf8') {
         for (let i = 0; i < 15; i++) {
             particles.push({
                 x, y,
@@ -469,11 +462,10 @@ function initArcadeGame() {
     function animateGame() {
         if (!gameRunning) return;
 
-        ctx.fillStyle = '#090b0e';
+        ctx.fillStyle = '#020617';
         ctx.fillRect(0, 0, width, height);
 
-        // Soft subtle grid lines
-        ctx.strokeStyle = 'rgba(229, 169, 93, 0.05)';
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
         ctx.lineWidth = 1;
         for (let x = 0; x < width; x += 30) {
             ctx.beginPath();
@@ -482,14 +474,12 @@ function initArcadeGame() {
             ctx.stroke();
         }
 
-        // Player Movement
         if (keys['KeyA'] || keys['ArrowLeft']) player.x -= player.speed;
         if (keys['KeyD'] || keys['ArrowRight']) player.x += player.speed;
         player.x = Math.max(0, Math.min(width - player.w, player.x));
 
-        // Draw Player Ship (Amber Glow)
-        ctx.fillStyle = '#e5a95d';
-        ctx.shadowColor = '#e5a95d';
+        ctx.fillStyle = '#38bdf8';
+        ctx.shadowColor = '#38bdf8';
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.moveTo(player.x + player.w / 2, player.y);
@@ -499,16 +489,14 @@ function initArcadeGame() {
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Bullets
         bullets.forEach((b, index) => {
             b.y -= b.speed;
-            ctx.fillStyle = '#f4c47f';
+            ctx.fillStyle = '#38bdf8';
             ctx.fillRect(b.x, b.y, b.w, b.h);
 
             if (b.y < -10) bullets.splice(index, 1);
         });
 
-        // Spawn Enemies
         if (Date.now() - lastEnemySpawn > 900) {
             enemies.push({
                 x: Math.random() * (width - 30),
@@ -520,16 +508,14 @@ function initArcadeGame() {
             lastEnemySpawn = Date.now();
         }
 
-        // Enemies (Sage Green Glow)
         enemies.forEach((e, eIndex) => {
             e.y += e.speed;
-            ctx.fillStyle = '#7b9e87';
-            ctx.shadowColor = '#7b9e87';
+            ctx.fillStyle = '#2dd4bf';
+            ctx.shadowColor = '#2dd4bf';
             ctx.shadowBlur = 8;
             ctx.fillRect(e.x, e.y, e.w, e.h);
             ctx.shadowBlur = 0;
 
-            // Collision with Bullets
             bullets.forEach((b, bIndex) => {
                 if (b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
                     spawnExplosion(e.x + e.w / 2, e.y + e.h / 2);
@@ -547,7 +533,6 @@ function initArcadeGame() {
                 }
             });
 
-            // Collision with Player
             if (e.y + e.h >= player.y && e.x < player.x + player.w && e.x + e.w > player.x) {
                 gameOver();
             } else if (e.y > height) {
@@ -555,7 +540,6 @@ function initArcadeGame() {
             }
         });
 
-        // Particles
         particles.forEach((p, pIndex) => {
             p.x += p.vx;
             p.y += p.vy;
@@ -583,7 +567,7 @@ function initArcadeGame() {
 
 /* ==========================================================================
    7. CONTACT FORM HANDLER
-   ========================================================================= */
+   ========================================================================== */
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
@@ -597,7 +581,7 @@ function initContactForm() {
 
         setTimeout(() => {
             submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Transmission Received!';
-            submitBtn.style.background = 'linear-gradient(135deg, #7b9e87, #e5a95d)';
+            submitBtn.style.background = 'linear-gradient(135deg, #0d9488, #0284c7)';
             playTone(700, 'sine', 0.2, 0.15);
             form.reset();
 
