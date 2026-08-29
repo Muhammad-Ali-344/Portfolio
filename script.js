@@ -1,6 +1,6 @@
 /* ==========================================================================
    MUHAMMAD ALI PORTFOLIO - WARM LIGHT BROWN & ESPRESSO SCRIPT
-   Interactive Light Canvas, WebAudio SFX, Mini-Game, Modal & Filters
+   Interactive Light Canvas, WebAudio SFX, Modal & Filters
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbarScroll();
     initPortfolioFilters();
     initProjectModals();
-    initArcadeGame();
     initContactForm();
 });
 
@@ -347,7 +346,7 @@ function initProjectModals() {
                 </div>
                 
                 <div style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
-                    <a href="#arcade" onclick="document.getElementById('project-modal').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play Demo / Prototype</a>
+                    <a href="#contact" onclick="document.getElementById('project-modal').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Inquire About Project</a>
                     <button class="btn btn-outline" onclick="document.getElementById('project-modal').classList.remove('active')"><i class="fa-solid fa-check"></i> Close Details</button>
                 </div>
             `;
@@ -368,205 +367,7 @@ function initProjectModals() {
 }
 
 /* ==========================================================================
-   6. PLAYABLE ARCADE MINI-GAME
-   ========================================================================== */
-function initArcadeGame() {
-    const canvas = document.getElementById('arcade-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const overlay = document.getElementById('arcade-overlay');
-    const startBtn = document.getElementById('start-game-btn');
-    const scoreEl = document.getElementById('arcade-score');
-    const highScoreEl = document.getElementById('arcade-high-score');
-
-    let gameRunning = false;
-    let score = 0;
-    let highScore = localStorage.getItem('cyber_defender_hs') || 1500;
-    highScoreEl.textContent = highScore.toString().padStart(4, '0');
-
-    let width = canvas.width = canvas.parentElement.clientWidth;
-    let height = canvas.height = canvas.parentElement.clientHeight;
-
-    window.addEventListener('resize', () => {
-        if (canvas.parentElement) {
-            width = canvas.width = canvas.parentElement.clientWidth;
-            height = canvas.height = canvas.parentElement.clientHeight;
-        }
-    });
-
-    const player = {
-        x: width / 2 - 20,
-        y: height - 50,
-        w: 40,
-        h: 30,
-        speed: 7
-    };
-
-    let bullets = [];
-    let enemies = [];
-    let particles = [];
-    let lastEnemySpawn = 0;
-
-    const keys = {};
-
-    window.addEventListener('keydown', (e) => {
-        keys[e.code] = true;
-        if (e.code === 'Space' && gameRunning) {
-            shootBullet();
-        }
-    });
-
-    window.addEventListener('keyup', (e) => {
-        keys[e.code] = false;
-    });
-
-    startBtn.addEventListener('click', () => {
-        overlay.style.display = 'none';
-        resetGame();
-        gameRunning = true;
-        animateGame();
-    });
-
-    function resetGame() {
-        score = 0;
-        scoreEl.textContent = '0000';
-        player.x = width / 2 - 20;
-        bullets = [];
-        enemies = [];
-        particles = [];
-    }
-
-    function shootBullet() {
-        bullets.push({
-            x: player.x + player.w / 2 - 3,
-            y: player.y,
-            w: 6,
-            h: 15,
-            speed: 10
-        });
-        playTone(750, 'sine', 0.05, 0.07);
-    }
-
-    function spawnExplosion(x, y, color = '#e5a95d') {
-        for (let i = 0; i < 15; i++) {
-            particles.push({
-                x, y,
-                vx: (Math.random() - 0.5) * 6,
-                vy: (Math.random() - 0.5) * 6,
-                life: 1,
-                color
-            });
-        }
-    }
-
-    function animateGame() {
-        if (!gameRunning) return;
-
-        ctx.fillStyle = '#170d06';
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.strokeStyle = 'rgba(229, 169, 93, 0.08)';
-        ctx.lineWidth = 1;
-        for (let x = 0; x < width; x += 30) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-
-        if (keys['KeyA'] || keys['ArrowLeft']) player.x -= player.speed;
-        if (keys['KeyD'] || keys['ArrowRight']) player.x += player.speed;
-        player.x = Math.max(0, Math.min(width - player.w, player.x));
-
-        ctx.fillStyle = '#e5a95d';
-        ctx.shadowColor = '#e5a95d';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.moveTo(player.x + player.w / 2, player.y);
-        ctx.lineTo(player.x, player.y + player.h);
-        ctx.lineTo(player.x + player.w, player.y + player.h);
-        ctx.closePath();
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        bullets.forEach((b, index) => {
-            b.y -= b.speed;
-            ctx.fillStyle = '#f4c47f';
-            ctx.fillRect(b.x, b.y, b.w, b.h);
-
-            if (b.y < -10) bullets.splice(index, 1);
-        });
-
-        if (Date.now() - lastEnemySpawn > 900) {
-            enemies.push({
-                x: Math.random() * (width - 30),
-                y: -30,
-                w: 30,
-                h: 25,
-                speed: 2 + Math.random() * 2
-            });
-            lastEnemySpawn = Date.now();
-        }
-
-        enemies.forEach((e, eIndex) => {
-            e.y += e.speed;
-            ctx.fillStyle = '#8c5e3c';
-            ctx.shadowColor = '#8c5e3c';
-            ctx.shadowBlur = 8;
-            ctx.fillRect(e.x, e.y, e.w, e.h);
-            ctx.shadowBlur = 0;
-
-            bullets.forEach((b, bIndex) => {
-                if (b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
-                    spawnExplosion(e.x + e.w / 2, e.y + e.h / 2);
-                    enemies.splice(eIndex, 1);
-                    bullets.splice(bIndex, 1);
-                    score += 100;
-                    scoreEl.textContent = score.toString().padStart(4, '0');
-                    playTone(280, 'sine', 0.1, 0.12);
-
-                    if (score > highScore) {
-                        highScore = score;
-                        localStorage.setItem('cyber_defender_hs', highScore);
-                        highScoreEl.textContent = highScore.toString().padStart(4, '0');
-                    }
-                }
-            });
-
-            if (e.y + e.h >= player.y && e.x < player.x + player.w && e.x + e.w > player.x) {
-                gameOver();
-            } else if (e.y > height) {
-                enemies.splice(eIndex, 1);
-            }
-        });
-
-        particles.forEach((p, pIndex) => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.life -= 0.04;
-            ctx.fillStyle = p.color;
-            ctx.globalAlpha = Math.max(0, p.life);
-            ctx.fillRect(p.x, p.y, 4, 4);
-            ctx.globalAlpha = 1;
-
-            if (p.life <= 0) particles.splice(pIndex, 1);
-        });
-
-        requestAnimationFrame(animateGame);
-    }
-
-    function gameOver() {
-        gameRunning = false;
-        playTone(140, 'sine', 0.4, 0.18);
-        overlay.style.display = 'flex';
-        overlay.querySelector('h3').textContent = 'MISSION FAILED';
-        overlay.querySelector('p').textContent = `Final Score: ${score} points! Can you defend the core again?`;
-        startBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> RESTART MISSION';
-    }
-}
-
-/* ==========================================================================
-   7. CONTACT FORM HANDLER
+   6. CONTACT FORM HANDLER
    ========================================================================== */
 function initContactForm() {
     const form = document.getElementById('contact-form');
