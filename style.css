@@ -701,9 +701,15 @@ h1, h2, h3, h4, h5 {
 .skill-meta {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
   margin-bottom: 0.4rem;
   font-size: 0.95rem;
   font-weight: 600;
+}
+
+.skill-meta span:last-child {
+  flex-shrink: 0;
 }
 
 .skill-progress-bg {
