@@ -233,8 +233,8 @@ function initPortfolioFilters() {
             const filter = btn.dataset.filter;
 
             gameCards.forEach(card => {
-                const category = card.dataset.category;
-                if (filter === 'all' || category === filter) {
+                const categories = (card.dataset.category || '').split(/\s+/);
+                if (filter === 'all' || categories.includes(filter)) {
                     card.style.display = 'flex';
                     setTimeout(() => {
                         card.style.opacity = '1';
