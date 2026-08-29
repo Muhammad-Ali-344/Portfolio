@@ -294,19 +294,6 @@ const projectData = {
             { label: 'Performance', val: 'Sub-millisecond render pass' },
             { label: 'Features', val: 'Volumetric Fog, Dissolve Effects, Multi-pass Bloom' }
         ]
-    },
-    'cyber-defender': {
-        title: 'Cyber Defender 2099',
-        subtitle: 'Retro Canvas Arcade Shooter',
-        engine: 'Native HTML5 Canvas & WebAudio API',
-        image: 'assets/spaceshooter.png',
-        desc: 'Built completely from scratch without external libraries! Features object pooling for bullet particles, spatial collision grid, procedural sound synthesis, and local storage high score tracking.',
-        specs: [
-            { label: 'Role', val: 'Game Programmer' },
-            { label: 'Framework', val: 'Vanilla JavaScript & Canvas' },
-            { label: 'Audio', val: 'WebAudio API Procedural Synthesizer' },
-            { label: 'Performance', val: 'Locked 60 FPS Render Loop' }
-        ]
     }
 };
 
