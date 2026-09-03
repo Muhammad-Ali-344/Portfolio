@@ -344,6 +344,26 @@ const projectData = {
             { label: 'Platform', val: 'Android / Google Play' },
             { label: 'Key Systems', val: 'Ragdoll Physics, 200+ Levels, Touch Controls, Tutorial' }
         ]
+    },
+    'snake-escape': {
+        title: 'Snake Escape: Tap Out Puzzle',
+        subtitle: '3D Logic Tap Out Mobile Puzzle · Available on Google Play',
+        engine: 'Unity 3D (C# / Mobile)',
+        image: 'assets/Snake_Game.png',
+        desc: 'A relaxing, brain-teasing 3D puzzle game where players solve tangled grid layouts by tapping snakes in the correct order to guide them to freedom. Features intuitive swipe/tap mechanics, zero-pressure zen gameplay, responsive haptic feedback, and 100+ meticulously handcrafted levels.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.BitAdventure.SnakeEscape',
+        contributions: [
+            'Developed and implemented the core gameplay mechanics.',
+            'Designed and implemented an interactive tutorial system to guide new players through the game.',
+            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.',
+            'Created and implemented 100+ gameplay levels, including full level design.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 3D, C#, UI Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: '100+ Levels, Grid Movement, Tutorial System, Level Design' }
+        ]
     }
 };
 
