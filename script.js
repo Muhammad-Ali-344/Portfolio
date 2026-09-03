@@ -323,6 +323,27 @@ const projectData = {
             { label: 'Backend Services', val: 'Realtime Database, Auth, Crashlytics, Analytics' },
             { label: 'Monetization & UX', val: 'AdMob, IAP, Interactive Tutorial, Leaderboards' }
         ]
+    },
+    'mr-greedy': {
+        title: 'Mr Greedy: Ragdoll Punch',
+        subtitle: '3D Ragdoll Physics Mobile Game · Available on Google Play',
+        engine: 'Unity 3D (C# / Mobile)',
+        image: 'assets/Greedy_Ragdoll .png',
+        desc: 'A hilarious 3D ragdoll physics mobile brawler where players punch, launch, and demolish enemies across 200+ handcrafted levels. Built from the ground up with tight touch controls, interactive tutorial onboarding, polished UI systems, and satisfying physics-driven gameplay.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.cbjstudios.mrgreedypunch&hl=en-US',
+        contributions: [
+            'Developed and implemented the core gameplay mechanics and systems from the ground up.',
+            'Designed and implemented an interactive tutorial system to guide new players through the game.',
+            'Designed and developed the game\'s UI panels and user interface systems.',
+            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.',
+            'Created and implemented 200+ gameplay levels, including full level design.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 3D, C#, 3D Physics, Ragdoll Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: 'Ragdoll Physics, 200+ Levels, Touch Controls, Tutorial' }
+        ]
     }
 };
 
