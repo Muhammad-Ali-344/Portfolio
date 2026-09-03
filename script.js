@@ -233,19 +233,21 @@ function initPortfolioFilters() {
             const filter = btn.dataset.filter;
 
             gameCards.forEach(card => {
-                const categories = (card.dataset.category || '').split(/\s+/);
-                if (filter === 'all' || categories.includes(filter)) {
+                const categories = (card.dataset.category || '').trim().split(/\s+/);
+                const isMatch = (filter === 'all') || categories.includes(filter);
+
+                if (isMatch) {
+                    card.classList.remove('is-hidden');
                     card.style.display = 'flex';
-                    setTimeout(() => {
+                    requestAnimationFrame(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'scale(1)';
-                    }, 50);
+                    });
                 } else {
+                    card.classList.add('is-hidden');
                     card.style.opacity = '0';
                     card.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 250);
+                    card.style.display = 'none';
                 }
             });
         });

@@ -575,6 +575,10 @@ h1, h2, h3, h4, h5 {
   transition: var(--transition-normal);
 }
 
+.game-card.is-hidden {
+  display: none !important;
+}
+
 .game-card:hover {
   transform: translateY(-6px);
   border-color: var(--amber-primary);
