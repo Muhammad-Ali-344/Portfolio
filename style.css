@@ -657,6 +657,21 @@ h1, h2, h3, h4, h5 {
   font-size: 0.75rem;
 }
 
+.game-card-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.game-card-actions .btn {
+  flex: 1;
+  min-width: 110px;
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 0.65rem 0.9rem;
+}
+
 /* ==========================================================================
    SKILLS & MATRIX SECTION
    ========================================================================== */

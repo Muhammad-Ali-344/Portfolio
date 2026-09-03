@@ -294,6 +294,27 @@ const projectData = {
             { label: 'Performance', val: 'Sub-millisecond render pass' },
             { label: 'Features', val: 'Volumetric Fog, Dissolve Effects, Multi-pass Bloom' }
         ]
+    },
+    'selah-charades': {
+        title: 'Selah: Bible Charades',
+        subtitle: '2D Mobile Party Game · Available on Google Play',
+        engine: 'Unity 2D (C# / Mobile)',
+        image: 'assets/Selah.png',
+        desc: 'A faith-filled, forehead-style mobile party game developed with Unity 2D. Features interactive tilt-based mechanics where players guess Bible-themed words before time expires, full video recording of gameplay moments with device storage saving, remotely configurable card decks, and complete Google Play monetization integration.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.selah.bible.headsup.quiz.games&hl=en-US',
+        contributions: [
+            'Developed core gameplay controls and tilt-based guess/pass mechanics.',
+            'Implemented character animation systems and polished UI transitions.',
+            'Developed in-game video recording system with direct device saving.',
+            'Implemented remotely configurable deck values for dynamic live updates.',
+            'Integrated In-App Purchases (IAP) and Google Play monetization features.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, URP Mobile' },
+            { label: 'Services', val: 'Google Play Services, Remote Config, IAP' },
+            { label: 'Key Systems', val: 'Video Recording, Animation Systems, Deck Config' }
+        ]
     }
 };
 
@@ -309,6 +330,17 @@ function initProjectModals() {
             const data = projectData[gameKey];
             if (!data) return;
 
+            const contributionsHtml = data.contributions && data.contributions.length > 0 ? `
+                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:1.2rem; color:var(--text-main);">What I Did / Key Contributions</h4>
+                <ul style="padding-left:1.4rem; margin-bottom:1.2rem; color:var(--text-muted); line-height:1.8;">
+                    ${data.contributions.map(c => `<li style="margin-bottom:0.35rem;"><strong style="color:var(--text-main);">${c}</strong></li>`).join('')}
+                </ul>
+            ` : '';
+
+            const playStoreBtn = data.playStoreUrl ? `
+                <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
+            ` : '';
+
             modalBody.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
@@ -322,6 +354,8 @@ function initProjectModals() {
                 
                 <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
                 
+                ${contributionsHtml}
+                
                 <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(245,239,230,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                     ${data.specs.map(s => `
@@ -332,7 +366,8 @@ function initProjectModals() {
                     `).join('')}
                 </div>
                 
-                <div style="display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap;">
+                <div style="display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap;">
+                    ${playStoreBtn}
                     <a href="#contact" onclick="document.getElementById('project-modal').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Inquire About Project</a>
                     <button class="btn btn-outline" onclick="document.getElementById('project-modal').classList.remove('active')"><i class="fa-solid fa-check"></i> Close Details</button>
                 </div>
