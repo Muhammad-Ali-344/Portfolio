@@ -337,6 +337,31 @@ const projectData = {
             { label: 'Platform', val: 'Android / Google Play' },
             { label: 'Key Systems', val: 'Tutorial System, UI/UX Redesign, VFX & Juice' }
         ]
+    },
+    'block-puzzle': {
+        title: '2468 Block Puzzle: 2048 Merge',
+        subtitle: '2D Number Merge Puzzle · Available on Google Play',
+        engine: 'Unity 2D (C# / Firebase / Android)',
+        image: 'assets/Block_Puzzle.png',
+        desc: 'An engaging number-merging block puzzle title where players connect numbered tiles to reach 2048, 2468, and beyond. Built with real-time cloud leaderboards, player authentication, in-game analytics, tutorials, and full monetization.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=stone.puzzle.merge.connect',
+        contributions: [
+            'Developed and implemented the core gameplay mechanics and systems from the ground up.',
+            'Designed and implemented an interactive tutorial system to guide new players through the game.',
+            'Integrated Firebase Realtime Database for player data and leaderboard functionality.',
+            'Implemented Firebase Analytics and Crashlytics for player behavior tracking, analytics, and crash monitoring.',
+            'Integrated Firebase Events to track important in-game player actions and events.',
+            'Implemented player login and authentication systems for a seamless player experience.',
+            'Designed and developed the game’s UI panels and user interface systems.',
+            'Integrated and configured in-game advertisements and In-App Purchases for monetization.',
+            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, Firebase Suite' },
+            { label: 'Backend Services', val: 'Realtime Database, Auth, Crashlytics, Analytics' },
+            { label: 'Monetization & UX', val: 'AdMob, IAP, Interactive Tutorial, Leaderboards' }
+        ]
     }
 };
 
