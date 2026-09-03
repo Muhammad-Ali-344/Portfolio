@@ -315,6 +315,26 @@ const projectData = {
             { label: 'Services', val: 'Google Play Services, Remote Config, IAP' },
             { label: 'Key Systems', val: 'Video Recording, Animation Systems, Deck Config' }
         ]
+    },
+    'jewel-crush': {
+        title: 'Jewel Crush Quest: Match 3',
+        subtitle: '2D Match-3 Mobile Puzzle · Available on Google Play',
+        engine: 'Unity 2D (C# / Android)',
+        image: 'assets/Jewel_Crush.png',
+        desc: 'A classic and colorful match-3 puzzle game on Android featuring hundreds of challenge levels, dynamic gem-swapping mechanics, rewarding combo cascades, and full offline accessibility.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kurlybrackets.jewelswap',
+        contributions: [
+            'Designed and implemented an interactive in-game tutorial system to guide new players through the core gameplay.',
+            'Redesigned and refined UI panels to create a cleaner and more polished player experience.',
+            'Improved existing animations and visual presentation to enhance the overall game feel.',
+            'Polished gameplay visuals, transitions, and UI interactions for a more engaging experience.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, Animation Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: 'Tutorial System, UI/UX Redesign, VFX & Juice' }
+        ]
     }
 };
 
