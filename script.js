@@ -258,45 +258,6 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
-    'neon-eclipse': {
-        title: 'Neon Eclipse',
-        subtitle: '3D Action RPG & Combat Prototype',
-        engine: 'Unity 3D (C# / HDRP)',
-        image: 'assets/cyberpunk.png',
-        desc: 'An immersive action RPG built in Unity featuring dynamic character state machine combat, fluid parkour system, real-time lighting, and custom gameplay C# architectures.',
-        specs: [
-            { label: 'Role', val: 'Game Developer & Mechanics Architect' },
-            { label: 'Engine', val: 'Unity 2022 LTS' },
-            { label: 'Platforms', val: 'PC & Console' },
-            { label: 'Features', val: 'Fluid Movement, State Machines, Custom Shader Graphs' }
-        ]
-    },
-    'valley-eternity': {
-        title: 'Valley of Eternity',
-        subtitle: '3D Fantasy VR & Platforming Experience',
-        engine: 'Unity VR / URP',
-        image: 'assets/platformer.png',
-        desc: 'A visually engaging 3D VR & platformer title with spherical gravity zones, immersive hand interaction mechanics, and optimized rendering for Quest & PC VR.',
-        specs: [
-            { label: 'Role', val: 'VR Gameplay Developer' },
-            { label: 'Engine', val: 'Unity OpenXR / URP' },
-            { label: 'Platforms', val: 'Meta Quest, SteamVR, PC' },
-            { label: 'Features', val: 'Physics Hand Grabbing, VR Locomotion, Optimization' }
-        ]
-    },
-    'aether-vfx': {
-        title: 'Aether Shader Suite',
-        subtitle: 'Real-time Shaders & VFX Library',
-        engine: 'Technical Art (HLSL / Shader Graph)',
-        image: 'assets/vfx.png',
-        desc: 'A collection of optimized real-time volumetric energy shaders, water displacement nodes, dissolve effects, and particle system blueprints for Unity.',
-        specs: [
-            { label: 'Role', val: 'Technical Artist' },
-            { label: 'Tech Stack', val: 'HLSL, Unity Shader Graph, VFX Graph' },
-            { label: 'Performance', val: 'Sub-millisecond render pass' },
-            { label: 'Features', val: 'Volumetric Fog, Dissolve Effects, Multi-pass Bloom' }
-        ]
-    },
     'selah-charades': {
         title: 'Selah: Bible Charades',
         subtitle: '2D Mobile Party Game · Available on Google Play',
