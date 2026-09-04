@@ -294,8 +294,8 @@ const projectData = {
         title: 'Fire Dragon: 3D Sculpting & Texturing',
         subtitle: 'Pixologic ZBrush · High-Poly Creature Sculpting & Hand Texturing',
         engine: 'ZBrush & Cinematic Lighting Renders',
-        image: 'assets/dragon/dragon_1.jpg',
-        fallbackImage: 'assets/dragon/dragon_1.jpg',
+        image: 'assets/dragon/Dragon_1.png',
+        fallbackImage: 'assets/dragon/Dragon_1.png',
         comparison: {
             before: 'assets/dragon/dragon_before.png',
             after: 'assets/dragon/dragon_after.png',
@@ -304,7 +304,7 @@ const projectData = {
         },
         desc: 'A high-detail 3D fantasy creature sculpt crafted and textured in Pixologic ZBrush. Developed with realistic reptilian anatomical landmarks, intricate hand-sculpted skin scales, horned head silhouettes, leather-textured wing membranes, and atmospheric fiery lighting for cinematic beauty renders.',
         gallery: [
-            'assets/dragon/dragon_1.jpg',
+            'assets/dragon/Dragon_1.png',
             'assets/dragon/Dragon_2.png',
             'assets/dragon/Dragon_3.png',
             'assets/dragon/Dragon_4.png'
