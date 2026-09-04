@@ -258,6 +258,34 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'dragon-car': {
+        title: 'Wyvern Beast: Dragon Hypercar',
+        subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
+        engine: '3D Modeling, PBR Materials & Cinematic Raytracing',
+        image: 'assets/dragon_car/dragon_car_1.jpg',
+        fallbackImage: 'assets/dragon_car/dragon_car_1.jpg',
+        desc: 'A striking fantasy automotive concept that fuses the aggressive body architecture of a high-performance supercar with the organic majesty of a winged dragon. Features a sculpted gold metallic finish, fanged predator grille, bat-like wyvern wing aerodynamics, and moody wet-asphalt night city raytraced reflections.',
+        gallery: [
+            'assets/dragon_car/dragon_car_1.jpg',
+            'assets/dragon_car/dragon_car_2.jpg',
+            'assets/dragon_car/dragon_car_3.jpg',
+            'assets/dragon_car/dragon_car_4.jpg',
+            'assets/dragon_car/dragon_car_5.jpg'
+        ],
+        contributions: [
+            'Conceived and designed unique creature-vehicle hybrid aesthetic marrying hard-surface car panels with organic creature anatomy.',
+            'Modeled aerodynamic chassis contours, custom front fascia with fanged tooth grille, and rear wing structural joints.',
+            'Sculpted intricate dragon wing membranes with realistic vein ridges and leather micro-textures.',
+            'Authored rich metallic gold carpaint material with clearcoat gloss and contrasting dark wing textures.',
+            'Configured dramatic cinematic night city environment with wet road puddle reflections and Gothic backdrop lighting.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Concept Artist & 3D Vehicle/Creature Modeler' },
+            { label: 'Category', val: 'Hard-Surface & Organic Hybrid Modeling' },
+            { label: 'Materials', val: 'Gold Metallic Automotive Paint & Leather Wings' },
+            { label: 'Environment', val: 'Gothic Nocturnal Cityscape with Raytraced Puddles' }
+        ]
+    },
     'dragon-sculpt': {
         title: 'Fire Dragon: 3D Sculpting & Texturing',
         subtitle: 'Pixologic ZBrush · High-Poly Creature Sculpting & Hand Texturing',
@@ -267,9 +295,9 @@ const projectData = {
         desc: 'A high-detail 3D fantasy creature sculpt crafted and textured in Pixologic ZBrush. Developed with realistic reptilian anatomical landmarks, intricate hand-sculpted skin scales, horned head silhouettes, leather-textured wing membranes, and atmospheric fiery lighting for cinematic beauty renders.',
         gallery: [
             'assets/dragon/dragon_1.jpg',
-            'assets/dragon/dragon_2.jpg',
-            'assets/dragon/dragon_3.jpg',
-            'assets/dragon/dragon_4.jpg'
+            'assets/dragon/Dragon_2.png',
+            'assets/dragon/Dragon_3.png',
+            'assets/dragon/Dragon_4.png'
         ],
         contributions: [
             'Sculpted primary, secondary, and micro-detail creature forms from a base mesh in ZBrush.',
