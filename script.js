@@ -258,6 +258,39 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'neon-bike': {
+        title: 'Cyberpunk Neon Bike: 3D Texturing & Renders',
+        subtitle: 'Substance 3D Painter · PBR Workflow · Sketchfab 3D Model',
+        engine: 'Substance 3D Painter & Marmoset / Blender Renders',
+        image: 'assets/bike/bike_1.png',
+        fallbackImage: 'assets/cyberpunk.png',
+        desc: 'A complete texturing and rendering project created for a futuristic cyberpunk bike model sourced from Sketchfab. Textured with Substance 3D Painter using realistic PBR materials, custom decals, metallic edge-wear, and vibrant neon emissive details, followed by cinematic multi-angle studio lighting and 4K beauty renders.',
+        gallery: [
+            'assets/bike/bike_1.png',
+            'assets/bike/bike_2.png',
+            'assets/bike/bike_3.png',
+            'assets/bike/bike_4.png',
+            'assets/bike/bike_5.png',
+            'assets/bike/bike_6.png',
+            'assets/bike/bike_7.png',
+            'assets/bike/bike_8.png',
+            'assets/bike/bike_9.png',
+            'assets/bike/bike_10.png'
+        ],
+        contributions: [
+            'Imported and prepared high-fidelity motorcycle 3D mesh from Sketchfab with clean UV unwrap inspection.',
+            'Authored realistic multi-layered PBR materials (Albedo, Roughness, Metallic, Normal, Ambient Occlusion).',
+            'Designed vibrant cyberpunk neon emissive elements with intensity masks and bloom control.',
+            'Hand-crafted procedural edge wear, scratches, dirt buildup, and carbon-fiber finish textures.',
+            'Configured studio lighting, HDRIs, raytraced shadows, and high-resolution camera angles for showcase rendering.'
+        ],
+        specs: [
+            { label: 'Role', val: '3D Texture Artist & Lighting/Render Specialist' },
+            { label: 'Software', val: 'Substance 3D Painter, Marmoset / Blender' },
+            { label: 'Workflow', val: 'PBR Metallic/Roughness & Emissive Shading' },
+            { label: 'Asset Origin', val: 'Sketchfab 3D Mesh / Hand-painted & Procedural Textures' }
+        ]
+    },
     'selah-charades': {
         title: 'Selah: Bible Charades',
         subtitle: '2D Mobile Party Game · Available on Google Play',
@@ -390,6 +423,30 @@ function initProjectModals() {
                 <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
             ` : '';
 
+            // Multi-image gallery builder
+            let visualMediaHtml = '';
+            if (data.gallery && data.gallery.length > 0) {
+                visualMediaHtml = `
+                    <div class="modal-gallery-container">
+                        <div class="modal-main-img-wrap">
+                            <img id="modal-featured-img" src="${data.image}" alt="${data.title}" class="modal-img" onerror="this.onerror=null; this.src='${data.fallbackImage || 'assets/cyberpunk.png'}';">
+                        </div>
+                        <div class="modal-gallery-strip">
+                            ${data.gallery.map((imgSrc, idx) => `
+                                <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" onerror="this.style.display='none';" onclick="
+                                    document.getElementById('modal-featured-img').src = this.dataset.full;
+                                    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                                    this.classList.add('active');
+                                ">
+                            `).join('')}
+                        </div>
+                        <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click any thumbnail above to view high-res angle render</span>
+                    </div>
+                `;
+            } else {
+                visualMediaHtml = `<img src="${data.image}" alt="${data.title}" class="modal-img">`;
+            }
+
             modalBody.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
@@ -399,7 +456,7 @@ function initProjectModals() {
                     </div>
                 </div>
                 
-                <img src="${data.image}" alt="${data.title}" class="modal-img">
+                ${visualMediaHtml}
                 
                 <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
                 
