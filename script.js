@@ -404,91 +404,99 @@ function initProjectModals() {
     const modal = document.getElementById('project-modal');
     const modalBody = document.getElementById('modal-body');
     const closeBtn = document.getElementById('modal-close');
-    const inspectBtns = document.querySelectorAll('.btn-inspect');
 
-    inspectBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const gameKey = btn.dataset.game;
-            const data = projectData[gameKey];
-            if (!data) return;
+    function openModal(gameKey) {
+        const data = projectData[gameKey];
+        if (!data) return;
 
-            const contributionsHtml = data.contributions && data.contributions.length > 0 ? `
-                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:1.2rem; color:var(--text-main);">What I Did / Key Contributions</h4>
-                <ul style="padding-left:1.4rem; margin-bottom:1.2rem; color:var(--text-muted); line-height:1.8;">
-                    ${data.contributions.map(c => `<li style="margin-bottom:0.35rem;"><strong style="color:var(--text-main);">${c}</strong></li>`).join('')}
-                </ul>
-            ` : '';
+        const contributionsHtml = data.contributions && data.contributions.length > 0 ? `
+            <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:1.2rem; color:var(--text-main);">What I Did / Key Contributions</h4>
+            <ul style="padding-left:1.4rem; margin-bottom:1.2rem; color:var(--text-muted); line-height:1.8;">
+                ${data.contributions.map(c => `<li style="margin-bottom:0.35rem;"><strong style="color:var(--text-main);">${c}</strong></li>`).join('')}
+            </ul>
+        ` : '';
 
-            const playStoreBtn = data.playStoreUrl ? `
-                <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
-            ` : '';
+        const playStoreBtn = data.playStoreUrl ? `
+            <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
+        ` : '';
 
-            // Multi-image gallery builder
-            let visualMediaHtml = '';
-            if (data.gallery && data.gallery.length > 0) {
-                visualMediaHtml = `
-                    <div class="modal-gallery-container">
-                        <div class="modal-main-img-wrap">
-                            <img id="modal-featured-img" src="${data.image}" alt="${data.title}" class="modal-img" onerror="this.onerror=null; this.src='${data.fallbackImage || 'assets/cyberpunk.png'}';">
-                        </div>
-                        <div class="modal-gallery-strip">
-                            ${data.gallery.map((imgSrc, idx) => `
-                                <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" onerror="this.style.display='none';" onclick="
-                                    document.getElementById('modal-featured-img').src = this.dataset.full;
-                                    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-                                    this.classList.add('active');
-                                ">
-                            `).join('')}
-                        </div>
-                        <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click any thumbnail above to view high-res angle render</span>
+        // Multi-image gallery builder
+        let visualMediaHtml = '';
+        if (data.gallery && data.gallery.length > 0) {
+            visualMediaHtml = `
+                <div class="modal-gallery-container">
+                    <div class="modal-main-img-wrap">
+                        <img id="modal-featured-img" src="${data.image}" alt="${data.title}" class="modal-img" onerror="this.onerror=null; this.src='${data.fallbackImage || 'assets/cyberpunk.png'}';">
                     </div>
-                `;
-            } else {
-                visualMediaHtml = `<img src="${data.image}" alt="${data.title}" class="modal-img">`;
-            }
-
-            modalBody.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
-                        <h2 style="font-size:2.2rem; color:var(--text-main);">${data.title}</h2>
-                        <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
+                    <div class="modal-gallery-strip">
+                        ${data.gallery.map((imgSrc, idx) => `
+                            <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}">
+                        `).join('')}
                     </div>
-                </div>
-                
-                ${visualMediaHtml}
-                
-                <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
-                
-                ${contributionsHtml}
-                
-                <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(245,239,230,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
-                    ${data.specs.map(s => `
-                        <div>
-                            <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
-                            <strong style="color:var(--amber-primary); font-size:0.95rem;">${s.val}</strong>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div style="display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap;">
-                    ${playStoreBtn}
-                    <a href="#contact" onclick="document.getElementById('project-modal').classList.remove('active')" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Inquire About Project</a>
-                    <button class="btn btn-outline" onclick="document.getElementById('project-modal').classList.remove('active')"><i class="fa-solid fa-check"></i> Close Details</button>
+                    <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click any thumbnail above to view high-res angle render</span>
                 </div>
             `;
+        } else {
+            visualMediaHtml = `<img src="${data.image}" alt="${data.title}" class="modal-img">`;
+        }
 
-            modal.classList.add('active');
-        });
-    });
+        modalBody.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                    <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
+                    <h2 style="font-size:2.2rem; color:var(--text-main);">${data.title}</h2>
+                    <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
+                </div>
+            </div>
+            
+            ${visualMediaHtml}
+            
+            <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
+            
+            ${contributionsHtml}
+            
+            <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(245,239,230,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                ${data.specs.map(s => `
+                    <div>
+                        <span style="color:var(--text-muted); font-size:0.85rem; display:block;">${s.label}</span>
+                        <strong style="color:var(--amber-primary); font-size:0.95rem;">${s.val}</strong>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div style="display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap;">
+                ${playStoreBtn}
+                <a href="#contact" class="btn btn-primary btn-modal-close-trigger"><i class="fa-solid fa-envelope"></i> Inquire About Project</a>
+                <button class="btn btn-outline btn-modal-close-trigger"><i class="fa-solid fa-check"></i> Close Details</button>
+            </div>
+        `;
 
-    closeBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
+        modal.classList.add('active');
+    }
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+    // Delegated click handler for inspect buttons and modal interactions
+    document.addEventListener('click', (e) => {
+        const inspectBtn = e.target.closest('.btn-inspect');
+        if (inspectBtn) {
+            e.preventDefault();
+            const gameKey = inspectBtn.dataset.game;
+            openModal(gameKey);
+            return;
+        }
+
+        const thumb = e.target.closest('.gallery-thumb');
+        if (thumb) {
+            const mainImg = document.getElementById('modal-featured-img');
+            if (mainImg && thumb.dataset.full) {
+                mainImg.src = thumb.dataset.full;
+                document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            }
+            return;
+        }
+
+        if (e.target.closest('.btn-modal-close-trigger') || e.target === closeBtn || e.target.closest('#modal-close') || e.target === modal) {
             modal.classList.remove('active');
         }
     });
