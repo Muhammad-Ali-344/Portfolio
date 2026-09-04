@@ -258,6 +258,33 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'dragon-sculpt': {
+        title: 'Fire Dragon: 3D Sculpting & Texturing',
+        subtitle: 'Pixologic ZBrush · High-Poly Creature Sculpting & Hand Texturing',
+        engine: 'ZBrush & Cinematic Lighting Renders',
+        image: 'assets/dragon/dragon_1.jpg',
+        fallbackImage: 'assets/dragon/dragon_1.jpg',
+        desc: 'A high-detail 3D fantasy creature sculpt crafted and textured in Pixologic ZBrush. Developed with realistic reptilian anatomical landmarks, intricate hand-sculpted skin scales, horned head silhouettes, leather-textured wing membranes, and atmospheric fiery lighting for cinematic beauty renders.',
+        gallery: [
+            'assets/dragon/dragon_1.jpg',
+            'assets/dragon/dragon_2.jpg',
+            'assets/dragon/dragon_3.jpg',
+            'assets/dragon/dragon_4.jpg'
+        ],
+        contributions: [
+            'Sculpted primary, secondary, and micro-detail creature forms from a base mesh in ZBrush.',
+            'Hand-sculpted detailed horn horns, teeth, facial expressions, and horned cranial ridge.',
+            'Created realistic organic scale alphas, skin wrinkle folds, and wing membrane tension.',
+            'PolyPainted and textured high-frequency color variations, glowing amber eyes, and scorched chest plates.',
+            'Set up multi-point rim lighting and atmospheric volcanic environment rendering.'
+        ],
+        specs: [
+            { label: 'Role', val: '3D Creature Sculptor & Texture Artist' },
+            { label: 'Software', val: 'Pixologic ZBrush, Rendering Suite' },
+            { label: 'Discipline', val: 'Digital Sculpting & Creature Anatomy' },
+            { label: 'Details', val: 'Multi-million High-Poly Sculpt, Polypaint & Texturing' }
+        ]
+    },
     'neon-bike': {
         title: 'Cyberpunk Neon Bike: 3D Texturing & Renders',
         subtitle: 'Substance 3D Painter · PBR Workflow · Sketchfab 3D Model',
@@ -430,7 +457,7 @@ function initProjectModals() {
                     </div>
                     <div class="modal-gallery-strip">
                         ${data.gallery.map((imgSrc, idx) => `
-                            <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}">
+                            <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" onerror="this.style.display='none';">
                         `).join('')}
                     </div>
                     <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click any thumbnail above to view high-res angle render</span>
