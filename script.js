@@ -262,15 +262,13 @@ const projectData = {
         title: 'Wyvern Beast: Dragon Hypercar',
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
         engine: '3D Modeling, PBR Materials & Cinematic Raytracing',
-        image: 'assets/dragon_car/dragon_car_1.jpg',
-        fallbackImage: 'assets/dragon_car/dragon_car_1.jpg',
+        image: 'assets/dragon_car/dragon_car_1.png',
+        fallbackImage: 'assets/dragon_car/dragon_car_1.png',
         desc: 'A striking fantasy automotive concept that fuses the aggressive body architecture of a high-performance supercar with the organic majesty of a winged dragon. Features a sculpted gold metallic finish, fanged predator grille, bat-like wyvern wing aerodynamics, and moody wet-asphalt night city raytraced reflections.',
         gallery: [
-            'assets/dragon_car/dragon_car_1.jpg',
-            'assets/dragon_car/dragon_car_2.jpg',
-            'assets/dragon_car/dragon_car_3.jpg',
-            'assets/dragon_car/dragon_car_4.jpg',
-            'assets/dragon_car/dragon_car_5.jpg'
+            'assets/dragon_car/dragon_car_1.png',
+            'assets/dragon_car/dragon_car_2.png',
+            'assets/dragon_car/dragon_car_3.png'
         ],
         contributions: [
             'Conceived and designed unique creature-vehicle hybrid aesthetic marrying hard-surface car panels with organic creature anatomy.',
