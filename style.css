@@ -1040,6 +1040,174 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ==========================================================================
+   TEXTURE COMPARISON SLIDER (DRAGON & DRAGON CAR ONLY)
+   ========================================================================== */
+.texture-compare-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.texture-compare-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.compare-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compare-instruction {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.texture-compare-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 480px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: #14100d;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.texture-compare-container.is-dragging {
+  cursor: ew-resize;
+}
+
+.compare-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  display: block;
+}
+
+.compare-img-after {
+  z-index: 1;
+}
+
+.compare-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  will-change: width;
+}
+
+.compare-img-before {
+  /* Crucial: Must size to the parent container width, not the overlay width */
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* Ensure inner image maintains container dimensions inside overlay */
+.texture-compare-container .compare-overlay .compare-img-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.texture-compare-container .compare-overlay {
+  width: 50%;
+}
+
+.texture-compare-container .compare-overlay img {
+  width: 100cqi; /* Container query fallback handled by JS/absolute */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  margin-left: -2px;
+  background: #ffffff;
+  z-index: 3;
+  cursor: ew-resize;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: left;
+}
+
+.compare-handle-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--amber-primary);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 3px #ffffff;
+  font-size: 0.85rem;
+  transition: transform 0.15s ease;
+}
+
+.texture-compare-container:hover .compare-handle-button,
+.texture-compare-container.is-dragging .compare-handle-button {
+  transform: scale(1.15);
+}
+
+.compare-badge {
+  position: absolute;
+  top: 1rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  background: rgba(20, 16, 13, 0.8);
+  backdrop-filter: blur(6px);
+  color: #fff8f0;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.compare-badge-left {
+  left: 1rem;
+  z-index: 4;
+}
+
+.compare-badge-right {
+  right: 1rem;
+  z-index: 2;
+}
+
+/* ==========================================================================
    FOOTER
    ========================================================================== */
 .footer {

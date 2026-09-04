@@ -264,6 +264,12 @@ const projectData = {
         engine: '3D Modeling, PBR Materials & Cinematic Raytracing',
         image: 'assets/dragon_car/dragon_car_1.png',
         fallbackImage: 'assets/dragon_car/dragon_car_1.png',
+        comparison: {
+            before: 'assets/dragon_car/dragon_car_before.png',
+            after: 'assets/dragon_car/dragon_car_after.png',
+            beforeLabel: 'Simple / White Texture',
+            afterLabel: 'Fully Textured'
+        },
         desc: 'A striking fantasy automotive concept that fuses the aggressive body architecture of a high-performance supercar with the organic majesty of a winged dragon. Features a sculpted gold metallic finish, fanged predator grille, bat-like wyvern wing aerodynamics, and moody wet-asphalt night city raytraced reflections.',
         gallery: [
             'assets/dragon_car/dragon_car_1.png',
@@ -290,6 +296,12 @@ const projectData = {
         engine: 'ZBrush & Cinematic Lighting Renders',
         image: 'assets/dragon/dragon_1.jpg',
         fallbackImage: 'assets/dragon/dragon_1.jpg',
+        comparison: {
+            before: 'assets/dragon/dragon_before.png',
+            after: 'assets/dragon/dragon_after.png',
+            beforeLabel: 'Simple / White Texture',
+            afterLabel: 'Fully Textured'
+        },
         desc: 'A high-detail 3D fantasy creature sculpt crafted and textured in Pixologic ZBrush. Developed with realistic reptilian anatomical landmarks, intricate hand-sculpted skin scales, horned head silhouettes, leather-textured wing membranes, and atmospheric fiery lighting for cinematic beauty renders.',
         gallery: [
             'assets/dragon/dragon_1.jpg',
@@ -473,8 +485,40 @@ function initProjectModals() {
             <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
         ` : '';
 
-        // Multi-image gallery builder
+        // Visual Media / Gallery / Comparison Builder
         let visualMediaHtml = '';
+        let comparisonHtml = '';
+
+        if (data.comparison) {
+            comparisonHtml = `
+                <div class="texture-compare-wrapper">
+                    <div class="texture-compare-header">
+                        <span class="compare-title"><i class="fa-solid fa-sliders"></i> Texture Comparison</span>
+                        <span class="compare-instruction">Drag slider left/right to compare</span>
+                    </div>
+                    <div class="texture-compare-container" id="texture-comparator">
+                        <!-- Fully Textured Image (Right / Base) -->
+                        <img src="${data.comparison.after}" alt="${data.comparison.afterLabel}" class="compare-img compare-img-after" onerror="this.onerror=null; this.src='${data.image}';">
+                        <span class="compare-badge compare-badge-right">${data.comparison.afterLabel}</span>
+
+                        <!-- Simple / White Texture Image (Left / Top Overlay Clipped) -->
+                        <div class="compare-overlay" id="compare-overlay" style="width: 50%;">
+                            <img src="${data.comparison.before}" alt="${data.comparison.beforeLabel}" class="compare-img compare-img-before" onerror="this.onerror=null; this.src='${data.image}';">
+                            <span class="compare-badge compare-badge-left">${data.comparison.beforeLabel}</span>
+                        </div>
+
+                        <!-- Draggable Divider Handle -->
+                        <div class="compare-handle" id="compare-handle" style="left: 50%;">
+                            <div class="compare-handle-line"></div>
+                            <div class="compare-handle-button">
+                                <i class="fa-solid fa-arrows-left-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         if (data.gallery && data.gallery.length > 0) {
             visualMediaHtml = `
                 <div class="modal-gallery-container">
@@ -503,6 +547,8 @@ function initProjectModals() {
             </div>
             
             ${visualMediaHtml}
+
+            ${comparisonHtml}
             
             <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
             
@@ -524,6 +570,10 @@ function initProjectModals() {
                 <button class="btn btn-outline btn-modal-close-trigger"><i class="fa-solid fa-check"></i> Close Details</button>
             </div>
         `;
+
+        if (data.comparison) {
+            initComparisonSlider();
+        }
 
         modal.classList.add('active');
     }
@@ -553,6 +603,70 @@ function initProjectModals() {
             modal.classList.remove('active');
         }
     });
+}
+
+/* ==========================================================================
+   5B. BEFORE/AFTER TEXTURE COMPARISON SLIDER (DRAGON & DRAGON CAR ONLY)
+   ========================================================================== */
+function initComparisonSlider() {
+    const container = document.getElementById('texture-comparator');
+    const overlay = document.getElementById('compare-overlay');
+    const handle = document.getElementById('compare-handle');
+    if (!container || !overlay || !handle) return;
+
+    let isDragging = false;
+
+    function syncImageWidth() {
+        const beforeImg = overlay.querySelector('.compare-img-before');
+        if (beforeImg) {
+            beforeImg.style.width = `${container.clientWidth}px`;
+        }
+    }
+
+    function updateSliderPosition(clientX) {
+        const rect = container.getBoundingClientRect();
+        let offsetX = clientX - rect.left;
+        if (offsetX < 0) offsetX = 0;
+        if (offsetX > rect.width) offsetX = rect.width;
+
+        const percentage = (offsetX / rect.width) * 100;
+        overlay.style.width = `${percentage}%`;
+        handle.style.left = `${percentage}%`;
+        syncImageWidth();
+    }
+
+    function onPointerDown(e) {
+        isDragging = true;
+        container.classList.add('is-dragging');
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        updateSliderPosition(clientX);
+    }
+
+    function onPointerMove(e) {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        updateSliderPosition(clientX);
+    }
+
+    function onPointerUp() {
+        if (isDragging) {
+            isDragging = false;
+            container.classList.remove('is-dragging');
+        }
+    }
+
+    // Initialize dimensions and bind events
+    syncImageWidth();
+    window.addEventListener('resize', syncImageWidth);
+
+    // Mouse & Touch events on container and document
+    container.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+
+    container.addEventListener('touchstart', onPointerDown, { passive: true });
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp);
 }
 
 /* ==========================================================================
