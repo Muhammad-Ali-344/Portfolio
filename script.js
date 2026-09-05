@@ -258,6 +258,32 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'lighthouse-env': {
+        title: 'Coastal Sentinel: Ocean Lighthouse Environment',
+        subtitle: 'Unity High Definition Render Pipeline (HDRP) · Dynamic Lighting & Volumetrics',
+        engine: 'Unity HDRP, Volumetric Fog & Physically-Based Water System',
+        image: 'assets/environment/env_1.png',
+        fallbackImage: 'assets/environment/env_1.png',
+        desc: 'A cinematic coastal maritime environment designed and lit in Unity HDRP. Showcases an isolated stone watchtower lighthouse atop rugged sea cliffs, facing vast open ocean waters with physically simulated wave motion, volumetric clouds, sun-position lighting transitions (golden hour sunset vs. high noon), atmospheric haze, and distant seafaring vessels.',
+        gallery: [
+            'assets/environment/env_1.png',
+            'assets/environment/env_2.png',
+            'assets/environment/env_3.png'
+        ],
+        contributions: [
+            'Architected complete maritime coastline scene using Unity High Definition Render Pipeline (HDRP).',
+            'Configured physically-based ocean water shader with sub-surface scattering, foam crests, and sun glint reflections.',
+            'Created multi-state time-of-day sky profiles comparing Golden Sunset and High Noon solar angles.',
+            'Implemented volumetric fog, atmospheric Rayleigh scattering, and dynamic cloud shadow layers.',
+            'Sculpted and textured weathered coastal rock cliffs and lighthouse tower with PBR materials.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Environment Artist & Unity HDRP Lighting Specialist' },
+            { label: 'Engine & Pipeline', val: 'Unity 2022/2023 HDRP (High Definition Render Pipeline)' },
+            { label: 'Key Features', val: 'Physically Based Sky, Water Shader, Volumetrics, Rock Formations' },
+            { label: 'Lighting Profiles', val: 'Sunset / Golden Hour, Midday Sun, Horizon Atmospheric Fog' }
+        ]
+    },
     'dragon-car': {
         title: 'Wyvern Beast: Dragon Hypercar',
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
