@@ -262,13 +262,13 @@ const projectData = {
         title: 'Coastal Sentinel: Ocean Lighthouse Environment',
         subtitle: 'Unity High Definition Render Pipeline (HDRP) · Dynamic Lighting & Volumetrics',
         engine: 'Unity HDRP, Volumetric Fog & Physically-Based Water System',
-        image: 'assets/environment/env_1.png',
-        fallbackImage: 'assets/environment/env_1.png',
+        image: 'assets/environment/env_1.jpg',
+        fallbackImage: 'assets/environment/env_1.jpg',
         desc: 'A cinematic coastal maritime environment designed and lit in Unity HDRP. Showcases an isolated stone watchtower lighthouse atop rugged sea cliffs, facing vast open ocean waters with physically simulated wave motion, volumetric clouds, sun-position lighting transitions (golden hour sunset vs. high noon), atmospheric haze, and distant seafaring vessels.',
         gallery: [
-            'assets/environment/env_1.png',
-            'assets/environment/env_2.png',
-            'assets/environment/env_3.png'
+            'assets/environment/env_1.jpg',
+            'assets/environment/env_2.jpg',
+            'assets/environment/env_3.jpg'
         ],
         contributions: [
             'Architected complete maritime coastline scene using Unity High Definition Render Pipeline (HDRP).',
