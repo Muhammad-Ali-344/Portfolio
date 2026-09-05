@@ -702,24 +702,42 @@ function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
 
-        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Transmitting...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Sending...';
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Transmission Received!';
-            submitBtn.style.background = 'linear-gradient(135deg, #8c5e3c, #3d2817)';
-            playTone(700, 'sine', 0.2, 0.15);
-            form.reset();
+        const formData = new FormData(form);
 
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Message Delivered!';
+                submitBtn.style.background = 'linear-gradient(135deg, #2e7d32, #1b5e20)';
+                playTone(700, 'sine', 0.2, 0.15);
+                form.reset();
+            } else {
+                throw new Error('Delivery failed');
+            }
+        } catch (error) {
+            submitBtn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Sending Failed';
+            submitBtn.style.background = 'linear-gradient(135deg, #c62828, #b71c1c)';
+        } finally {
             setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
+                submitBtn.innerHTML = originalText;
                 submitBtn.style.background = '';
                 submitBtn.disabled = false;
-            }, 3000);
-        }, 1200);
+            }, 4000);
+        }
     });
 }
