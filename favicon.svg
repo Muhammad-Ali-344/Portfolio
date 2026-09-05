@@ -1,0 +1,38 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="controllerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a67449"/>
+      <stop offset="50%" stop-color="#8c5e3c"/>
+      <stop offset="100%" stop-color="#3d2817"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8bf8a"/>
+      <stop offset="100%" stop-color="#c48f58"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded plate -->
+  <rect width="64" height="64" rx="16" fill="#fdfbf7"/>
+  <rect width="60" height="60" x="2" y="2" rx="14" fill="none" stroke="#e0d6c8" stroke-width="1.5"/>
+
+  <!-- Controller Body -->
+  <path d="M18 20 C13 20 9 24 9 30 C9 36 12 48 16 50 C18 51 22 47 25 41 C27 38 37 38 39 41 C42 47 46 51 48 50 C52 48 55 36 55 30 C55 24 51 20 46 20 Z" 
+        fill="url(#controllerGrad)" 
+        filter="url(#shadow)"/>
+
+  <!-- D-Pad (Left) -->
+  <path d="M19 28 h4 v-3 h3 v3 h4 v3 h-4 v3 h-3 v-3 h-4 z" fill="#fdfbf7" opacity="0.95"/>
+
+  <!-- Action Buttons (Right) -->
+  <circle cx="43" cy="27" r="1.8" fill="url(#accentGrad)"/>
+  <circle cx="47" cy="31" r="1.8" fill="url(#accentGrad)"/>
+  <circle cx="39" cy="31" r="1.8" fill="url(#accentGrad)"/>
+  <circle cx="43" cy="35" r="1.8" fill="url(#accentGrad)"/>
+
+  <!-- Middle indicator dots -->
+  <circle cx="30" cy="31" r="1.2" fill="#e8bf8a" opacity="0.8"/>
+  <circle cx="34" cy="31" r="1.2" fill="#e8bf8a" opacity="0.8"/>
+</svg>
