@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbarScroll();
     initPortfolioFilters();
     initProjectModals();
+    initProfileModal();
     initContactForm();
 });
 
@@ -627,6 +628,40 @@ function initProjectModals() {
 
         if (e.target.closest('.btn-modal-close-trigger') || e.target === closeBtn || e.target.closest('#modal-close') || e.target === modal) {
             modal.classList.remove('active');
+        }
+    });
+}
+
+/* ==========================================================================
+   5A. PROFILE PHOTO LIGHTBOX MODAL
+   ========================================================================== */
+function initProfileModal() {
+    const trigger = document.getElementById('avatar-zoom-trigger');
+    const profileModal = document.getElementById('profile-modal');
+    const closeBtn = document.getElementById('profile-modal-close');
+    if (!trigger || !profileModal) return;
+
+    trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        profileModal.classList.add('active');
+        playTone(600, 'sine', 0.08, 0.08);
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            profileModal.classList.remove('active');
+        });
+    }
+
+    profileModal.addEventListener('click', (e) => {
+        if (e.target === profileModal) {
+            profileModal.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && profileModal.classList.contains('active')) {
+            profileModal.classList.remove('active');
         }
     });
 }

@@ -28,10 +28,13 @@
     <!-- Navigation Header -->
     <header class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#hero" class="nav-logo">
-                <div class="nav-logo-icon">M</div>
-                <div class="nav-logo-text">MUHAMMAD ALI<span>.DEV</span></div>
-            </a>
+            <div class="nav-logo-group">
+                <button type="button" class="nav-avatar-btn" id="avatar-zoom-trigger" title="Click to view photo">
+                    <img src="assets/profile.jpg" alt="Muhammad Ali" class="nav-avatar-img">
+                    <span class="avatar-zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                </button>
+                <a href="#hero" class="nav-logo-text">MUHAMMAD ALI<span>.DEV</span></a>
+            </div>
             
             <ul class="nav-links">
                 <li><a href="#hero" class="nav-link active">Home</a></li>
@@ -548,6 +551,29 @@
             <button class="modal-close-btn" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-body" id="modal-body">
                 <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dialog for Profile Photo Zoom -->
+    <div class="modal-backdrop" id="profile-modal">
+        <div class="glass-panel modal-content profile-modal-content">
+            <button class="modal-close-btn" id="profile-modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="profile-modal-body">
+                <div class="profile-modal-img-wrap">
+                    <img src="assets/profile.jpg" alt="Muhammad Ali" class="profile-modal-img">
+                </div>
+                <div class="profile-modal-info">
+                    <span class="section-tag">&lt; GAME DESIGNER & DEVELOPER &gt;</span>
+                    <h2 style="font-size: 2rem; margin: 0.5rem 0; color: var(--text-main);">Muhammad Ali</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.2rem;">
+                        <i class="fa-solid fa-location-dot" style="color: var(--amber-primary);"></i> Rawalpindi, Pakistan · Unity Specialist
+                    </p>
+                    <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="mailto:muhammadali.offical.gd@gmail.com" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.2rem;"><i class="fa-solid fa-envelope"></i> Email Me</a>
+                        <a href="https://www.linkedin.com/in/muhammad-ali-381865352/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.2rem;"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
