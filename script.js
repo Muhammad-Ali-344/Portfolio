@@ -285,6 +285,30 @@ const projectData = {
             { label: 'Lighting Profiles', val: 'Sunset / Golden Hour, Midday Sun, Horizon Atmospheric Fog' }
         ]
     },
+    'nordic-cabin': {
+        title: 'Modern Nordic Cabin: 3D Model & Texturing',
+        subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Architectural Rendering',
+        engine: 'Blender 3D, Procedural & PBR Texturing, Architectural Lighting',
+        image: 'assets/cabin/cabin_1.jpg',
+        fallbackImage: 'assets/cabin/cabin_1.jpg',
+        desc: 'A complete 3D architectural project designed, modeled, textured, and rendered entirely from scratch in Blender. Featuring a minimalist Scandinavian wooden cottage with vertical timber battens, a gabled roofline with dual skylights and chimney, a recessed entrance porch with patio seating, concrete plinth foundation, and atmospheric golden-hour sunset lighting.',
+        gallery: [
+            'assets/cabin/cabin_1.jpg'
+        ],
+        contributions: [
+            'Modeled the entire cabin structure from scratch in Blender using clean hard-surface geometry and modular measurements.',
+            'Created detailed architectural elements including vertical wood slat cladding, window casings, skylights, and rooftop chimney.',
+            'Modeled custom porch furniture (Adirondack lounge chairs) and recessed timber entryway.',
+            'Authored and mapped realistic PBR wood textures, concrete foundation materials, and glass reflections from scratch.',
+            'Configured golden-hour lighting with warm directional sunlight, soft ambient sky fill, and realistic shadow falloff in Blender.'
+        ],
+        specs: [
+            { label: 'Role', val: '3D Modeler & Texture Artist' },
+            { label: 'Software', val: 'Blender 3D' },
+            { label: 'Workflow', val: '100% Made from Scratch (Modeling, UVs & Texturing)' },
+            { label: 'Style', val: 'Scandinavian Architectural Design & Golden Hour Render' }
+        ]
+    },
     'dragon-car': {
         title: 'Wyvern Beast: Dragon Hypercar',
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
