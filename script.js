@@ -309,6 +309,35 @@ const projectData = {
             { label: 'Style', val: 'Scandinavian Architectural Design & Golden Hour Render' }
         ]
     },
+    'isometric-house': {
+        title: 'Traditional Isometric House: 3D Interior & Cutaway',
+        subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Multi-Room Cutaway Diorama',
+        engine: 'Blender 3D, Custom PBR Texturing, Interior Light Design',
+        image: 'assets/isometric_house/isometric_1.jpg',
+        fallbackImage: 'assets/isometric_house/isometric_1.jpg',
+        desc: 'An intricate, multi-room two-story traditional house cutaway modeled and textured entirely from scratch in Blender. Features an expansive layout including a living room with wooden sofa and tea table, tatami and shoji screens with landscape artwork, an open-concept kitchen and dining area, upstairs bedroom suite with canopy bed and nightstand, private soaking bathroom, and ornate wooden lattice railings throughout.',
+        gallery: [
+            'assets/isometric_house/isometric_1.jpg',
+            'assets/isometric_house/isometric_2.jpg',
+            'assets/isometric_house/isometric_3.jpg',
+            'assets/isometric_house/isometric_4.jpg',
+            'assets/isometric_house/isometric_5.jpg',
+            'assets/isometric_house/isometric_6.jpg'
+        ],
+        contributions: [
+            'Designed and modeled every room, architectural cutaway, and structural wall 100% from scratch in Blender.',
+            'Modeled complex custom furniture assets including canopy bed, wardrobe, kitchen stove, soaking tub, wooden benches, and lattice railings.',
+            'Authored all custom materials and textures (wood grain, ceramic tile floors, wall plaster, fabrics, and decorative porcelain) from scratch.',
+            'Created decorative props such as ceramic tea sets, wall art, vases, floor lanterns, and pillows.',
+            'Engineered realistic multi-point interior lighting, simulating warm room lamps, overhead glow, and architectural depth.'
+        ],
+        specs: [
+            { label: 'Role', val: '3D Architectural & Interior Modeler / Texture Artist' },
+            { label: 'Software', val: 'Blender 3D' },
+            { label: 'Workflow', val: '100% Made from Scratch (Modeling, Props, UVs & Texturing)' },
+            { label: 'Render Style', val: 'Isometric Diorama with Warm Interior Ambient Lighting' }
+        ]
+    },
     'dragon-car': {
         title: 'Wyvern Beast: Dragon Hypercar',
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
