@@ -259,55 +259,80 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'sword-stone-env': {
+        title: 'The Sword in the Stone: Ancient Fortress Courtyard',
+        subtitle: 'Unreal Engine 5 · Lumen Real-Time Global Illumination & Environment Art',
+        engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Nanite Geometry & PBR Shaders',
+        image: 'assets/sword_stone/sword_1.jpg',
+        fallbackImage: 'assets/sword_stone/sword_1.jpg',
+        desc: 'A legendary medieval fortress courtyard scene crafted in Unreal Engine 5. The composition centers on the iconic Arthurian sword wedged deep into an ancient boulder, enclosed by towering weathered stone fortress walls, crenellated battlements, stone column sentinels, mossy ground scatter, and bathed in crisp daytime sunlight with realistic Lumen global illumination and sky reflections.',
+        gallery: [
+            'assets/sword_stone/sword_1.jpg'
+        ],
+        contributions: [
+            'Assembled and art-directed the medieval fortress courtyard in Unreal Engine 5.',
+            'Created realistic Lumen global illumination setup with directional sun, sky atmosphere, and natural bounced lighting.',
+            'Authored and textured multi-colored stone masonry walls, round stone columns, and ruined archways.',
+            'Composed dynamic low-angle framing focusing the focal point onto the mythical sword and stone centerpiece.',
+            'Populated organic ground scatter including moss patches, rocky terrain blend, and sparse wild vegetation.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Environment Artist & Lighting Designer' },
+            { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
+            { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Virtual Shadow Maps' },
+            { label: 'Aesthetics', val: 'Arthurian Legend / Ancient Stone Fortress Ruin' },
+            { label: 'Key Features', val: 'Hero Sword & Boulder, Weathered Ashlar Masonry, Stone Columns' }
+        ]
+    },
     'ruins-env': {
         title: 'Overgrown Sanctuary: Ancient Ivy-Clad Portal',
-        subtitle: '3D Environment Design · Foliage Generation & Natural Daylight Scattering',
-        engine: 'Unity / 3D Environment, Procedural Foliage, PBR Texturing, Directional Sunlight',
+        subtitle: 'Unreal Engine 5 · Foliage Scattering, Lumen Lighting & Natural Daylight',
+        engine: 'Unreal Engine 5, Lumen Global Illumination, Procedural Ivy & Foliage',
         image: 'assets/overgrown_ruins/ruins_1.jpg',
         fallbackImage: 'assets/overgrown_ruins/ruins_1.jpg',
-        desc: 'A realistic outdoor nature-reclaimed ruin environment bathed in hard diagonal sunlight. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools (wooden pitchfork / rake and shovel).',
+        desc: 'A realistic outdoor nature-reclaimed ruin environment built in Unreal Engine 5. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools (wooden pitchfork / rake and shovel) rendered with Lumen real-time lighting.',
         gallery: [
             'assets/overgrown_ruins/ruins_1.jpg',
             'assets/overgrown_ruins/ruins_2.jpg'
         ],
         contributions: [
-            'Designed a nature-reclaimed environment layout balancing dense organic foliage with weathered stone architecture.',
-            'Created realistic creeping ivy vine distribution along tall masonry walls and doorway architraves with translucent leaf shaders.',
+            'Designed a nature-reclaimed environment layout in Unreal Engine 5 balancing dense organic foliage with weathered stone architecture.',
+            'Configured realistic creeping ivy vine distribution along tall masonry walls and doorway architraves with sub-surface leaf scattering.',
             'Authored aged natural elements including rotten hollow logs, moss-covered bark textures, and rocky soil ground scatter.',
-            'Engineered crisp directional sun lighting with realistic hard shadow edges, light penetration through foliage, and ambient bounce fill.',
+            'Engineered crisp directional sun lighting in UE5 using Lumen, featuring realistic hard shadow falloff and ambient light bounce.',
             'Dressed the foreground with period props including rustic wooden pitchforks, weathered bricks, and broken rock debris.'
         ],
         specs: [
             { label: 'Role', val: 'Environment Artist & Foliage / Lighting Specialist' },
-            { label: 'Category', val: '3D Environment Design & Organic Set Dressing' },
+            { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
+            { label: 'Lighting Technology', val: 'Lumen Real-Time Lighting & Directional Sun Atmosphere' },
             { label: 'Aesthetics', val: 'Nature Reclaimed / Ancient Overgrown Ruins' },
-            { label: 'Lighting Style', val: 'Direct High-Contrast Sunlight & Soft Organic Ambient Fill' },
             { label: 'Key Elements', val: 'Creeping Ivy, Weathered Stone Walls, Aged Doorway, Fallen Logs & Props' }
         ]
     },
     'dungeon-env': {
         title: 'Forgotten Crypt: Medieval Dungeon Courtyard',
-        subtitle: '3D Environment Design · Atmospheric Candle Lighting & Stone Architecture',
-        engine: 'Unity / 3D Environment, PBR Texturing, Volumetric & Point Lighting',
+        subtitle: 'Unreal Engine 5 · Atmospheric Lumen Dungeon Lighting & Stone Architecture',
+        engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Point Lights & PBR Materials',
         image: 'assets/dungeon/dungeon_1.jpg',
         fallbackImage: 'assets/dungeon/dungeon_1.jpg',
-        desc: 'A dark, atmospheric medieval dungeon courtyard and subterranean crypt gateway. Built with massive stone masonry walls, heavy timber beams with hanging rusted iron chains, a reinforced arched wooden portal flanked by stacked stone pillars, a central stone staircase, and warm, flickering candlelit altar lighting casting dramatic deep shadows.',
+        desc: 'A dark, atmospheric medieval dungeon courtyard and subterranean crypt gateway created in Unreal Engine 5. Built with massive stone masonry walls, heavy timber beams with hanging rusted iron chains, a reinforced arched wooden portal flanked by stacked stone pillars, a central stone staircase, and warm, flickering candlelit altar lighting casting dramatic deep shadows.',
         gallery: [
             'assets/dungeon/dungeon_1.jpg',
             'assets/dungeon/dungeon_2.jpg'
         ],
         contributions: [
-            'Composed a high-atmosphere medieval courtyard scene with dynamic verticality, arches, and hanging suspended chain elements.',
+            'Composed a high-atmosphere medieval courtyard scene in Unreal Engine 5 with dynamic verticality, arches, and hanging suspended chain elements.',
             'Crafted realistic weathered PBR stone masonry, rough mortar walls, and carved stone column pillars.',
             'Authored aged wooden elements: heavy beams, arched portal door with iron ring-pull, handcart, and ladder props.',
-            'Engineered realistic multi-source mood lighting with warm candle clusters on foreground pedestals and high-contrast ambient fill.',
+            'Engineered realistic multi-source mood lighting in UE5 with warm candle clusters on foreground pedestals and Lumen bounce fill.',
             'Balanced compositional sightlines drawing the viewer toward the gated archway and overhead candlelit shrine.'
         ],
         specs: [
             { label: 'Role', val: 'Environment Artist & Lighting Designer' },
-            { label: 'Category', val: '3D Environment Design & Level Art' },
+            { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
+            { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Dynamic Candle Point Lights' },
             { label: 'Aesthetics', val: 'Dark Medieval Fantasy / Subterranean Crypt' },
-            { label: 'Lighting Style', val: 'Flickering Candlelight, Warm Highlights & Deep Dungeon Shadows' },
             { label: 'Key Elements', val: 'Modular Masonry, Arched Portal, Iron Chains, Wooden Beams & Altar' }
         ]
     },
