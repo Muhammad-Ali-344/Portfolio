@@ -220,10 +220,25 @@ function initNavbarScroll() {
 }
 
 /* ==========================================================================
-   4. PORTFOLIO FILTERING SYSTEM
+   4. PORTFOLIO FILTERING & SHUFFLE SYSTEM
    ========================================================================== */
 function initPortfolioFilters() {
+    const grid = document.getElementById('games-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    // Randomize / shuffle the project cards on load so games, environments, and 3D art are mixed
+    if (grid) {
+        const cardsArray = Array.from(grid.children);
+        for (let i = cardsArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            grid.appendChild(cardsArray[j]);
+            // swap reference in array to ensure fair distribution
+            const temp = cardsArray[i];
+            cardsArray[i] = cardsArray[j];
+            cardsArray[j] = temp;
+        }
+    }
+
     const gameCards = document.querySelectorAll('.game-card');
 
     filterBtns.forEach(btn => {
