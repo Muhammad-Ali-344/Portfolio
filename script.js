@@ -259,6 +259,32 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'ruins-env': {
+        title: 'Overgrown Sanctuary: Ancient Ivy-Clad Portal',
+        subtitle: '3D Environment Design · Foliage Generation & Natural Daylight Scattering',
+        engine: 'Unity / 3D Environment, Procedural Foliage, PBR Texturing, Directional Sunlight',
+        image: 'assets/overgrown_ruins/ruins_1.jpg',
+        fallbackImage: 'assets/overgrown_ruins/ruins_1.jpg',
+        desc: 'A realistic outdoor nature-reclaimed ruin environment bathed in hard diagonal sunlight. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools (wooden pitchfork / rake and shovel).',
+        gallery: [
+            'assets/overgrown_ruins/ruins_1.jpg',
+            'assets/overgrown_ruins/ruins_2.jpg'
+        ],
+        contributions: [
+            'Designed a nature-reclaimed environment layout balancing dense organic foliage with weathered stone architecture.',
+            'Created realistic creeping ivy vine distribution along tall masonry walls and doorway architraves with translucent leaf shaders.',
+            'Authored aged natural elements including rotten hollow logs, moss-covered bark textures, and rocky soil ground scatter.',
+            'Engineered crisp directional sun lighting with realistic hard shadow edges, light penetration through foliage, and ambient bounce fill.',
+            'Dressed the foreground with period props including rustic wooden pitchforks, weathered bricks, and broken rock debris.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Environment Artist & Foliage / Lighting Specialist' },
+            { label: 'Category', val: '3D Environment Design & Organic Set Dressing' },
+            { label: 'Aesthetics', val: 'Nature Reclaimed / Ancient Overgrown Ruins' },
+            { label: 'Lighting Style', val: 'Direct High-Contrast Sunlight & Soft Organic Ambient Fill' },
+            { label: 'Key Elements', val: 'Creeping Ivy, Weathered Stone Walls, Aged Doorway, Fallen Logs & Props' }
+        ]
+    },
     'dungeon-env': {
         title: 'Forgotten Crypt: Medieval Dungeon Courtyard',
         subtitle: '3D Environment Design · Atmospheric Candle Lighting & Stone Architecture',
