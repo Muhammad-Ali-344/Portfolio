@@ -259,6 +259,31 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'cave-env': {
+        title: 'Sunlit Grotto: Subterranean Cavern & Skylight',
+        subtitle: 'Unreal Engine 5 · Environment Section Study · Volumetric Sun Shaft & Lumen Lighting',
+        engine: 'Unreal Engine 5, Lumen Indirect Illumination, Nanite Rock Meshes & Foliage',
+        image: 'assets/cave_env/cave_1.jpg',
+        fallbackImage: 'assets/cave_env/cave_1.jpg',
+        desc: 'A natural subterranean grotto and sinkhole cave environment study created in Unreal Engine 5. Focused on realistic verticality and lighting, the scene features stratified sedimentary rock cliff faces, a jagged ceiling rupture allowing bright volumetric sunlight to flood into the subterranean hollow, tiered stone ledges, and clusters of wild green grasses thriving in the light shaft.',
+        gallery: [
+            'assets/cave_env/cave_1.jpg'
+        ],
+        contributions: [
+            'Crafted a focused natural subterranean cave section study in Unreal Engine 5.',
+            'Engineered realistic overhead sunlight shaft penetrating through a natural ceiling sinkhole aperture.',
+            'Utilized Unreal Engine 5 Lumen for deep subterranean indirect light bounce and soft cavity shading.',
+            'Sculpted and layered stratified sedimentary rock shelves, overhangs, and cliff wall textures.',
+            'Placed organic wild cave grass foliage scattered specifically along the sunlit ground and elevated stone ledges.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Environment Artist & Lighting Designer' },
+            { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
+            { label: 'Type', val: 'Environment Section / Lighting & Atmosphere Study' },
+            { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Volumetric Sun Shaft' },
+            { label: 'Key Features', val: 'Ceiling Skylight Aperture, Sedimentary Rock Layers, Wild Cave Grass' }
+        ]
+    },
     'sword-stone-env': {
         title: 'The Sword in the Stone: Ancient Fortress Courtyard',
         subtitle: 'Unreal Engine 5 · Lumen Real-Time Global Illumination & Environment Art',
