@@ -259,6 +259,32 @@ function initPortfolioFilters() {
    5. PROJECT SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'dungeon-env': {
+        title: 'Forgotten Crypt: Medieval Dungeon Courtyard',
+        subtitle: '3D Environment Design · Atmospheric Candle Lighting & Stone Architecture',
+        engine: 'Unity / 3D Environment, PBR Texturing, Volumetric & Point Lighting',
+        image: 'assets/dungeon/dungeon_1.jpg',
+        fallbackImage: 'assets/dungeon/dungeon_1.jpg',
+        desc: 'A dark, atmospheric medieval dungeon courtyard and subterranean crypt gateway. Built with massive stone masonry walls, heavy timber beams with hanging rusted iron chains, a reinforced arched wooden portal flanked by stacked stone pillars, a central stone staircase, and warm, flickering candlelit altar lighting casting dramatic deep shadows.',
+        gallery: [
+            'assets/dungeon/dungeon_1.jpg',
+            'assets/dungeon/dungeon_2.jpg'
+        ],
+        contributions: [
+            'Composed a high-atmosphere medieval courtyard scene with dynamic verticality, arches, and hanging suspended chain elements.',
+            'Crafted realistic weathered PBR stone masonry, rough mortar walls, and carved stone column pillars.',
+            'Authored aged wooden elements: heavy beams, arched portal door with iron ring-pull, handcart, and ladder props.',
+            'Engineered realistic multi-source mood lighting with warm candle clusters on foreground pedestals and high-contrast ambient fill.',
+            'Balanced compositional sightlines drawing the viewer toward the gated archway and overhead candlelit shrine.'
+        ],
+        specs: [
+            { label: 'Role', val: 'Environment Artist & Lighting Designer' },
+            { label: 'Category', val: '3D Environment Design & Level Art' },
+            { label: 'Aesthetics', val: 'Dark Medieval Fantasy / Subterranean Crypt' },
+            { label: 'Lighting Style', val: 'Flickering Candlelight, Warm Highlights & Deep Dungeon Shadows' },
+            { label: 'Key Elements', val: 'Modular Masonry, Arched Portal, Iron Chains, Wooden Beams & Altar' }
+        ]
+    },
     'lighthouse-env': {
         title: 'Coastal Sentinel: Ocean Lighthouse Environment',
         subtitle: 'Unity High Definition Render Pipeline (HDRP) · Dynamic Lighting & Volumetrics',
