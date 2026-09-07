@@ -188,13 +188,16 @@ function playTone(freq, type = 'sine', duration = 0.1, vol = 0.08) {
 }
 
 /* ==========================================================================
-   3. NAVBAR SCROLL & ACTIVE SECTIONS
+   3. NAVBAR SCROLL, ACTIVE SECTIONS & MOBILE DRAWER
    ========================================================================== */
 function initNavbarScroll() {
     const navbar = document.getElementById('navbar');
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navLinksContainer = document.getElementById('nav-links');
 
+    // Scroll listener for sticky background & scroll-spy
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -204,11 +207,16 @@ function initNavbarScroll() {
 
         let current = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120;
+            const sectionTop = section.offsetTop - 140;
             if (window.scrollY >= sectionTop) {
                 current = section.getAttribute('id');
             }
         });
+
+        // Map featured section to highlight projects link
+        if (current === 'featured') {
+            current = 'games';
+        }
 
         navLinks.forEach(link => {
             link.classList.remove('active');
@@ -217,28 +225,50 @@ function initNavbarScroll() {
             }
         });
     });
+
+    // Mobile drawer toggle
+    if (mobileToggle && navLinksContainer) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = navLinksContainer.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            if (icon) {
+                icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            }
+            mobileToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close when clicking any nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                if (icon) {
+                    icon.className = 'fa-solid fa-bars';
+                }
+                mobileToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close when clicking outside navbar
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target)) {
+                navLinksContainer.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                if (icon) {
+                    icon.className = 'fa-solid fa-bars';
+                }
+                mobileToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 }
 
 /* ==========================================================================
-   4. PORTFOLIO FILTERING & SHUFFLE SYSTEM
+   4. PORTFOLIO FILTERING SYSTEM
    ========================================================================== */
 function initPortfolioFilters() {
-    const grid = document.getElementById('games-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
-    
-    // Randomize / shuffle the project cards on load so games, environments, and 3D art are mixed
-    if (grid) {
-        const cardsArray = Array.from(grid.children);
-        for (let i = cardsArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            grid.appendChild(cardsArray[j]);
-            // swap reference in array to ensure fair distribution
-            const temp = cardsArray[i];
-            cardsArray[i] = cardsArray[j];
-            cardsArray[j] = temp;
-        }
-    }
-
     const gameCards = document.querySelectorAll('.game-card');
 
     filterBtns.forEach(btn => {
@@ -271,13 +301,192 @@ function initPortfolioFilters() {
 }
 
 /* ==========================================================================
-   5. PROJECT SPECS MODAL MANAGER
+   5. PROJECT CASE STUDY & SPECS MODAL MANAGER
    ========================================================================== */
 const projectData = {
+    'forgotten-train': {
+        title: 'The Forgotten Train: VR Escape',
+        subtitle: 'Virtual Reality Multiplayer Puzzle Escape Game · 100% Solo Built from Scratch',
+        engine: 'Unity 3D (URP), C#, XR Interaction Toolkit, Photon PUN2 & Photon Voice, Blender 3D, Substance Painter',
+        role: 'Solo Developer & 3D Artist (100% Made from Scratch: 3D Models, Textures, Code & UI)',
+        image: 'assets/forgotten_train.jpg',
+        fallbackImage: 'assets/forgotten_train.jpg',
+        desc: 'An atmospheric VR multiplayer escape room game set inside an accelerating vintage Victorian train carriage hurtling through misty mountain terrain. Created 100% independently from the ground up: every 3D environment asset, mechanical puzzle prop, and carriage structure was manually modeled and textured, paired with custom gameplay code, diegetic in-world VR UI, tactile hand physics, and synchronized multiplayer networking.',
+        gallery: [
+            'assets/forgotten_train.jpg',
+            'assets/forgotten_train/train_1.jpg',
+            'assets/forgotten_train/train_2.jpg',
+            'assets/forgotten_train/train_3.jpg',
+            'assets/forgotten_train/train_4.jpg',
+            'assets/forgotten_train/train_5.jpg',
+            'assets/forgotten_train/train_6.jpg'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            '100% Solo Development: Handcrafted every single component of the project from scratch without premade asset packs — including all 3D modeling, texturing, C# programming, VR physics, and spatial UI.',
+            '3D Modeling from Scratch: Hand-modeled the vintage Victorian train carriage, interior seating, luggage racks, clockwork puzzle mechanisms, keys, lockboxes, and brass gauges in Blender 3D.',
+            'Custom PBR Texturing: Hand-authored all PBR material maps (weathered wood grains, polished brass, rusted iron gears, fabric upholstery, and frosted glass) in Substance Painter.',
+            'VR Physical Interactions: Architected core VR tactile mechanics using Unity XR Interaction Toolkit (two-handed object grabs, socket docking, rotational valves, pull levers, and physical keyhole turning).',
+            'Diegetic In-Game UI / UX: Designed immersive in-world VR interfaces, tactile wrist dials, physical notebook clues, and custom haptic feedback for Meta Quest touch controllers.',
+            'Multiplayer State Replication: Programmed real-time multiplayer synchronization with Photon PUN2 (hand tracking positions, cooperative puzzle state machines, physical object ownership transfers, and Photon Voice 3D spatial audio).'
+        ],
+        challenge: 'Synchronizing multi-user physical hand interactions and continuous grab physics across Photon PUN2 without grab jitter, clipping through carriage walls, or state divergence when two players interact with interconnected puzzle mechanisms simultaneously.',
+        solution: 'Implemented an authoritative ownership-transfer system using kinematic physics overrides. When a player grabs an interactive object, ownership smoothly transitions to the local client with local velocity prediction and lerped dampening, delivering responsive zero-latency tactile feel while continuously broadcasting authoritative state updates to remote players.',
+        specs: [
+            { label: 'Role & Scope', val: '100% Solo Creator (Code, 3D Models, Textures, UI & Mechanics)' },
+            { label: 'Workflow', val: '100% Made from Scratch (No Premade Asset Packs)' },
+            { label: 'Art & Texturing', val: 'Blender 3D, Substance Painter (PBR Materials)' },
+            { label: 'Engine & Pipeline', val: 'Unity 3D (URP), C#' },
+            { label: 'Target Platforms', val: 'Meta Quest 2/3 / PC VR (SteamVR)' },
+            { label: 'Networking & Audio', val: 'Photon PUN2 & Photon Voice 3D Audio' },
+            { label: 'Key Toolkits', val: 'XR Interaction Toolkit, Final IK, Physics Hands, Diegetic VR UI' }
+        ]
+    },
+    'selah-charades': {
+        title: 'Selah: Bible Charades',
+        subtitle: '2D Mobile Party Game · Available on Google Play',
+        engine: 'Unity 2D (C# / Mobile / URP)',
+        role: 'Lead Unity Developer & Mechanics Programmer',
+        image: 'assets/Selah.png',
+        desc: 'A faith-filled, forehead-style mobile party game developed with Unity 2D. Features interactive tilt-based mechanics where players guess Bible-themed words before time expires, full in-game video recording of player reactions saved directly to device storage, remotely configurable card decks, and complete Google Play monetization integration.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.selah.bible.headsup.quiz.games&hl=en-US',
+        gallery: [
+            'assets/Selah.png'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            'Developed core gameplay controls with gyroscope and accelerometer tilt detection for seamless guess/pass motions.',
+            'Implemented in-game video recording system capturing forehead-level reactions and exporting to device media storage.',
+            'Integrated remotely configurable deck values for dynamic live updates without requiring full app store updates.',
+            'Designed and developed the user interface flow, round timers, animated category cards, and results screens.',
+            'Integrated Google Play In-App Purchases (IAP) and AdMob monetization architecture.'
+        ],
+        challenge: 'Capturing real-time in-game video recording of players’ expressions during high-energy party gameplay without generating memory spikes, thermal throttling, or dropped frames on low-to-mid-range Android smartphones.',
+        solution: 'Utilized hardware-accelerated texture buffers with asynchronous background encoding pipelines directly targeting native Android storage streams, decoupling frame capture from the main 60 FPS Unity render thread.',
+        specs: [
+            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, URP Mobile' },
+            { label: 'Services', val: 'Google Play Services, Remote Config, IAP, AdMob' },
+            { label: 'Key Systems', val: 'Video Recording, Gyro Tilt Controls, Deck Config' }
+        ]
+    },
+    'jewel-crush': {
+        title: 'Jewel Crush Quest: Match 3',
+        subtitle: '2D Match-3 Mobile Puzzle · Available on Google Play',
+        engine: 'Unity 2D (C# / Android)',
+        role: 'Gameplay Programmer & UI/UX Specialist',
+        image: 'assets/Jewel_Crush.png',
+        desc: 'A vibrant match-3 mobile puzzle game featuring interactive tutorial onboarding, redesigned responsive UI panels, enhanced gem-matching animations, and polished juice with rewarding combo cascades.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kurlybrackets.jewelswap',
+        gallery: [
+            'assets/Jewel_Crush.png'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            'Designed and implemented an interactive in-game tutorial system guiding new players through basic matches and special combo creation.',
+            'Redesigned responsive UI panels, score counters, and win/loss dialogs across diverse phone aspect ratios.',
+            'Enhanced visual juice with particle bursts, screen shakes, and tweening animations for explosive cascades.',
+            'Polished touch input responsiveness and gem-swapping feel with tactile spring animations.'
+        ],
+        challenge: 'Eliminating layout clipping and input misalignment across non-standard aspect ratios while making multi-tier gem cascades feel punchy and responsive without animation backlog lag.',
+        solution: 'Refactored canvas anchors to a unified layout framework and implemented dynamic event-driven tween queues that speed up animation playback when players trigger rapid successive combos.',
+        specs: [
+            { label: 'Role', val: 'Gameplay Programmer & UI/UX Specialist' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, Animation Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: 'Tutorial System, UI/UX Redesign, VFX & Juice' }
+        ]
+    },
+    'block-puzzle': {
+        title: '2468 Block Puzzle: 2048 Merge',
+        subtitle: '2D Number Merge Puzzle · Available on Google Play',
+        engine: 'Unity 2D (C# / Firebase / Android)',
+        role: 'Full Gameplay & Backend Developer',
+        image: 'assets/Block_Puzzle.png',
+        desc: 'An addictive 2048 number-merging block puzzle title where players connect numbered tiles to reach 2048, 2468, and beyond. Built with real-time cloud leaderboards, player authentication, in-game analytics, tutorials, and full monetization.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=stone.puzzle.merge.connect',
+        gallery: [
+            'assets/Block_Puzzle.png'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            'Developed and implemented the core grid mathematics and merging mechanics from scratch.',
+            'Integrated Firebase Realtime Database for live global and weekly high score leaderboards.',
+            'Implemented Firebase Authentication for persistent cross-session player profiles.',
+            'Configured Firebase Analytics and Crashlytics for user retention tracking and crash diagnostics.',
+            'Engineered interactive tutorial steps teaching multi-tile combo merges.',
+            'Integrated AdMob banners, interstitials, and rewarded ads alongside IAP features.'
+        ],
+        challenge: 'Managing high-frequency leaderboard write requests and handling intermittent offline gameplay without data corruption or lost high scores.',
+        solution: 'Implemented atomic local database caching with transactional synchronization upon network reconnection, verified with Firebase server-side timestamp validation.',
+        specs: [
+            { label: 'Role', val: 'Full Gameplay & Backend Developer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, Firebase Suite' },
+            { label: 'Backend Services', val: 'Realtime Database, Auth, Crashlytics, Analytics' },
+            { label: 'Monetization & UX', val: 'AdMob, IAP, Interactive Tutorial, Leaderboards' }
+        ]
+    },
+    'mr-greedy': {
+        title: 'Mr Greedy: Ragdoll Punch',
+        subtitle: '3D Ragdoll Physics Mobile Game · Available on Google Play',
+        engine: 'Unity 3D (C# / Mobile)',
+        role: 'Gameplay Systems & Level Designer (200+ Levels)',
+        image: 'assets/Greedy_Ragdoll .png',
+        desc: 'A hilarious 3D ragdoll physics mobile brawler where players punch, launch, and demolish enemies across 200+ handcrafted levels. Built from the ground up with tight touch controls, interactive tutorial onboarding, polished UI systems, and satisfying physics-driven gameplay.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.cbjstudios.mrgreedypunch&hl=en-US',
+        gallery: [
+            'assets/Greedy_Ragdoll .png'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            'Handcrafted 200+ progressive gameplay levels balancing obstacle layouts, enemy counts, and physical traps.',
+            'Developed and tuned ragdoll joint physics, impact impulse multipliers, and knockout triggers.',
+            'Implemented touch swipe-and-punch control schemes with directional aiming indicators.',
+            'Created interactive tutorial steps demonstrating ragdoll combos and environmental hazards.',
+            'Designed and hooked up full UI flow including stage selection, star ratings, and shop interfaces.'
+        ],
+        challenge: 'Maintaining physical joint stability for humanoid ragdolls during extreme impact impulses without limbs popping out of sockets or penetrating floor colliders.',
+        solution: 'Implemented continuous collision detection on key bone colliders, tuned configurable joint angular drive dampening, and clamped maximum instantaneous angular velocities during punch impacts.',
+        specs: [
+            { label: 'Role', val: 'Gameplay Systems & Level Designer' },
+            { label: 'Tech Stack', val: 'Unity 3D, C#, 3D Physics, Ragdoll Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: 'Ragdoll Physics, 200+ Handcrafted Levels, Touch Controls' }
+        ]
+    },
+    'snake-escape': {
+        title: 'Snake Escape: Tap Out Puzzle',
+        subtitle: '2D Logic Tap Out Mobile Puzzle · Available on Google Play',
+        engine: 'Unity 2D (C# / Mobile)',
+        role: 'Core Mechanics & Level Designer (100+ Levels)',
+        image: 'assets/Snake_Game.png',
+        desc: 'A relaxing, brain-teasing 2D puzzle game where players solve tangled grid layouts by tapping snakes in the correct order to guide them to freedom. Features intuitive swipe/tap mechanics, zero-pressure zen gameplay, responsive haptic feedback, and 100+ meticulously handcrafted levels.',
+        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.BitAdventure.SnakeEscape',
+        gallery: [
+            'assets/Snake_Game.png'
+        ],
+        videoDemo: 'placeholder',
+        contributions: [
+            'Created and tuned 100+ intricate puzzle levels with increasing complexity and spatial twists.',
+            'Developed the core grid movement state machine and collision raycast checks.',
+            'Implemented interactive tutorial onboarding introducing blocked path mechanics and directional rules.',
+            'Polished visual juice including squishy head turns, smooth body following, and celebratory particle confetti.',
+            'Integrated responsive mobile touch controls with haptic vibration feedback.'
+        ],
+        challenge: 'Calculating smooth multi-segment body slithering paths along dense, overlapping grid matrices without path overlap glitches or visual desynchronization between head and tail.',
+        solution: 'Developed an optimized discrete node reservation array where each segment follows an indexed breadcrumb waypoint buffer, preventing collisions while ensuring perfectly smooth interpolated movement.',
+        specs: [
+            { label: 'Role', val: 'Core Mechanics & Level Designer' },
+            { label: 'Tech Stack', val: 'Unity 2D, C#, UI Systems' },
+            { label: 'Platform', val: 'Android / Google Play' },
+            { label: 'Key Systems', val: '100+ Levels, Grid Movement, Tutorial System, Level Design' }
+        ]
+    },
     'cave-env': {
-        title: 'Sunlit Grotto: Subterranean Cavern & Skylight',
+        title: 'Sunlit Grotto: Subterranean Cavern',
         subtitle: 'Unreal Engine 5 · Environment Section Study · Volumetric Sun Shaft & Lumen Lighting',
         engine: 'Unreal Engine 5, Lumen Indirect Illumination, Nanite Rock Meshes & Foliage',
+        role: 'Environment Artist & Lighting Designer',
         image: 'assets/cave_env/cave_1.jpg',
         fallbackImage: 'assets/cave_env/cave_1.jpg',
         desc: 'A natural subterranean grotto and sinkhole cave environment study created in Unreal Engine 5. Focused on realistic verticality and lighting, the scene features stratified sedimentary rock cliff faces, a jagged ceiling rupture allowing bright volumetric sunlight to flood into the subterranean hollow, tiered stone ledges, and clusters of wild green grasses thriving in the light shaft.',
@@ -291,18 +500,20 @@ const projectData = {
             'Sculpted and layered stratified sedimentary rock shelves, overhangs, and cliff wall textures.',
             'Placed organic wild cave grass foliage scattered specifically along the sunlit ground and elevated stone ledges.'
         ],
+        challenge: 'Preventing severe indirect light leaking in deep subterranean cave geometry while keeping real-time Lumen frame rates smooth at high resolutions.',
+        solution: 'Engineered two-sided shadow casting geometry blockers encasing exterior cave meshes, tuned Lumen surface cache resolution, and balanced directional sun lux with distance field ambient occlusion.',
         specs: [
             { label: 'Role', val: 'Environment Artist & Lighting Designer' },
             { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
-            { label: 'Type', val: 'Environment Section / Lighting & Atmosphere Study' },
-            { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Volumetric Sun Shaft' },
+            { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Volumetric Sunbeams' },
             { label: 'Key Features', val: 'Ceiling Skylight Aperture, Sedimentary Rock Layers, Wild Cave Grass' }
         ]
     },
     'sword-stone-env': {
-        title: 'The Sword in the Stone: Ancient Fortress Courtyard',
+        title: 'The Sword in the Stone: Ancient Courtyard',
         subtitle: 'Unreal Engine 5 · Lumen Real-Time Global Illumination & Environment Art',
         engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Nanite Geometry & PBR Shaders',
+        role: 'Environment Artist & Lighting Designer',
         image: 'assets/sword_stone/sword_1.jpg',
         fallbackImage: 'assets/sword_stone/sword_1.jpg',
         desc: 'A legendary medieval fortress courtyard scene crafted in Unreal Engine 5. The composition centers on the iconic Arthurian sword wedged deep into an ancient boulder, enclosed by towering weathered stone fortress walls, crenellated battlements, stone column sentinels, mossy ground scatter, and bathed in crisp daytime sunlight with realistic Lumen global illumination and sky reflections.',
@@ -316,21 +527,23 @@ const projectData = {
             'Composed dynamic low-angle framing focusing the focal point onto the mythical sword and stone centerpiece.',
             'Populated organic ground scatter including moss patches, rocky terrain blend, and sparse wild vegetation.'
         ],
+        challenge: 'Balancing harsh direct midday sunlight with soft ambient shadows across weathered stone fortifications without losing focal emphasis on the hero sword prop.',
+        solution: 'Created a targeted cinematic lighting rig utilizing localized sky atmosphere scattering, contact shadows, and subtle rim lights framing the sword silhouette.',
         specs: [
             { label: 'Role', val: 'Environment Artist & Lighting Designer' },
             { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
             { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Virtual Shadow Maps' },
-            { label: 'Aesthetics', val: 'Arthurian Legend / Ancient Stone Fortress Ruin' },
             { label: 'Key Features', val: 'Hero Sword & Boulder, Weathered Ashlar Masonry, Stone Columns' }
         ]
     },
     'ruins-env': {
-        title: 'Overgrown Sanctuary: Ancient Ivy-Clad Portal',
+        title: 'Overgrown Sanctuary: Ancient Ivy Portal',
         subtitle: 'Unreal Engine 5 · Foliage Scattering, Lumen Lighting & Natural Daylight',
         engine: 'Unreal Engine 5, Lumen Global Illumination, Procedural Ivy & Foliage',
+        role: 'Environment Artist & Foliage / Lighting Specialist',
         image: 'assets/overgrown_ruins/ruins_1.jpg',
         fallbackImage: 'assets/overgrown_ruins/ruins_1.jpg',
-        desc: 'A realistic outdoor nature-reclaimed ruin environment built in Unreal Engine 5. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools (wooden pitchfork / rake and shovel) rendered with Lumen real-time lighting.',
+        desc: 'A realistic outdoor nature-reclaimed ruin environment built in Unreal Engine 5. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools rendered with Lumen real-time lighting.',
         gallery: [
             'assets/overgrown_ruins/ruins_1.jpg',
             'assets/overgrown_ruins/ruins_2.jpg'
@@ -342,18 +555,20 @@ const projectData = {
             'Engineered crisp directional sun lighting in UE5 using Lumen, featuring realistic hard shadow falloff and ambient light bounce.',
             'Dressed the foreground with period props including rustic wooden pitchforks, weathered bricks, and broken rock debris.'
         ],
+        challenge: 'Distributing dense creeping ivy foliage along weathered masonry walls naturally without causing geometry budget spikes or unnatural repetition.',
+        solution: 'Combined procedural vine splines with optimized Nanite foliage scatter instances, incorporating sub-surface scattering shaders for realistic leaf translucency.',
         specs: [
-            { label: 'Role', val: 'Environment Artist & Foliage / Lighting Specialist' },
+            { label: 'Role', val: 'Environment Artist & Foliage Specialist' },
             { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
             { label: 'Lighting Technology', val: 'Lumen Real-Time Lighting & Directional Sun Atmosphere' },
-            { label: 'Aesthetics', val: 'Nature Reclaimed / Ancient Overgrown Ruins' },
             { label: 'Key Elements', val: 'Creeping Ivy, Weathered Stone Walls, Aged Doorway, Fallen Logs & Props' }
         ]
     },
     'dungeon-env': {
-        title: 'Forgotten Crypt: Medieval Dungeon Courtyard',
+        title: 'Forgotten Crypt: Medieval Courtyard',
         subtitle: 'Unreal Engine 5 · Atmospheric Lumen Dungeon Lighting & Stone Architecture',
         engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Point Lights & PBR Materials',
+        role: 'Environment Artist & Lighting Designer',
         image: 'assets/dungeon/dungeon_1.jpg',
         fallbackImage: 'assets/dungeon/dungeon_1.jpg',
         desc: 'A dark, atmospheric medieval dungeon courtyard and subterranean crypt gateway created in Unreal Engine 5. Built with massive stone masonry walls, heavy timber beams with hanging rusted iron chains, a reinforced arched wooden portal flanked by stacked stone pillars, a central stone staircase, and warm, flickering candlelit altar lighting casting dramatic deep shadows.',
@@ -365,24 +580,25 @@ const projectData = {
             'Composed a high-atmosphere medieval courtyard scene in Unreal Engine 5 with dynamic verticality, arches, and hanging suspended chain elements.',
             'Crafted realistic weathered PBR stone masonry, rough mortar walls, and carved stone column pillars.',
             'Authored aged wooden elements: heavy beams, arched portal door with iron ring-pull, handcart, and ladder props.',
-            'Engineered realistic multi-source mood lighting in UE5 with warm candle clusters on foreground pedestals and Lumen bounce fill.',
-            'Balanced compositional sightlines drawing the viewer toward the gated archway and overhead candlelit shrine.'
+            'Engineered realistic multi-source mood lighting in UE5 with warm candle clusters on foreground pedestals and Lumen bounce fill.'
         ],
+        challenge: 'Creating high-contrast dramatic mood lighting using dozens of flickering candle flame sources without triggering dynamic light overlapping penalties.',
+        solution: 'Clustered proximate candle light sources into calibrated stationary radii with Lumen indirect diffuse bounce, prioritizing dynamic shadows strictly on hero altar focal points.',
         specs: [
             { label: 'Role', val: 'Environment Artist & Lighting Designer' },
             { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },
             { label: 'Lighting Technology', val: 'Lumen Real-Time Global Illumination & Dynamic Candle Point Lights' },
-            { label: 'Aesthetics', val: 'Dark Medieval Fantasy / Subterranean Crypt' },
             { label: 'Key Elements', val: 'Modular Masonry, Arched Portal, Iron Chains, Wooden Beams & Altar' }
         ]
     },
     'lighthouse-env': {
-        title: 'Coastal Sentinel: Ocean Lighthouse Environment',
+        title: 'Coastal Sentinel: Ocean Lighthouse',
         subtitle: 'Unity High Definition Render Pipeline (HDRP) · Dynamic Lighting & Volumetrics',
         engine: 'Unity HDRP, Volumetric Fog & Physically-Based Water System',
+        role: 'Environment Artist & Unity HDRP Lighting Specialist',
         image: 'assets/environment/env_1.jpg',
         fallbackImage: 'assets/environment/env_1.jpg',
-        desc: 'A cinematic coastal maritime environment designed and lit in Unity HDRP. Showcases an isolated stone watchtower lighthouse atop rugged sea cliffs, facing vast open ocean waters with physically simulated wave motion, volumetric clouds, sun-position lighting transitions (golden hour sunset vs. high noon), atmospheric haze, and distant seafaring vessels.',
+        desc: 'A cinematic coastal maritime environment designed and lit in Unity HDRP. Showcases an isolated stone watchtower lighthouse atop rugged sea cliffs, facing vast open ocean waters with physically simulated wave motion, volumetric clouds, sun-position lighting transitions, atmospheric haze, and distant seafaring vessels.',
         gallery: [
             'assets/environment/env_1.jpg',
             'assets/environment/env_2.jpg',
@@ -395,17 +611,20 @@ const projectData = {
             'Implemented volumetric fog, atmospheric Rayleigh scattering, and dynamic cloud shadow layers.',
             'Sculpted and textured weathered coastal rock cliffs and lighthouse tower with PBR materials.'
         ],
+        challenge: 'Simulating physically accurate ocean surface displacement, crest foam, and sun glint reflections simultaneously with heavy volumetric fog in Unity HDRP.',
+        solution: 'Authored a custom vertex-displacement water shader interacting with HDRP volumetric fog volumes, featuring Fresnel reflections and wave crest mask buffers.',
         specs: [
             { label: 'Role', val: 'Environment Artist & Unity HDRP Lighting Specialist' },
-            { label: 'Engine & Pipeline', val: 'Unity 2022/2023 HDRP (High Definition Render Pipeline)' },
+            { label: 'Engine & Pipeline', val: 'Unity HDRP' },
             { label: 'Key Features', val: 'Physically Based Sky, Water Shader, Volumetrics, Rock Formations' },
             { label: 'Lighting Profiles', val: 'Sunset / Golden Hour, Midday Sun, Horizon Atmospheric Fog' }
         ]
     },
     'nordic-cabin': {
-        title: 'Modern Nordic Cabin: 3D Model & Texturing',
+        title: 'Modern Nordic Cabin: 3D Model',
         subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Architectural Rendering',
         engine: 'Blender 3D, Procedural & PBR Texturing, Architectural Lighting',
+        role: '3D Modeler & Texture Artist (100% From Scratch)',
         image: 'assets/cabin/cabin_1.jpg',
         fallbackImage: 'assets/cabin/cabin_1.jpg',
         desc: 'A complete 3D architectural project designed, modeled, textured, and rendered entirely from scratch in Blender. Featuring a minimalist Scandinavian wooden cottage with vertical timber battens, a gabled roofline with dual skylights and chimney, a recessed entrance porch with patio seating, concrete plinth foundation, and atmospheric golden-hour sunset lighting.',
@@ -419,6 +638,8 @@ const projectData = {
             'Authored and mapped realistic PBR wood textures, concrete foundation materials, and glass reflections from scratch.',
             'Configured golden-hour lighting with warm directional sunlight, soft ambient sky fill, and realistic shadow falloff in Blender.'
         ],
+        challenge: 'Modeling clean architectural bevels and authentic vertical wood slat geometry completely from scratch without excessive polygon counts.',
+        solution: 'Employed modular hard-surface workflows with weighted normal modifiers and procedural PBR wood textures mapped across seamless UV quadrants.',
         specs: [
             { label: 'Role', val: '3D Modeler & Texture Artist' },
             { label: 'Software', val: 'Blender 3D' },
@@ -427,9 +648,10 @@ const projectData = {
         ]
     },
     'isometric-house': {
-        title: 'Traditional Isometric House: 3D Interior & Cutaway',
+        title: 'Traditional Isometric House: Cutaway',
         subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Multi-Room Cutaway Diorama',
         engine: 'Blender 3D, Custom PBR Texturing, Interior Light Design',
+        role: '3D Architectural Modeler & Texture Artist (100% From Scratch)',
         image: 'assets/isometric_house/isometric_1.jpg',
         fallbackImage: 'assets/isometric_house/isometric_1.jpg',
         desc: 'An intricate, multi-room two-story traditional house cutaway modeled and textured entirely from scratch in Blender. Features an expansive layout including a living room with wooden sofa and tea table, tatami and shoji screens with landscape artwork, an open-concept kitchen and dining area, upstairs bedroom suite with canopy bed and nightstand, private soaking bathroom, and ornate wooden lattice railings throughout.',
@@ -448,6 +670,8 @@ const projectData = {
             'Created decorative props such as ceramic tea sets, wall art, vases, floor lanterns, and pillows.',
             'Engineered realistic multi-point interior lighting, simulating warm room lamps, overhead glow, and architectural depth.'
         ],
+        challenge: 'Managing dozens of detailed furniture assets and distinct interior lighting zones inside an open cutaway diorama without visual clutter.',
+        solution: 'Established a unified color palette and modular scale grid in Blender, balancing cool exterior daylight with warm localized interior practical lamps.',
         specs: [
             { label: 'Role', val: '3D Architectural & Interior Modeler / Texture Artist' },
             { label: 'Software', val: 'Blender 3D' },
@@ -459,6 +683,7 @@ const projectData = {
         title: 'Wyvern Beast: Dragon Hypercar',
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
         engine: '3D Modeling, PBR Materials & Cinematic Raytracing',
+        role: 'Concept Artist & 3D Vehicle/Creature Modeler',
         image: 'assets/dragon_car/dragon_car_1.png',
         fallbackImage: 'assets/dragon_car/dragon_car_1.png',
         comparison: {
@@ -480,6 +705,8 @@ const projectData = {
             'Authored rich metallic gold carpaint material with clearcoat gloss and contrasting dark wing textures.',
             'Configured dramatic cinematic night city environment with wet road puddle reflections and Gothic backdrop lighting.'
         ],
+        challenge: 'Harmonizing angular aerodynamic supercar sheet metal with organic creature anatomy and wing membrane folds.',
+        solution: 'Developed custom transition blend surfaces connecting hard-surface chassis panels with sculpted organic wing joints and metallic multi-coat shaders.',
         specs: [
             { label: 'Role', val: 'Concept Artist & 3D Vehicle/Creature Modeler' },
             { label: 'Category', val: 'Hard-Surface & Organic Hybrid Modeling' },
@@ -488,9 +715,10 @@ const projectData = {
         ]
     },
     'dragon-sculpt': {
-        title: 'Fire Dragon: 3D Sculpting & Texturing',
+        title: 'Fire Dragon: 3D Creature Sculpt',
         subtitle: 'Pixologic ZBrush · High-Poly Creature Sculpting & Hand Texturing',
         engine: 'ZBrush & Cinematic Lighting Renders',
+        role: '3D Creature Sculptor & Texture Artist',
         image: 'assets/dragon/dragon_1.png',
         fallbackImage: 'assets/dragon/dragon_1.png',
         comparison: {
@@ -513,6 +741,8 @@ const projectData = {
             'PolyPainted and textured high-frequency color variations, glowing amber eyes, and scorched chest plates.',
             'Set up multi-point rim lighting and atmospheric volcanic environment rendering.'
         ],
+        challenge: 'Sculpting micro-scale reptilian skin detail across an entire dragon anatomy while maintaining anatomical volume and silhouette strength.',
+        solution: 'Worked through progressive subdivision levels in ZBrush, sculpting primary muscle landmarks first, followed by secondary skin folds, and hand-painting high-frequency scales with custom alphas.',
         specs: [
             { label: 'Role', val: '3D Creature Sculptor & Texture Artist' },
             { label: 'Software', val: 'Pixologic ZBrush, Rendering Suite' },
@@ -521,9 +751,10 @@ const projectData = {
         ]
     },
     'neon-bike': {
-        title: 'Cyberpunk Neon Bike: 3D Texturing & Renders',
+        title: 'Cyberpunk Neon Bike: 3D Textures',
         subtitle: 'Substance 3D Painter · PBR Workflow · Sketchfab 3D Model',
         engine: 'Substance 3D Painter & Marmoset / Blender Renders',
+        role: '3D Texture Artist & Lighting Specialist',
         image: 'assets/bike/bike_1.png',
         fallbackImage: 'assets/cyberpunk.png',
         desc: 'A complete texturing and rendering project created for a futuristic cyberpunk bike model sourced from Sketchfab. Textured with Substance 3D Painter using realistic PBR materials, custom decals, metallic edge-wear, and vibrant neon emissive details, followed by cinematic multi-angle studio lighting and 4K beauty renders.',
@@ -546,118 +777,13 @@ const projectData = {
             'Hand-crafted procedural edge wear, scratches, dirt buildup, and carbon-fiber finish textures.',
             'Configured studio lighting, HDRIs, raytraced shadows, and high-resolution camera angles for showcase rendering.'
         ],
+        challenge: 'Balancing intense emissive cyberpunk neon elements with realistic metallic edge wear and weathering without blowing out exposure.',
+        solution: 'Layered micro-scratches, dust occlusion masks, and calibrated emissive color maps in Substance 3D Painter with ACES tone mapping in Marmoset.',
         specs: [
-            { label: 'Role', val: '3D Texture Artist & Lighting/Render Specialist' },
+            { label: 'Role', val: '3D Texture Artist & Render Specialist' },
             { label: 'Software', val: 'Substance 3D Painter, Marmoset / Blender' },
             { label: 'Workflow', val: 'PBR Metallic/Roughness & Emissive Shading' },
             { label: 'Asset Origin', val: 'Sketchfab 3D Mesh / Hand-painted & Procedural Textures' }
-        ]
-    },
-    'selah-charades': {
-        title: 'Selah: Bible Charades',
-        subtitle: '2D Mobile Party Game · Available on Google Play',
-        engine: 'Unity 2D (C# / Mobile)',
-        image: 'assets/Selah.png',
-        desc: 'A faith-filled, forehead-style mobile party game developed with Unity 2D. Features interactive tilt-based mechanics where players guess Bible-themed words before time expires, full video recording of gameplay moments with device storage saving, remotely configurable card decks, and complete Google Play monetization integration.',
-        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.selah.bible.headsup.quiz.games&hl=en-US',
-        contributions: [
-            'Developed core gameplay controls and tilt-based guess/pass mechanics.',
-            'Implemented character animation systems and polished UI transitions.',
-            'Developed in-game video recording system with direct device saving.',
-            'Implemented remotely configurable deck values for dynamic live updates.',
-            'Integrated In-App Purchases (IAP) and Google Play monetization features.'
-        ],
-        specs: [
-            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
-            { label: 'Tech Stack', val: 'Unity 2D, C#, URP Mobile' },
-            { label: 'Services', val: 'Google Play Services, Remote Config, IAP' },
-            { label: 'Key Systems', val: 'Video Recording, Animation Systems, Deck Config' }
-        ]
-    },
-    'jewel-crush': {
-        title: 'Jewel Crush Quest: Match 3',
-        subtitle: '2D Match-3 Mobile Puzzle · Available on Google Play',
-        engine: 'Unity 2D (C# / Android)',
-        image: 'assets/Jewel_Crush.png',
-        desc: 'A classic and colorful match-3 puzzle game on Android featuring hundreds of challenge levels, dynamic gem-swapping mechanics, rewarding combo cascades, and full offline accessibility.',
-        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kurlybrackets.jewelswap',
-        contributions: [
-            'Designed and implemented an interactive in-game tutorial system to guide new players through the core gameplay.',
-            'Redesigned and refined UI panels to create a cleaner and more polished player experience.',
-            'Improved existing animations and visual presentation to enhance the overall game feel.',
-            'Polished gameplay visuals, transitions, and UI interactions for a more engaging experience.'
-        ],
-        specs: [
-            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
-            { label: 'Tech Stack', val: 'Unity 2D, C#, Animation Systems' },
-            { label: 'Platform', val: 'Android / Google Play' },
-            { label: 'Key Systems', val: 'Tutorial System, UI/UX Redesign, VFX & Juice' }
-        ]
-    },
-    'block-puzzle': {
-        title: '2468 Block Puzzle: 2048 Merge',
-        subtitle: '2D Number Merge Puzzle · Available on Google Play',
-        engine: 'Unity 2D (C# / Firebase / Android)',
-        image: 'assets/Block_Puzzle.png',
-        desc: 'An engaging number-merging block puzzle title where players connect numbered tiles to reach 2048, 2468, and beyond. Built with real-time cloud leaderboards, player authentication, in-game analytics, tutorials, and full monetization.',
-        playStoreUrl: 'https://play.google.com/store/apps/details?id=stone.puzzle.merge.connect',
-        contributions: [
-            'Developed and implemented the core gameplay mechanics and systems from the ground up.',
-            'Designed and implemented an interactive tutorial system to guide new players through the game.',
-            'Integrated Firebase Realtime Database for player data and leaderboard functionality.',
-            'Implemented Firebase Analytics and Crashlytics for player behavior tracking, analytics, and crash monitoring.',
-            'Integrated Firebase Events to track important in-game player actions and events.',
-            'Implemented player login and authentication systems for a seamless player experience.',
-            'Designed and developed the game’s UI panels and user interface systems.',
-            'Integrated and configured in-game advertisements and In-App Purchases for monetization.',
-            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.'
-        ],
-        specs: [
-            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
-            { label: 'Tech Stack', val: 'Unity 2D, C#, Firebase Suite' },
-            { label: 'Backend Services', val: 'Realtime Database, Auth, Crashlytics, Analytics' },
-            { label: 'Monetization & UX', val: 'AdMob, IAP, Interactive Tutorial, Leaderboards' }
-        ]
-    },
-    'mr-greedy': {
-        title: 'Mr Greedy: Ragdoll Punch',
-        subtitle: '3D Ragdoll Physics Mobile Game · Available on Google Play',
-        engine: 'Unity 3D (C# / Mobile)',
-        image: 'assets/Greedy_Ragdoll .png',
-        desc: 'A hilarious 3D ragdoll physics mobile brawler where players punch, launch, and demolish enemies across 200+ handcrafted levels. Built from the ground up with tight touch controls, interactive tutorial onboarding, polished UI systems, and satisfying physics-driven gameplay.',
-        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.cbjstudios.mrgreedypunch&hl=en-US',
-        contributions: [
-            'Developed and implemented the core gameplay mechanics and systems from the ground up.',
-            'Designed and implemented an interactive tutorial system to guide new players through the game.',
-            'Designed and developed the game\'s UI panels and user interface systems.',
-            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.',
-            'Created and implemented 200+ gameplay levels, including full level design.'
-        ],
-        specs: [
-            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
-            { label: 'Tech Stack', val: 'Unity 3D, C#, 3D Physics, Ragdoll Systems' },
-            { label: 'Platform', val: 'Android / Google Play' },
-            { label: 'Key Systems', val: 'Ragdoll Physics, 200+ Levels, Touch Controls, Tutorial' }
-        ]
-    },
-    'snake-escape': {
-        title: 'Snake Escape: Tap Out Puzzle',
-        subtitle: '2D Logic Tap Out Mobile Puzzle · Available on Google Play',
-        engine: 'Unity 2D (C# / Mobile)',
-        image: 'assets/Snake_Game.png',
-        desc: 'A relaxing, brain-teasing 2D puzzle game where players solve tangled grid layouts by tapping snakes in the correct order to guide them to freedom. Features intuitive swipe/tap mechanics, zero-pressure zen gameplay, responsive haptic feedback, and 100+ meticulously handcrafted levels.',
-        playStoreUrl: 'https://play.google.com/store/apps/details?id=com.BitAdventure.SnakeEscape',
-        contributions: [
-            'Developed and implemented the core gameplay mechanics.',
-            'Designed and implemented an interactive tutorial system to guide new players through the game.',
-            'Polished gameplay systems, UI interactions, and overall game flow to improve the player experience.',
-            'Created and implemented 100+ gameplay levels, including full level design.'
-        ],
-        specs: [
-            { label: 'Role', val: 'Lead Unity Developer & Mechanics Programmer' },
-            { label: 'Tech Stack', val: 'Unity 2D, C#, UI Systems' },
-            { label: 'Platform', val: 'Android / Google Play' },
-            { label: 'Key Systems', val: '100+ Levels, Grid Movement, Tutorial System, Level Design' }
         ]
     }
 };
@@ -671,12 +797,45 @@ function initProjectModals() {
         const data = projectData[gameKey];
         if (!data) return;
 
+        const roleBadgeHtml = data.role ? `
+            <div style="margin: 0.6rem 0 0.8rem 0;">
+                <span class="game-role-badge" style="font-size:0.85rem; padding: 0.4rem 0.8rem;"><i class="fa-solid fa-user-gear"></i> MY ROLE: ${data.role}</span>
+            </div>
+        ` : '';
+
         const contributionsHtml = data.contributions && data.contributions.length > 0 ? `
-            <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:1.2rem; color:var(--text-main);">What I Did / Key Contributions</h4>
-            <ul style="padding-left:1.4rem; margin-bottom:1.2rem; color:var(--text-muted); line-height:1.8;">
-                ${data.contributions.map(c => `<li style="margin-bottom:0.35rem;"><strong style="color:var(--text-main);">${c}</strong></li>`).join('')}
+            <h4 style="font-family:var(--font-heading); font-size:1.25rem; margin-top:1.4rem; margin-bottom: 0.6rem; color:var(--text-main);">My Key Contributions</h4>
+            <ul style="padding-left:1.4rem; margin-bottom:1.4rem; color:var(--text-muted); line-height:1.8;">
+                ${data.contributions.map(c => `<li style="margin-bottom:0.4rem;"><strong style="color:var(--text-main);">${c}</strong></li>`).join('')}
             </ul>
         ` : '';
+
+        let challengeSolutionHtml = '';
+        if (data.challenge && data.solution) {
+            challengeSolutionHtml = `
+                <div class="cs-callout-grid">
+                    <div class="cs-challenge-box">
+                        <div class="cs-challenge-title"><i class="fa-solid fa-triangle-exclamation"></i> TECHNICAL CHALLENGE</div>
+                        <p style="font-size:0.92rem; color:var(--text-main); margin:0; line-height:1.6;">${data.challenge}</p>
+                    </div>
+                    <div class="cs-solution-box">
+                        <div class="cs-solution-title"><i class="fa-solid fa-lightbulb"></i> ENGINEERED SOLUTION</div>
+                        <p style="font-size:0.92rem; color:var(--text-main); margin:0; line-height:1.6;">${data.solution}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        let videoHtml = '';
+        if (data.videoDemo === 'placeholder') {
+            videoHtml = `
+                <div class="cs-video-placeholder">
+                    <i class="fa-solid fa-circle-play"></i>
+                    <strong style="color:var(--text-main); font-size:0.95rem;">10–20s Gameplay Demo Video / GIF</strong>
+                    <span>[Gameplay Media Container — Place your recording/GIF here]</span>
+                </div>
+            `;
+        }
 
         const playStoreBtn = data.playStoreUrl ? `
             <a href="${data.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:linear-gradient(135deg, #01875f, #0d654a);"><i class="fa-brands fa-google-play"></i> View on Google Play</a>
@@ -694,17 +853,14 @@ function initProjectModals() {
                         <span class="compare-instruction">Drag slider left/right to compare</span>
                     </div>
                     <div class="texture-compare-container" id="texture-comparator">
-                        <!-- Fully Textured Image (Right / Base) -->
                         <img src="${data.comparison.after}" alt="${data.comparison.afterLabel}" class="compare-img compare-img-after" onerror="this.onerror=null; this.src='${data.image}';">
                         <span class="compare-badge compare-badge-right">${data.comparison.afterLabel}</span>
 
-                        <!-- Simple / White Texture Image (Left / Top Overlay Clipped) -->
                         <div class="compare-overlay" id="compare-overlay" style="width: 50%;">
                             <img src="${data.comparison.before}" alt="${data.comparison.beforeLabel}" class="compare-img compare-img-before" onerror="this.onerror=null; this.src='${data.image}';">
                             <span class="compare-badge compare-badge-left">${data.comparison.beforeLabel}</span>
                         </div>
 
-                        <!-- Draggable Divider Handle -->
                         <div class="compare-handle" id="compare-handle" style="left: 50%;">
                             <div class="compare-handle-line"></div>
                             <div class="compare-handle-button">
@@ -727,7 +883,7 @@ function initProjectModals() {
                             <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" onerror="this.style.display='none';">
                         `).join('')}
                     </div>
-                    <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click any thumbnail above to view high-res angle render</span>
+                    <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click thumbnail to inspect high-resolution view</span>
                 </div>
             `;
         } else {
@@ -735,23 +891,27 @@ function initProjectModals() {
         }
 
         modalBody.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                <div>
-                    <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
-                    <h2 style="font-size:2.2rem; color:var(--text-main);">${data.title}</h2>
-                    <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
-                </div>
+            <div>
+                <span style="color:var(--amber-primary); font-family:var(--font-arcade); font-size:0.75rem;">${data.engine}</span>
+                <h2 style="font-size:2.2rem; color:var(--text-main); margin-top:0.3rem;">${data.title}</h2>
+                <p style="color:var(--text-muted); font-size:1.05rem;">${data.subtitle}</p>
+                ${roleBadgeHtml}
             </div>
             
             ${visualMediaHtml}
 
             ${comparisonHtml}
+
+            ${videoHtml}
             
+            <h4 style="font-family:var(--font-heading); font-size:1.25rem; margin-top:1rem; color:var(--text-main);">The Project Overview</h4>
             <p style="font-size:1rem; color:var(--text-main); line-height:1.7;">${data.desc}</p>
             
             ${contributionsHtml}
+
+            ${challengeSolutionHtml}
             
-            <h4 style="font-family:var(--font-heading); font-size:1.2rem; margin-top:0.5rem; color:var(--text-main);">Technical Breakdown</h4>
+            <h4 style="font-family:var(--font-heading); font-size:1.25rem; margin-top:1.2rem; color:var(--text-main);">Technical Breakdown</h4>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:rgba(245,239,230,0.8); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                 ${data.specs.map(s => `
                     <div>
@@ -761,10 +921,10 @@ function initProjectModals() {
                 `).join('')}
             </div>
             
-            <div style="display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap;">
+            <div style="display:flex; gap:1rem; margin-top:1.4rem; flex-wrap:wrap;">
                 ${playStoreBtn}
                 <a href="#contact" class="btn btn-primary btn-modal-close-trigger"><i class="fa-solid fa-envelope"></i> Inquire About Project</a>
-                <button class="btn btn-outline btn-modal-close-trigger"><i class="fa-solid fa-check"></i> Close Details</button>
+                <button class="btn btn-outline btn-modal-close-trigger"><i class="fa-solid fa-check"></i> Close Case Study</button>
             </div>
         `;
 
