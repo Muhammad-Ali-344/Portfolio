@@ -306,12 +306,12 @@ function initPortfolioFilters() {
 const projectData = {
     'forgotten-train': {
         title: 'The Forgotten Train: VR Escape',
-        subtitle: 'Virtual Reality Multiplayer Puzzle Escape Game · 100% Solo Built from Scratch',
-        engine: 'Unity 3D (URP), C#, XR Interaction Toolkit, Photon PUN2 & Photon Voice, Blender 3D, Substance Painter',
+        subtitle: 'Virtual Reality Puzzle Escape Game · 100% Solo Built from Scratch',
+        engine: 'Unity 3D (URP), C#, XR Interaction Toolkit, Blender 3D, Substance Painter',
         role: 'Solo Developer & 3D Artist (100% Made from Scratch: 3D Models, Textures, Code & UI)',
         image: 'assets/forgotten_train.jpg',
         fallbackImage: 'assets/forgotten_train.jpg',
-        desc: 'An atmospheric VR multiplayer escape room game set inside an accelerating vintage Victorian train carriage hurtling through misty mountain terrain. Created 100% independently from the ground up: every 3D environment asset, mechanical puzzle prop, and carriage structure was manually modeled and textured, paired with custom gameplay code, diegetic in-world VR UI, tactile hand physics, and synchronized multiplayer networking.',
+        desc: 'An atmospheric VR escape room game set inside an accelerating vintage Victorian train carriage hurtling through misty mountain terrain. Created 100% independently from the ground up: every 3D environment asset, mechanical puzzle prop, and carriage structure was manually modeled and textured, paired with custom gameplay code, diegetic in-world VR UI, tactile hand physics, and intricate lock & puzzle mechanics.',
         gallery: [
             'assets/forgotten_train.jpg',
             'assets/forgotten_train/train_1.jpg',
@@ -328,18 +328,18 @@ const projectData = {
             'Custom PBR Texturing: Hand-authored all PBR material maps (weathered wood grains, polished brass, rusted iron gears, fabric upholstery, and frosted glass) in Substance Painter.',
             'VR Physical Interactions: Architected core VR tactile mechanics using Unity XR Interaction Toolkit (two-handed object grabs, socket docking, rotational valves, pull levers, and physical keyhole turning).',
             'Diegetic In-Game UI / UX: Designed immersive in-world VR interfaces, tactile wrist dials, physical notebook clues, and custom haptic feedback for Meta Quest touch controllers.',
-            'Multiplayer State Replication: Programmed real-time multiplayer synchronization with Photon PUN2 (hand tracking positions, cooperative puzzle state machines, physical object ownership transfers, and Photon Voice 3D spatial audio).'
+            'Puzzle & State Architecture: Programmed cascading puzzle state logic, mechanical lock feedback, interactive drawer/compartment physics, and spatial audio cues.'
         ],
-        challenge: 'Synchronizing multi-user physical hand interactions and continuous grab physics across Photon PUN2 without grab jitter, clipping through carriage walls, or state divergence when two players interact with interconnected puzzle mechanisms simultaneously.',
-        solution: 'Implemented an authoritative ownership-transfer system using kinematic physics overrides. When a player grabs an interactive object, ownership smoothly transitions to the local client with local velocity prediction and lerped dampening, delivering responsive zero-latency tactile feel while continuously broadcasting authoritative state updates to remote players.',
+        challenge: 'Designing stable, tactile physical hand interactions and realistic continuous collision responses within the confined space of a moving train carriage without physics clipping or unstable jitter.',
+        solution: 'Implemented custom physics-based hand grab constraints and kinematic secondary dampening on interactables, paired with continuous dynamic collision detection and responsive haptic pulses to deliver authentic weight, tactile resistance, and solid feel when manipulating locks, levers, and carriage mechanisms.',
         specs: [
             { label: 'Role & Scope', val: '100% Solo Creator (Code, 3D Models, Textures, UI & Mechanics)' },
             { label: 'Workflow', val: '100% Made from Scratch (No Premade Asset Packs)' },
             { label: 'Art & Texturing', val: 'Blender 3D, Substance Painter (PBR Materials)' },
             { label: 'Engine & Pipeline', val: 'Unity 3D (URP), C#' },
             { label: 'Target Platforms', val: 'Meta Quest 2/3 / PC VR (SteamVR)' },
-            { label: 'Networking & Audio', val: 'Photon PUN2 & Photon Voice 3D Audio' },
-            { label: 'Key Toolkits', val: 'XR Interaction Toolkit, Final IK, Physics Hands, Diegetic VR UI' }
+            { label: 'Interaction Systems', val: 'XR Interaction Toolkit, Physics Hands, Diegetic VR UI' },
+            { label: 'Key Mechanics', val: 'Tactile Lock & Key, Kinetic Levers, Clockwork Puzzles' }
         ]
     },
     'selah-charades': {
