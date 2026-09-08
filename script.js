@@ -485,7 +485,7 @@ const projectData = {
     'cave-env': {
         title: 'Sunlit Grotto: Subterranean Cavern',
         subtitle: 'Unreal Engine 5 · Environment Section Study · Volumetric Sun Shaft & Lumen Lighting',
-        engine: 'Unreal Engine 5, Lumen Indirect Illumination, Nanite Rock Meshes & Foliage',
+        engine: 'Unreal Engine 5, Lumen Indirect Illumination, Rock Meshes & Foliage',
         role: 'Environment Artist & Lighting Designer',
         image: 'assets/cave_env/cave_1.jpg',
         fallbackImage: 'assets/cave_env/cave_1.jpg',
@@ -512,7 +512,7 @@ const projectData = {
     'sword-stone-env': {
         title: 'The Sword in the Stone: Ancient Courtyard',
         subtitle: 'Unreal Engine 5 · Lumen Real-Time Global Illumination & Environment Art',
-        engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Nanite Geometry & PBR Shaders',
+        engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Modular Geometry & PBR Shaders',
         role: 'Environment Artist & Lighting Designer',
         image: 'assets/sword_stone/sword_1.jpg',
         fallbackImage: 'assets/sword_stone/sword_1.jpg',
@@ -556,7 +556,7 @@ const projectData = {
             'Dressed the foreground with period props including rustic wooden pitchforks, weathered bricks, and broken rock debris.'
         ],
         challenge: 'Distributing dense creeping ivy foliage along weathered masonry walls naturally without causing geometry budget spikes or unnatural repetition.',
-        solution: 'Combined procedural vine splines with optimized Nanite foliage scatter instances, incorporating sub-surface scattering shaders for realistic leaf translucency.',
+        solution: 'Combined procedural vine splines with optimized foliage scatter instances, incorporating sub-surface scattering shaders for realistic leaf translucency.',
         specs: [
             { label: 'Role', val: 'Environment Artist & Foliage Specialist' },
             { label: 'Engine', val: 'Unreal Engine 5 (UE5)' },

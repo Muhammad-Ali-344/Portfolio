@@ -844,62 +844,340 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ==========================================================================
-   EXPERIENCE & TIMELINE
+   CAREER MILESTONES & EXPERIENCE TIMELINE
    ========================================================================== */
-.timeline {
-  position: relative;
-  max-width: 800px;
+.career-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 960px;
   margin: 0 auto;
+  position: relative;
 }
 
-.timeline::before {
+.career-timeline::before {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 20px;
+  top: 2rem;
+  bottom: 2rem;
+  left: 32px;
   width: 2px;
-  background: linear-gradient(180deg, var(--amber-primary) 0%, var(--sage-accent) 100%);
+  background: linear-gradient(180deg, var(--amber-primary) 0%, rgba(140, 94, 60, 0.25) 100%);
+  z-index: 0;
 }
 
-.timeline-item {
+.career-card {
   position: relative;
-  padding-left: 60px;
-  margin-bottom: 3rem;
+  z-index: 1;
+  padding: 2.2rem 2.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  margin-left: 60px;
 }
 
-.timeline-dot {
+.career-card::before {
+  content: '';
   position: absolute;
-  left: 11px;
-  top: 5px;
+  left: -40px;
+  top: 2.3rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fdfbf7;
+  border: 3.5px solid var(--amber-primary);
+  box-shadow: 0 0 0 4px rgba(61, 40, 23, 0.12);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.career-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(61, 40, 23, 0.4);
+  box-shadow: 0 16px 40px rgba(61, 40, 23, 0.1);
+}
+
+.career-card:hover::before {
+  transform: scale(1.2);
+  border-color: var(--rust-accent);
+  box-shadow: 0 0 0 6px rgba(185, 74, 43, 0.15);
+}
+
+/* Primary / Highlighted Card (Kurlee Brackets) */
+.career-card-featured {
+  background: linear-gradient(135deg, rgba(253, 251, 247, 0.98) 0%, rgba(246, 239, 229, 0.92) 100%);
+  border: 1.5px solid rgba(61, 40, 23, 0.35);
+  box-shadow: 0 14px 45px rgba(61, 40, 23, 0.12);
+}
+
+.career-card-featured::before {
+  background: var(--amber-primary);
+  border-color: #fdfbf7;
+  box-shadow: 0 0 0 5px rgba(61, 40, 23, 0.25);
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  background: var(--bg-dark);
-  border: 3px solid var(--amber-primary);
-  box-shadow: 0 0 10px var(--amber-glow);
+  left: -41px;
 }
 
-.timeline-content {
-  padding: 1.8rem;
+/* Academic Card (Riphah) */
+.career-card-academic {
+  border-left: 3px solid var(--sage-accent);
 }
 
-.timeline-date {
-  color: var(--amber-primary);
+.career-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(140, 94, 60, 0.14);
+}
+
+.career-period-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.career-date {
   font-family: var(--font-arcade);
-  font-size: 0.75rem;
-  margin-bottom: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: var(--amber-primary);
+  font-weight: 700;
 }
 
-.timeline-role {
-  font-size: 1.4rem;
-  margin-bottom: 0.2rem;
+.career-duration-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(61, 40, 23, 0.08);
+  color: var(--amber-primary);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid rgba(61, 40, 23, 0.18);
+  letter-spacing: 0.5px;
 }
 
-.timeline-company {
+.career-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(46, 125, 50, 0.1);
+  color: #1e6b23;
+  font-family: var(--font-arcade);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(46, 125, 50, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.career-status-pill .pulse-dot {
+  background: #2e7d32;
+  box-shadow: 0 0 8px rgba(46, 125, 50, 0.6);
+}
+
+.career-track-tag {
+  font-family: var(--font-arcade);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.8px;
+}
+
+.career-grade-highlight .grade-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+}
+
+.academic-grade .grade-badge {
+  background: linear-gradient(135deg, rgba(61, 40, 23, 0.92), rgba(92, 62, 38, 0.95));
+  color: #fff8f0;
+  box-shadow: 0 4px 14px rgba(61, 40, 23, 0.2);
+}
+
+.course-grade .grade-badge {
+  background: rgba(140, 94, 60, 0.12);
+  color: var(--amber-primary);
+  border: 1px solid rgba(140, 94, 60, 0.3);
+}
+
+.career-title-group {
+  margin-bottom: 0.85rem;
+}
+
+.career-role {
+  font-family: var(--font-heading);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.career-company {
+  color: var(--sage-accent);
+  font-size: 1.05rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.career-company i {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.career-location {
   color: var(--text-muted);
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.career-desc {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.career-desc strong {
+  color: var(--text-main);
+}
+
+/* Highlighted Achievement Banner (12+ Shipped Titles) */
+.career-achievement-banner {
+  margin-top: 1.6rem;
+  padding: 1.3rem 1.6rem;
+  background: linear-gradient(135deg, rgba(61, 40, 23, 0.06) 0%, rgba(140, 94, 60, 0.09) 100%);
+  border: 1px solid rgba(61, 40, 23, 0.22);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.achievement-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  padding: 0.6rem 1rem;
+  background: var(--amber-primary);
+  border-radius: var(--radius-sm);
+  color: #fff8f0;
+  box-shadow: 0 6px 18px rgba(61, 40, 23, 0.25);
+  flex-shrink: 0;
+}
+
+.achievement-number {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff8f0;
+}
+
+.achievement-label {
+  font-family: var(--font-arcade);
+  font-size: 0.55rem;
+  letter-spacing: 0.5px;
+  color: rgba(255, 248, 240, 0.85);
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.achievement-details {
+  flex: 1;
+}
+
+.achievement-heading {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.achievement-subtext {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.achievement-subtext em {
+  color: var(--text-main);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .career-timeline::before {
+    left: 15px;
+  }
+
+  .career-card {
+    margin-left: 35px;
+    padding: 1.6rem 1.4rem;
+  }
+
+  .career-card::before {
+    left: -28px;
+    width: 14px;
+    height: 14px;
+    top: 1.8rem;
+    border-width: 2.5px;
+  }
+
+  .career-card-featured::before {
+    left: -29px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .career-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .career-achievement-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem;
+  }
+
+  .achievement-stat {
+    width: 100%;
+    flex-direction: row;
+    gap: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .achievement-label {
+    margin-top: 0;
+  }
+
+  .career-role {
+    font-size: 1.35rem;
+  }
 }
 
 /* ==========================================================================
