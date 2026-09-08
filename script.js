@@ -35,14 +35,14 @@ function initBgCanvas() {
     });
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(width / 18), 65);
+    const particleCount = Math.min(Math.floor(width / 28), 35);
 
-    let mouse = { x: null, y: null, radius: 180 };
+    let mouse = { x: null, y: null, radius: 150 };
 
     window.addEventListener('mousemove', (e) => {
         mouse.x = e.clientX;
         mouse.y = e.clientY;
-    });
+    }, { passive: true });
 
     class LightParticle {
         constructor() {
@@ -52,12 +52,12 @@ function initBgCanvas() {
         reset() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.radius = Math.random() * 2.5 + 1;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = -(Math.random() * 0.4 + 0.1);
-            this.alpha = Math.random() * 0.35 + 0.15;
+            this.radius = Math.random() * 2 + 1;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = -(Math.random() * 0.35 + 0.1);
+            this.alpha = Math.random() * 0.3 + 0.12;
             this.maxAlpha = this.alpha;
-            this.pulse = Math.random() * 0.02 + 0.005;
+            this.pulse = Math.random() * 0.015 + 0.005;
             this.pulseDir = 1;
             // Warm Mocha or Golden Tan
             this.color = Math.random() > 0.4 ? '140, 94, 60' : '166, 116, 73';
@@ -68,7 +68,7 @@ function initBgCanvas() {
             this.y += this.vy;
 
             this.alpha += this.pulse * this.pulseDir;
-            if (this.alpha >= this.maxAlpha || this.alpha <= 0.1) {
+            if (this.alpha >= this.maxAlpha || this.alpha <= 0.08) {
                 this.pulseDir *= -1;
             }
 
@@ -79,12 +79,13 @@ function initBgCanvas() {
             if (mouse.x !== null) {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < mouse.radius) {
+                const distSq = dx * dx + dy * dy;
+                if (distSq < mouse.radius * mouse.radius) {
+                    const dist = Math.sqrt(distSq);
                     const angle = Math.atan2(dy, dx);
                     const force = (mouse.radius - dist) / mouse.radius;
-                    this.x -= Math.cos(angle) * force * 1.5;
-                    this.y -= Math.sin(angle) * force * 1.5;
+                    this.x -= Math.cos(angle) * force * 1.2;
+                    this.y -= Math.sin(angle) * force * 1.2;
                 }
             }
         }
@@ -101,26 +102,18 @@ function initBgCanvas() {
         particles.push(new LightParticle());
     }
 
+    let isVisible = true;
+    document.addEventListener('visibilitychange', () => {
+        isVisible = !document.hidden;
+    });
+
     function animate() {
-        ctx.clearRect(0, 0, width, height);
+        if (isVisible) {
+            ctx.clearRect(0, 0, width, height);
 
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.strokeStyle = `rgba(140, 94, 60, ${0.1 * (1 - dist / 100)})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.stroke();
-                }
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
             }
         }
         requestAnimationFrame(animate);
@@ -200,34 +193,53 @@ function initNavbarScroll() {
     const mobileToggle = document.getElementById('mobile-toggle');
     const navLinksContainer = document.getElementById('nav-links');
 
-    // Scroll listener for sticky background & scroll-spy
+    // Cache section offsets on resize and load to prevent layout thrashing during scroll
+    let cachedOffsets = [];
+    function updateSectionOffsets() {
+        cachedOffsets = Array.from(sections).map(section => ({
+            id: section.getAttribute('id'),
+            top: section.offsetTop - 150
+        }));
+    }
+    updateSectionOffsets();
+    window.addEventListener('resize', updateSectionOffsets, { passive: true });
+
+    // Throttled scroll listener using requestAnimationFrame
+    let scrollTicking = false;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (!scrollTicking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+
+                if (scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                let current = '';
+                for (let i = 0; i < cachedOffsets.length; i++) {
+                    if (scrollY >= cachedOffsets[i].top) {
+                        current = cachedOffsets[i].id;
+                    }
+                }
+
+                if (current === 'featured') {
+                    current = 'games';
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+
+                scrollTicking = false;
+            });
+            scrollTicking = true;
         }
-
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 140;
-            if (window.scrollY >= sectionTop) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        // Map featured section to highlight projects link
-        if (current === 'featured') {
-            current = 'games';
-        }
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
+    }, { passive: true });
 
     // Mobile drawer toggle
     if (mobileToggle && navLinksContainer) {
@@ -1172,32 +1184,19 @@ function initScrollReveals() {
         });
     });
 
-    // Observer that adds reveal-active on enter and removes it on exit so animations replay every time
+    // Observer that adds reveal-active on enter and removes it on exit so animations replay smoothly
     const singleObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Calculate delay based on index among visible siblings in its grid
-                const parent = entry.target.parentElement;
-                if (parent && (parent.classList.contains('games-grid') || parent.classList.contains('disciplines-grid') || parent.classList.contains('skills-grid') || parent.classList.contains('career-timeline'))) {
-                    const visibleCards = Array.from(parent.children).filter(c => !c.classList.contains('is-hidden'));
-                    const cardIndex = visibleCards.indexOf(entry.target);
-                    if (cardIndex >= 0) {
-                        entry.target.style.transitionDelay = `${Math.min(cardIndex * 0.1, 0.45)}s`;
-                    }
-                }
-                
-                requestAnimationFrame(() => {
-                    entry.target.classList.add('reveal-active');
-                });
+                entry.target.classList.add('reveal-active');
             } else {
                 // Reset when scrolled out of view so it animates again next time
                 entry.target.classList.remove('reveal-active');
-                entry.target.style.transitionDelay = '';
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -30px 0px'
     });
 
     document.querySelectorAll('.reveal-init').forEach(el => {

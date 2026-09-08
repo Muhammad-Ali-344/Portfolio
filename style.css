@@ -2215,25 +2215,24 @@ h1, h2, h3, h4, h5 {
 /* 2. Viewport Scroll Reveal System */
 .reveal-init {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-active {
   opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 /* Staggered Grid Reveal Delays */
-.reveal-active.stagger-1 { transition-delay: 0.06s; }
-.reveal-active.stagger-2 { transition-delay: 0.14s; }
-.reveal-active.stagger-3 { transition-delay: 0.22s; }
-.reveal-active.stagger-4 { transition-delay: 0.30s; }
-.reveal-active.stagger-5 { transition-delay: 0.38s; }
-.reveal-active.stagger-6 { transition-delay: 0.46s; }
-.reveal-active.stagger-7 { transition-delay: 0.54s; }
-.reveal-active.stagger-8 { transition-delay: 0.62s; }
+.reveal-active.stagger-1 { transition-delay: 0.05s; }
+.reveal-active.stagger-2 { transition-delay: 0.10s; }
+.reveal-active.stagger-3 { transition-delay: 0.15s; }
+.reveal-active.stagger-4 { transition-delay: 0.20s; }
+.reveal-active.stagger-5 { transition-delay: 0.25s; }
+.reveal-active.stagger-6 { transition-delay: 0.30s; }
+.reveal-active.stagger-7 { transition-delay: 0.35s; }
+.reveal-active.stagger-8 { transition-delay: 0.40s; }
 
 /* Section Header Masked Reveals */
 .section-header .section-tag {
@@ -2328,11 +2327,11 @@ h1, h2, h3, h4, h5 {
 
 /* 5. Micro-Interactions on Project Cards */
 .game-card.reveal-init {
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .game-card.reveal-active {
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .game-card .game-title {
