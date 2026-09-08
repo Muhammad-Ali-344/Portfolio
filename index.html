@@ -19,6 +19,9 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- High-Priority Preload for Above-the-Fold Hero Image -->
+    <link rel="preload" as="image" href="assets/forgotten_train.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
 
@@ -30,7 +33,7 @@
         <div class="container nav-container">
             <div class="nav-logo-group">
                 <button type="button" class="nav-avatar-btn" id="avatar-zoom-trigger" title="Click to view photo">
-                    <img src="assets/profile.jpg" alt="Muhammad Ali" class="nav-avatar-img">
+                    <img src="assets/profile.webp" alt="Muhammad Ali" class="nav-avatar-img" width="42" height="42" loading="eager" decoding="async">
                     <span class="avatar-zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
                 </button>
                 <a href="#hero" class="nav-logo-text">MUHAMMAD ALI<span>.DEV</span></a>
@@ -112,7 +115,7 @@
                 
                 <div class="hero-visual">
                     <div class="hero-card-frame neon-glow-cyan">
-                        <img src="assets/forgotten_train.jpg" alt="The Forgotten Train: VR Escape" class="hero-card-img">
+                        <img src="assets/forgotten_train.webp" alt="The Forgotten Train: VR Escape" class="hero-card-img" width="440" height="380" loading="eager" fetchpriority="high" decoding="async">
                         <div class="hero-card-badge">
                             <span class="badge-tag">FEATURED PROJECT &middot; VR ESCAPE ROOM</span>
                             <h3 class="badge-title">THE FORGOTTEN TRAIN</h3>
@@ -216,7 +219,7 @@
 
                 <div class="featured-spotlight-card">
                     <div class="spotlight-media">
-                        <img src="assets/forgotten_train.jpg" alt="The Forgotten Train: VR Escape Showcase">
+                        <img src="assets/forgotten_train.webp" alt="The Forgotten Train: VR Escape Showcase" width="640" height="400" loading="lazy" decoding="async">
                         <span class="spotlight-badge"><i class="fa-solid fa-vr-cardboard"></i> VR ESCAPE ROOM &middot; SOLO PROJECT</span>
                     </div>
                     <div class="spotlight-content">
@@ -273,7 +276,7 @@
                     <!-- Game 1: The Forgotten Train (VR Escape Game) -->
                     <div class="glass-panel game-card" data-category="games tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/forgotten_train.jpg" alt="The Forgotten Train - VR Escape Game" class="game-thumb">
+                            <img src="assets/forgotten_train.webp" alt="The Forgotten Train - VR Escape Game" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #2b1f14, #4a3320); color: #e5a95d;">UNITY / VR</span>
                         </div>
                         <div class="game-info">
@@ -299,7 +302,7 @@
                     <!-- Game 2: Selah: Bible Charades -->
                     <div class="glass-panel game-card" data-category="games ui-ux">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/Selah.png" alt="Selah: Bible Charades - Shipped Mobile Game" class="game-thumb">
+                            <img src="assets/Selah.webp" alt="Selah: Bible Charades - Shipped Mobile Game" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag">UNITY 2D / SHIPPED</span>
                         </div>
                         <div class="game-info">
@@ -324,7 +327,7 @@
                     <!-- Game 3: Jewel Crush Quest: Match 3 -->
                     <div class="glass-panel game-card" data-category="games ui-ux">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/Jewel_Crush.png" alt="Jewel Crush Quest: Match 3" class="game-thumb">
+                            <img src="assets/Jewel_Crush.webp" alt="Jewel Crush Quest: Match 3" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag">UNITY 2D / SHIPPED</span>
                         </div>
                         <div class="game-info">
@@ -349,7 +352,7 @@
                     <!-- Game 4: 2468 Block Puzzle: 2048 Merge -->
                     <div class="glass-panel game-card" data-category="games ui-ux">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/Block_Puzzle.png" alt="2468 Block Puzzle: 2048 Merge" class="game-thumb">
+                            <img src="assets/Block_Puzzle.webp" alt="2468 Block Puzzle: 2048 Merge" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag">UNITY 2D / SHIPPED</span>
                         </div>
                         <div class="game-info">
@@ -374,7 +377,7 @@
                     <!-- Game 5: Mr Greedy: Ragdoll Punch -->
                     <div class="glass-panel game-card" data-category="games">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/Greedy_Ragdoll .png" alt="Mr Greedy: Ragdoll Punch" class="game-thumb">
+                            <img src="assets/Greedy_Ragdoll .webp" alt="Mr Greedy: Ragdoll Punch" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag">UNITY 3D / SHIPPED</span>
                         </div>
                         <div class="game-info">
@@ -399,7 +402,7 @@
                     <!-- Game 6: Snake Escape: Tap Out Puzzle -->
                     <div class="glass-panel game-card" data-category="games ui-ux">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/Snake_Game.png" alt="Snake Escape: Tap Out Puzzle" class="game-thumb">
+                            <img src="assets/Snake_Game.webp" alt="Snake Escape: Tap Out Puzzle" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag">UNITY 2D / SHIPPED</span>
                         </div>
                         <div class="game-info">
@@ -428,7 +431,7 @@
                     <!-- 3D 1: Sunlit Grotto Cave -->
                     <div class="glass-panel game-card" data-category="environments tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/cave_env/cave_1.jpg" alt="Sunlit Grotto Cave - Unreal Engine 5 Subterranean Environment &amp; Lumen Lighting" class="game-thumb">
+                            <img src="assets/cave_env/cave_1.webp" alt="Sunlit Grotto Cave - Unreal Engine 5 Subterranean Environment &amp; Lumen Lighting" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">UE5 / CAVE STUDY</span>
                         </div>
                         <div class="game-info">
@@ -452,7 +455,7 @@
                     <!-- 3D 2: The Sword in the Stone -->
                     <div class="glass-panel game-card" data-category="environments tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/sword_stone/sword_1.jpg" alt="The Sword in the Stone - Unreal Engine 5 Environment Design &amp; Lumen Lighting" class="game-thumb">
+                            <img src="assets/sword_stone/sword_1.webp" alt="The Sword in the Stone - Unreal Engine 5 Environment Design &amp; Lumen Lighting" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">UE5 / LUMEN</span>
                         </div>
                         <div class="game-info">
@@ -476,7 +479,7 @@
                     <!-- 3D 3: Overgrown Sanctuary Ruins -->
                     <div class="glass-panel game-card" data-category="environments tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/overgrown_ruins/ruins_1.jpg" alt="Overgrown Sanctuary Ruins - Unreal Engine 5 Environment Design" class="game-thumb">
+                            <img src="assets/overgrown_ruins/ruins_1.webp" alt="Overgrown Sanctuary Ruins - Unreal Engine 5 Environment Design" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">UE5 / FOLIAGE</span>
                         </div>
                         <div class="game-info">
@@ -500,7 +503,7 @@
                     <!-- 3D 4: Forgotten Crypt & Dungeon Courtyard -->
                     <div class="glass-panel game-card" data-category="environments tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/dungeon/dungeon_1.jpg" alt="Medieval Crypt &amp; Dungeon Courtyard" class="game-thumb">
+                            <img src="assets/dungeon/dungeon_1.webp" alt="Medieval Crypt &amp; Dungeon Courtyard" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">UE5 / LIGHTING</span>
                         </div>
                         <div class="game-info">
@@ -524,7 +527,7 @@
                     <!-- 3D 5: Coastal Sentinel Lighthouse -->
                     <div class="glass-panel game-card" data-category="environments tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/environment/env_1.jpg" alt="Coastal Sentinel Ocean Lighthouse - Unity HDRP" class="game-thumb">
+                            <img src="assets/environment/env_1.webp" alt="Coastal Sentinel Ocean Lighthouse - Unity HDRP" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">UNITY HDRP</span>
                         </div>
                         <div class="game-info">
@@ -548,7 +551,7 @@
                     <!-- 3D 6: Modern Nordic Cabin -->
                     <div class="glass-panel game-card" data-category="environments">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/cabin/cabin_1.jpg" alt="Modern Nordic Cabin - 3D Modeling &amp; Texturing in Blender" class="game-thumb">
+                            <img src="assets/cabin/cabin_1.webp" alt="Modern Nordic Cabin - 3D Modeling &amp; Texturing in Blender" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c); color: #ffffff;">BLENDER / SCRATCH</span>
                         </div>
                         <div class="game-info">
@@ -572,7 +575,7 @@
                     <!-- 3D 7: Traditional Isometric House -->
                     <div class="glass-panel game-card" data-category="environments">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/isometric_house/isometric_1.jpg" alt="Traditional Isometric House - 3D Interior &amp; Cutaway in Blender" class="game-thumb">
+                            <img src="assets/isometric_house/isometric_1.webp" alt="Traditional Isometric House - 3D Interior &amp; Cutaway in Blender" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c); color: #ffffff;">BLENDER / SCRATCH</span>
                         </div>
                         <div class="game-info">
@@ -596,7 +599,7 @@
                     <!-- 3D 8: Wyvern Beast Dragon Car -->
                     <div class="glass-panel game-card" data-category="environments">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/dragon_car/dragon_car_1.png" alt="Wyvern Beast: Dragon Hypercar Concept" class="game-thumb">
+                            <img src="assets/dragon_car/dragon_car_1.webp" alt="Wyvern Beast: Dragon Hypercar Concept" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">3D CONCEPT / HYBRID</span>
                         </div>
                         <div class="game-info">
@@ -620,7 +623,7 @@
                     <!-- 3D 9: Dragon 3D Sculpting (ZBrush) -->
                     <div class="glass-panel game-card" data-category="environments">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/dragon/dragon_1.png" alt="Dragon Character - 3D Sculpting &amp; Texturing" class="game-thumb">
+                            <img src="assets/dragon/dragon_1.webp" alt="Dragon Character - 3D Sculpting &amp; Texturing" class="game-thumb" width="500" height="280" loading="lazy" decoding="async">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">ZBRUSH / 3D SCULPT</span>
                         </div>
                         <div class="game-info">
@@ -644,7 +647,7 @@
                     <!-- 3D 10: Cyberpunk Neon Bike -->
                     <div class="glass-panel game-card" data-category="tech-art">
                         <div class="game-thumb-wrapper">
-                            <img src="assets/bike/bike_1.png" alt="Cyberpunk Neon Bike - 3D Texturing &amp; Rendering" class="game-thumb" onerror="this.onerror=null; this.src='assets/cyberpunk.png';">
+                            <img src="assets/bike/bike_1.webp" alt="Cyberpunk Neon Bike - 3D Texturing &amp; Rendering" class="game-thumb" width="500" height="280" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/bike/bike_1.png';">
                             <span class="game-engine-tag" style="background: linear-gradient(135deg, #a67449, #8c5e3c);">SUBSTANCE / 3D RENDER</span>
                         </div>
                         <div class="game-info">
@@ -970,7 +973,7 @@
             <button class="modal-close-btn" id="profile-modal-close"><i class="fa-solid fa-xmark"></i></button>
             <div class="profile-modal-body">
                 <div class="profile-modal-img-wrap">
-                    <img src="assets/profile.jpg" alt="Muhammad Ali" class="profile-modal-img">
+                    <img src="assets/profile.webp" alt="Muhammad Ali" class="profile-modal-img" width="380" height="380" loading="lazy" decoding="async">
                 </div>
                 <div class="profile-modal-info">
                     <span class="section-tag">&lt; GAME DESIGNER & DEVELOPER &gt;</span>

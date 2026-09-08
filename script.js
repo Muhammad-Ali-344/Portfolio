@@ -336,17 +336,17 @@ const projectData = {
         subtitle: 'Virtual Reality Puzzle Escape Game · 100% Solo Built from Scratch',
         engine: 'Unity 3D (URP), C#, XR Interaction Toolkit, Blender 3D, Substance Painter',
         role: 'Solo Developer & 3D Artist (100% Made from Scratch: 3D Models, Textures, Code & UI)',
-        image: 'assets/forgotten_train.jpg',
-        fallbackImage: 'assets/forgotten_train.jpg',
+        image: 'assets/forgotten_train.webp',
+        fallbackImage: 'assets/forgotten_train.webp',
         desc: 'An atmospheric VR escape room game set inside an accelerating vintage Victorian train carriage hurtling through misty mountain terrain. Created 100% independently from the ground up: every 3D environment asset, mechanical puzzle prop, and carriage structure was manually modeled and textured, paired with custom gameplay code, diegetic in-world VR UI, tactile hand physics, and intricate lock & puzzle mechanics.',
         gallery: [
-            'assets/forgotten_train.jpg',
-            'assets/forgotten_train/train_1.jpg',
-            'assets/forgotten_train/train_2.jpg',
-            'assets/forgotten_train/train_3.jpg',
-            'assets/forgotten_train/train_4.jpg',
-            'assets/forgotten_train/train_5.jpg',
-            'assets/forgotten_train/train_6.jpg'
+            'assets/forgotten_train.webp',
+            'assets/forgotten_train/train_1.webp',
+            'assets/forgotten_train/train_2.webp',
+            'assets/forgotten_train/train_3.webp',
+            'assets/forgotten_train/train_4.webp',
+            'assets/forgotten_train/train_5.webp',
+            'assets/forgotten_train/train_6.webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -374,11 +374,11 @@ const projectData = {
         subtitle: '2D Mobile Party Game · Available on Google Play',
         engine: 'Unity 2D (C# / Mobile / URP)',
         role: 'Lead Unity Developer & Mechanics Programmer',
-        image: 'assets/Selah.png',
+        image: 'assets/Selah.webp',
         desc: 'A faith-filled, forehead-style mobile party game developed with Unity 2D. Features interactive tilt-based mechanics where players guess Bible-themed words before time expires, full in-game video recording of player reactions saved directly to device storage, remotely configurable card decks, and complete Google Play monetization integration.',
         playStoreUrl: 'https://play.google.com/store/apps/details?id=com.selah.bible.headsup.quiz.games&hl=en-US',
         gallery: [
-            'assets/Selah.png'
+            'assets/Selah.webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -402,11 +402,11 @@ const projectData = {
         subtitle: '2D Match-3 Mobile Puzzle · Available on Google Play',
         engine: 'Unity 2D (C# / Android)',
         role: 'Gameplay Programmer & UI/UX Specialist',
-        image: 'assets/Jewel_Crush.png',
+        image: 'assets/Jewel_Crush.webp',
         desc: 'A vibrant match-3 mobile puzzle game featuring interactive tutorial onboarding, redesigned responsive UI panels, enhanced gem-matching animations, and polished juice with rewarding combo cascades.',
         playStoreUrl: 'https://play.google.com/store/apps/details?id=com.kurlybrackets.jewelswap',
         gallery: [
-            'assets/Jewel_Crush.png'
+            'assets/Jewel_Crush.webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -429,11 +429,11 @@ const projectData = {
         subtitle: '2D Number Merge Puzzle · Available on Google Play',
         engine: 'Unity 2D (C# / Firebase / Android)',
         role: 'Full Gameplay & Backend Developer',
-        image: 'assets/Block_Puzzle.png',
+        image: 'assets/Block_Puzzle.webp',
         desc: 'An addictive 2048 number-merging block puzzle title where players connect numbered tiles to reach 2048, 2468, and beyond. Built with real-time cloud leaderboards, player authentication, in-game analytics, tutorials, and full monetization.',
         playStoreUrl: 'https://play.google.com/store/apps/details?id=stone.puzzle.merge.connect',
         gallery: [
-            'assets/Block_Puzzle.png'
+            'assets/Block_Puzzle.webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -458,11 +458,11 @@ const projectData = {
         subtitle: '3D Ragdoll Physics Mobile Game · Available on Google Play',
         engine: 'Unity 3D (C# / Mobile)',
         role: 'Gameplay Systems & Level Designer (200+ Levels)',
-        image: 'assets/Greedy_Ragdoll .png',
+        image: 'assets/Greedy_Ragdoll .webp',
         desc: 'A hilarious 3D ragdoll physics mobile brawler where players punch, launch, and demolish enemies across 200+ handcrafted levels. Built from the ground up with tight touch controls, interactive tutorial onboarding, polished UI systems, and satisfying physics-driven gameplay.',
         playStoreUrl: 'https://play.google.com/store/apps/details?id=com.cbjstudios.mrgreedypunch&hl=en-US',
         gallery: [
-            'assets/Greedy_Ragdoll .png'
+            'assets/Greedy_Ragdoll .webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -486,11 +486,11 @@ const projectData = {
         subtitle: '2D Logic Tap Out Mobile Puzzle · Available on Google Play',
         engine: 'Unity 2D (C# / Mobile)',
         role: 'Core Mechanics & Level Designer (100+ Levels)',
-        image: 'assets/Snake_Game.png',
+        image: 'assets/Snake_Game.webp',
         desc: 'A relaxing, brain-teasing 2D puzzle game where players solve tangled grid layouts by tapping snakes in the correct order to guide them to freedom. Features intuitive swipe/tap mechanics, zero-pressure zen gameplay, responsive haptic feedback, and 100+ meticulously handcrafted levels.',
         playStoreUrl: 'https://play.google.com/store/apps/details?id=com.BitAdventure.SnakeEscape',
         gallery: [
-            'assets/Snake_Game.png'
+            'assets/Snake_Game.webp'
         ],
         videoDemo: 'placeholder',
         contributions: [
@@ -514,11 +514,11 @@ const projectData = {
         subtitle: 'Unreal Engine 5 · Environment Section Study · Volumetric Sun Shaft & Lumen Lighting',
         engine: 'Unreal Engine 5, Lumen Indirect Illumination, Rock Meshes & Foliage',
         role: 'Environment Artist & Lighting Designer',
-        image: 'assets/cave_env/cave_1.jpg',
-        fallbackImage: 'assets/cave_env/cave_1.jpg',
+        image: 'assets/cave_env/cave_1.webp',
+        fallbackImage: 'assets/cave_env/cave_1.webp',
         desc: 'A natural subterranean grotto and sinkhole cave environment study created in Unreal Engine 5. Focused on realistic verticality and lighting, the scene features stratified sedimentary rock cliff faces, a jagged ceiling rupture allowing bright volumetric sunlight to flood into the subterranean hollow, tiered stone ledges, and clusters of wild green grasses thriving in the light shaft.',
         gallery: [
-            'assets/cave_env/cave_1.jpg'
+            'assets/cave_env/cave_1.webp'
         ],
         contributions: [
             'Crafted a focused natural subterranean cave section study in Unreal Engine 5.',
@@ -541,11 +541,11 @@ const projectData = {
         subtitle: 'Unreal Engine 5 · Lumen Real-Time Global Illumination & Environment Art',
         engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Modular Geometry & PBR Shaders',
         role: 'Environment Artist & Lighting Designer',
-        image: 'assets/sword_stone/sword_1.jpg',
-        fallbackImage: 'assets/sword_stone/sword_1.jpg',
+        image: 'assets/sword_stone/sword_1.webp',
+        fallbackImage: 'assets/sword_stone/sword_1.webp',
         desc: 'A legendary medieval fortress courtyard scene crafted in Unreal Engine 5. The composition centers on the iconic Arthurian sword wedged deep into an ancient boulder, enclosed by towering weathered stone fortress walls, crenellated battlements, stone column sentinels, mossy ground scatter, and bathed in crisp daytime sunlight with realistic Lumen global illumination and sky reflections.',
         gallery: [
-            'assets/sword_stone/sword_1.jpg'
+            'assets/sword_stone/sword_1.webp'
         ],
         contributions: [
             'Assembled and art-directed the medieval fortress courtyard in Unreal Engine 5.',
@@ -568,12 +568,12 @@ const projectData = {
         subtitle: 'Unreal Engine 5 · Foliage Scattering, Lumen Lighting & Natural Daylight',
         engine: 'Unreal Engine 5, Lumen Global Illumination, Procedural Ivy & Foliage',
         role: 'Environment Artist & Foliage / Lighting Specialist',
-        image: 'assets/overgrown_ruins/ruins_1.jpg',
-        fallbackImage: 'assets/overgrown_ruins/ruins_1.jpg',
+        image: 'assets/overgrown_ruins/ruins_1.webp',
+        fallbackImage: 'assets/overgrown_ruins/ruins_1.webp',
         desc: 'A realistic outdoor nature-reclaimed ruin environment built in Unreal Engine 5. Features weathered stone ashlar masonry walls enveloped by dense creeping ivy foliage, an aged wooden doorway with wrought-iron knocker ring, fallen moss-covered timber logs, scattered stones and bricks, and antique farming tools rendered with Lumen real-time lighting.',
         gallery: [
-            'assets/overgrown_ruins/ruins_1.jpg',
-            'assets/overgrown_ruins/ruins_2.jpg'
+            'assets/overgrown_ruins/ruins_1.webp',
+            'assets/overgrown_ruins/ruins_2.webp'
         ],
         contributions: [
             'Designed a nature-reclaimed environment layout in Unreal Engine 5 balancing dense organic foliage with weathered stone architecture.',
@@ -596,12 +596,12 @@ const projectData = {
         subtitle: 'Unreal Engine 5 · Atmospheric Lumen Dungeon Lighting & Stone Architecture',
         engine: 'Unreal Engine 5, Lumen Dynamic Lighting, Point Lights & PBR Materials',
         role: 'Environment Artist & Lighting Designer',
-        image: 'assets/dungeon/dungeon_1.jpg',
-        fallbackImage: 'assets/dungeon/dungeon_1.jpg',
+        image: 'assets/dungeon/dungeon_1.webp',
+        fallbackImage: 'assets/dungeon/dungeon_1.webp',
         desc: 'A dark, atmospheric medieval dungeon courtyard and subterranean crypt gateway created in Unreal Engine 5. Built with massive stone masonry walls, heavy timber beams with hanging rusted iron chains, a reinforced arched wooden portal flanked by stacked stone pillars, a central stone staircase, and warm, flickering candlelit altar lighting casting dramatic deep shadows.',
         gallery: [
-            'assets/dungeon/dungeon_1.jpg',
-            'assets/dungeon/dungeon_2.jpg'
+            'assets/dungeon/dungeon_1.webp',
+            'assets/dungeon/dungeon_2.webp'
         ],
         contributions: [
             'Composed a high-atmosphere medieval courtyard scene in Unreal Engine 5 with dynamic verticality, arches, and hanging suspended chain elements.',
@@ -623,13 +623,13 @@ const projectData = {
         subtitle: 'Unity High Definition Render Pipeline (HDRP) · Dynamic Lighting & Volumetrics',
         engine: 'Unity HDRP, Volumetric Fog & Physically-Based Water System',
         role: 'Environment Artist & Unity HDRP Lighting Specialist',
-        image: 'assets/environment/env_1.jpg',
-        fallbackImage: 'assets/environment/env_1.jpg',
+        image: 'assets/environment/env_1.webp',
+        fallbackImage: 'assets/environment/env_1.webp',
         desc: 'A cinematic coastal maritime environment designed and lit in Unity HDRP. Showcases an isolated stone watchtower lighthouse atop rugged sea cliffs, facing vast open ocean waters with physically simulated wave motion, volumetric clouds, sun-position lighting transitions, atmospheric haze, and distant seafaring vessels.',
         gallery: [
-            'assets/environment/env_1.jpg',
-            'assets/environment/env_2.jpg',
-            'assets/environment/env_3.jpg'
+            'assets/environment/env_1.webp',
+            'assets/environment/env_2.webp',
+            'assets/environment/env_3.webp'
         ],
         contributions: [
             'Architected complete maritime coastline scene using Unity High Definition Render Pipeline (HDRP).',
@@ -652,11 +652,11 @@ const projectData = {
         subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Architectural Rendering',
         engine: 'Blender 3D, Procedural & PBR Texturing, Architectural Lighting',
         role: '3D Modeler & Texture Artist (100% From Scratch)',
-        image: 'assets/cabin/cabin_1.jpg',
-        fallbackImage: 'assets/cabin/cabin_1.jpg',
+        image: 'assets/cabin/cabin_1.webp',
+        fallbackImage: 'assets/cabin/cabin_1.webp',
         desc: 'A complete 3D architectural project designed, modeled, textured, and rendered entirely from scratch in Blender. Featuring a minimalist Scandinavian wooden cottage with vertical timber battens, a gabled roofline with dual skylights and chimney, a recessed entrance porch with patio seating, concrete plinth foundation, and atmospheric golden-hour sunset lighting.',
         gallery: [
-            'assets/cabin/cabin_1.jpg'
+            'assets/cabin/cabin_1.webp'
         ],
         contributions: [
             'Modeled the entire cabin structure from scratch in Blender using clean hard-surface geometry and modular measurements.',
@@ -679,16 +679,16 @@ const projectData = {
         subtitle: 'Blender 3D · Modeled & Textured 100% From Scratch · Multi-Room Cutaway Diorama',
         engine: 'Blender 3D, Custom PBR Texturing, Interior Light Design',
         role: '3D Architectural Modeler & Texture Artist (100% From Scratch)',
-        image: 'assets/isometric_house/isometric_1.jpg',
-        fallbackImage: 'assets/isometric_house/isometric_1.jpg',
+        image: 'assets/isometric_house/isometric_1.webp',
+        fallbackImage: 'assets/isometric_house/isometric_1.webp',
         desc: 'An intricate, multi-room two-story traditional house cutaway modeled and textured entirely from scratch in Blender. Features an expansive layout including a living room with wooden sofa and tea table, tatami and shoji screens with landscape artwork, an open-concept kitchen and dining area, upstairs bedroom suite with canopy bed and nightstand, private soaking bathroom, and ornate wooden lattice railings throughout.',
         gallery: [
-            'assets/isometric_house/isometric_1.jpg',
-            'assets/isometric_house/isometric_2.jpg',
-            'assets/isometric_house/isometric_3.jpg',
-            'assets/isometric_house/isometric_4.jpg',
-            'assets/isometric_house/isometric_5.jpg',
-            'assets/isometric_house/isometric_6.jpg'
+            'assets/isometric_house/isometric_1.webp',
+            'assets/isometric_house/isometric_2.webp',
+            'assets/isometric_house/isometric_3.webp',
+            'assets/isometric_house/isometric_4.webp',
+            'assets/isometric_house/isometric_5.webp',
+            'assets/isometric_house/isometric_6.webp'
         ],
         contributions: [
             'Designed and modeled every room, architectural cutaway, and structural wall 100% from scratch in Blender.',
@@ -711,19 +711,19 @@ const projectData = {
         subtitle: '3D Concept Vehicle · Creature-Machine Hybrid Modeling & Renders',
         engine: '3D Modeling, PBR Materials & Cinematic Raytracing',
         role: 'Concept Artist & 3D Vehicle/Creature Modeler',
-        image: 'assets/dragon_car/dragon_car_1.png',
-        fallbackImage: 'assets/dragon_car/dragon_car_1.png',
+        image: 'assets/dragon_car/dragon_car_1.webp',
+        fallbackImage: 'assets/dragon_car/dragon_car_1.webp',
         comparison: {
-            before: 'assets/dragon_car/dragon_car_before.png',
-            after: 'assets/dragon_car/dragon_car_after.png',
+            before: 'assets/dragon_car/dragon_car_before.webp',
+            after: 'assets/dragon_car/dragon_car_after.webp',
             beforeLabel: 'Simple / White Texture',
             afterLabel: 'Fully Textured'
         },
         desc: 'A striking fantasy automotive concept that fuses the aggressive body architecture of a high-performance supercar with the organic majesty of a winged dragon. Features a sculpted gold metallic finish, fanged predator grille, bat-like wyvern wing aerodynamics, and moody wet-asphalt night city raytraced reflections.',
         gallery: [
-            'assets/dragon_car/dragon_car_1.png',
-            'assets/dragon_car/dragon_car_2.png',
-            'assets/dragon_car/dragon_car_3.png'
+            'assets/dragon_car/dragon_car_1.webp',
+            'assets/dragon_car/dragon_car_2.webp',
+            'assets/dragon_car/dragon_car_3.webp'
         ],
         contributions: [
             'Conceived and designed unique creature-vehicle hybrid aesthetic marrying hard-surface car panels with organic creature anatomy.',
@@ -746,20 +746,20 @@ const projectData = {
         subtitle: 'Pixologic ZBrush · High-Poly Creature Sculpting & Hand Texturing',
         engine: 'ZBrush & Cinematic Lighting Renders',
         role: '3D Creature Sculptor & Texture Artist',
-        image: 'assets/dragon/dragon_1.png',
-        fallbackImage: 'assets/dragon/dragon_1.png',
+        image: 'assets/dragon/dragon_1.webp',
+        fallbackImage: 'assets/dragon/dragon_1.webp',
         comparison: {
-            before: 'assets/dragon/dragon_before.png',
-            after: 'assets/dragon/dragon_after.png',
+            before: 'assets/dragon/dragon_before.webp',
+            after: 'assets/dragon/dragon_after.webp',
             beforeLabel: 'Simple / White Texture',
             afterLabel: 'Fully Textured'
         },
         desc: 'A high-detail 3D fantasy creature sculpt crafted and textured in Pixologic ZBrush. Developed with realistic reptilian anatomical landmarks, intricate hand-sculpted skin scales, horned head silhouettes, leather-textured wing membranes, and atmospheric fiery lighting for cinematic beauty renders.',
         gallery: [
-            'assets/dragon/dragon_1.png',
-            'assets/dragon/Dragon_2.png',
-            'assets/dragon/Dragon_3.png',
-            'assets/dragon/Dragon_4.png'
+            'assets/dragon/dragon_1.webp',
+            'assets/dragon/Dragon_2.webp',
+            'assets/dragon/Dragon_3.webp',
+            'assets/dragon/Dragon_4.webp'
         ],
         contributions: [
             'Sculpted primary, secondary, and micro-detail creature forms from a base mesh in ZBrush.',
@@ -782,20 +782,20 @@ const projectData = {
         subtitle: 'Substance 3D Painter · PBR Workflow · Sketchfab 3D Model',
         engine: 'Substance 3D Painter & Marmoset / Blender Renders',
         role: '3D Texture Artist & Lighting Specialist',
-        image: 'assets/bike/bike_1.png',
-        fallbackImage: 'assets/cyberpunk.png',
+        image: 'assets/bike/bike_1.webp',
+        fallbackImage: 'assets/bike/bike_1.webp',
         desc: 'A complete texturing and rendering project created for a futuristic cyberpunk bike model sourced from Sketchfab. Textured with Substance 3D Painter using realistic PBR materials, custom decals, metallic edge-wear, and vibrant neon emissive details, followed by cinematic multi-angle studio lighting and 4K beauty renders.',
         gallery: [
-            'assets/bike/bike_1.png',
-            'assets/bike/bike_2.png',
-            'assets/bike/bike_3.png',
-            'assets/bike/bike_4.png',
-            'assets/bike/bike_5.png',
-            'assets/bike/bike_6.png',
-            'assets/bike/bike_7.png',
-            'assets/bike/bike_8.png',
-            'assets/bike/bike_9.png',
-            'assets/bike/bike_10.png'
+            'assets/bike/bike_1.webp',
+            'assets/bike/bike_2.webp',
+            'assets/bike/bike_3.webp',
+            'assets/bike/bike_4.webp',
+            'assets/bike/bike_5.webp',
+            'assets/bike/bike_6.webp',
+            'assets/bike/bike_7.webp',
+            'assets/bike/bike_8.webp',
+            'assets/bike/bike_9.webp',
+            'assets/bike/bike_10.webp'
         ],
         contributions: [
             'Imported and prepared high-fidelity motorcycle 3D mesh from Sketchfab with clean UV unwrap inspection.',
@@ -880,11 +880,11 @@ function initProjectModals() {
                         <span class="compare-instruction">Drag slider left/right to compare</span>
                     </div>
                     <div class="texture-compare-container" id="texture-comparator">
-                        <img src="${data.comparison.after}" alt="${data.comparison.afterLabel}" class="compare-img compare-img-after" onerror="this.onerror=null; this.src='${data.image}';">
+                        <img src="${data.comparison.after}" alt="${data.comparison.afterLabel}" class="compare-img compare-img-after" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${data.image}';">
                         <span class="compare-badge compare-badge-right">${data.comparison.afterLabel}</span>
 
                         <div class="compare-overlay" id="compare-overlay" style="width: 50%;">
-                            <img src="${data.comparison.before}" alt="${data.comparison.beforeLabel}" class="compare-img compare-img-before" onerror="this.onerror=null; this.src='${data.image}';">
+                            <img src="${data.comparison.before}" alt="${data.comparison.beforeLabel}" class="compare-img compare-img-before" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='${data.image}';">
                             <span class="compare-badge compare-badge-left">${data.comparison.beforeLabel}</span>
                         </div>
 
@@ -903,18 +903,18 @@ function initProjectModals() {
             visualMediaHtml = `
                 <div class="modal-gallery-container">
                     <div class="modal-main-img-wrap">
-                        <img id="modal-featured-img" src="${data.image}" alt="${data.title}" class="modal-img" onerror="this.onerror=null; this.src='${data.fallbackImage || 'assets/cyberpunk.png'}';">
+                        <img id="modal-featured-img" src="${data.image}" alt="${data.title}" class="modal-img" loading="eager" decoding="async" onerror="this.onerror=null; this.src='${data.fallbackImage || data.image}';">
                     </div>
                     <div class="modal-gallery-strip">
                         ${data.gallery.map((imgSrc, idx) => `
-                            <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" onerror="this.style.display='none';">
+                            <img src="${imgSrc}" class="gallery-thumb ${idx === 0 ? 'active' : ''}" data-full="${imgSrc}" alt="Render angle ${idx + 1}" width="76" height="56" loading="lazy" decoding="async" onerror="this.style.display='none';">
                         `).join('')}
                     </div>
                     <span style="font-size:0.8rem; color:var(--text-muted); display:block; margin-top:0.3rem;"><i class="fa-solid fa-hand-pointer"></i> Click thumbnail to inspect high-resolution view</span>
                 </div>
             `;
         } else {
-            visualMediaHtml = `<img src="${data.image}" alt="${data.title}" class="modal-img">`;
+            visualMediaHtml = `<img src="${data.image}" alt="${data.title}" class="modal-img" loading="eager" decoding="async">`;
         }
 
         modalBody.innerHTML = `
