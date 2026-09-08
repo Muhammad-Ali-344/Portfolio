@@ -1172,29 +1172,32 @@ function initScrollReveals() {
         });
     });
 
-    // Individual element observer for smooth, one-by-one sequential reveals
-    const singleObserver = new IntersectionObserver((entries, obs) => {
+    // Observer that adds reveal-active on enter and removes it on exit so animations replay every time
+    const singleObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 // Calculate delay based on index among visible siblings in its grid
                 const parent = entry.target.parentElement;
-                if (parent && (parent.classList.contains('games-grid') || parent.classList.contains('disciplines-grid') || parent.classList.contains('skills-grid'))) {
-                    const visibleCards = Array.from(parent.children).filter(c => !c.classList.contains('is-hidden') && !c.classList.contains('reveal-active'));
+                if (parent && (parent.classList.contains('games-grid') || parent.classList.contains('disciplines-grid') || parent.classList.contains('skills-grid') || parent.classList.contains('career-timeline'))) {
+                    const visibleCards = Array.from(parent.children).filter(c => !c.classList.contains('is-hidden'));
                     const cardIndex = visibleCards.indexOf(entry.target);
-                    if (cardIndex > 0) {
-                        entry.target.style.transitionDelay = `${Math.min(cardIndex * 0.1, 0.4)}s`;
+                    if (cardIndex >= 0) {
+                        entry.target.style.transitionDelay = `${Math.min(cardIndex * 0.1, 0.45)}s`;
                     }
                 }
                 
                 requestAnimationFrame(() => {
                     entry.target.classList.add('reveal-active');
                 });
-                obs.unobserve(entry.target);
+            } else {
+                // Reset when scrolled out of view so it animates again next time
+                entry.target.classList.remove('reveal-active');
+                entry.target.style.transitionDelay = '';
             }
         });
     }, {
-        threshold: 0.08,
-        rootMargin: '0px 0px -20px 0px'
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
     });
 
     document.querySelectorAll('.reveal-init').forEach(el => {
