@@ -976,11 +976,12 @@ h1, h2, h3, h4, h5 {
 }
 
 .career-date {
-  font-family: var(--font-arcade);
-  font-size: 0.72rem;
-  letter-spacing: 1px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
   color: var(--amber-primary);
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .career-duration-pill {
@@ -2214,7 +2215,7 @@ h1, h2, h3, h4, h5 {
 /* 2. Viewport Scroll Reveal System */
 .reveal-init {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(35px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
@@ -2225,12 +2226,14 @@ h1, h2, h3, h4, h5 {
 }
 
 /* Staggered Grid Reveal Delays */
-.reveal-active.stagger-1 { transition-delay: 0.08s; }
-.reveal-active.stagger-2 { transition-delay: 0.16s; }
-.reveal-active.stagger-3 { transition-delay: 0.24s; }
-.reveal-active.stagger-4 { transition-delay: 0.32s; }
-.reveal-active.stagger-5 { transition-delay: 0.40s; }
-.reveal-active.stagger-6 { transition-delay: 0.48s; }
+.reveal-active.stagger-1 { transition-delay: 0.06s; }
+.reveal-active.stagger-2 { transition-delay: 0.14s; }
+.reveal-active.stagger-3 { transition-delay: 0.22s; }
+.reveal-active.stagger-4 { transition-delay: 0.30s; }
+.reveal-active.stagger-5 { transition-delay: 0.38s; }
+.reveal-active.stagger-6 { transition-delay: 0.46s; }
+.reveal-active.stagger-7 { transition-delay: 0.54s; }
+.reveal-active.stagger-8 { transition-delay: 0.62s; }
 
 /* Section Header Masked Reveals */
 .section-header .section-tag {
@@ -2324,8 +2327,12 @@ h1, h2, h3, h4, h5 {
 }
 
 /* 5. Micro-Interactions on Project Cards */
-.game-card {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease !important;
+.game-card.reveal-init {
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+}
+
+.game-card.reveal-active {
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
 }
 
 .game-card .game-title {

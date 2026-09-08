@@ -1172,20 +1172,33 @@ function initScrollReveals() {
         });
     });
 
-    const observer = new IntersectionObserver((entries, obs) => {
+    // Individual element observer for smooth, one-by-one sequential reveals
+    const singleObserver = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('reveal-active');
-                obs.unobserve(entry.target); // Trigger once only, no annoying replaying
+                // Calculate delay based on index among visible siblings in its grid
+                const parent = entry.target.parentElement;
+                if (parent && (parent.classList.contains('games-grid') || parent.classList.contains('disciplines-grid') || parent.classList.contains('skills-grid'))) {
+                    const visibleCards = Array.from(parent.children).filter(c => !c.classList.contains('is-hidden') && !c.classList.contains('reveal-active'));
+                    const cardIndex = visibleCards.indexOf(entry.target);
+                    if (cardIndex > 0) {
+                        entry.target.style.transitionDelay = `${Math.min(cardIndex * 0.1, 0.4)}s`;
+                    }
+                }
+                
+                requestAnimationFrame(() => {
+                    entry.target.classList.add('reveal-active');
+                });
+                obs.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -20px 0px'
     });
 
     document.querySelectorAll('.reveal-init').forEach(el => {
-        observer.observe(el);
+        singleObserver.observe(el);
     });
 }
 
