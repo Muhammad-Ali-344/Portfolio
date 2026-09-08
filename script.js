@@ -1185,13 +1185,31 @@ function initScrollReveals() {
     });
 
     // Observer that adds reveal-active on enter and removes it on exit so animations replay smoothly
+    let enterQueue = [];
+    let enterTimer = null;
+
+    function processEnterQueue() {
+        enterQueue.forEach((el, idx) => {
+            el.style.transitionDelay = `${idx * 0.14}s`;
+            el.classList.add('reveal-active');
+        });
+        enterQueue = [];
+        enterTimer = null;
+    }
+
     const singleObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('reveal-active');
+                if (!entry.target.classList.contains('reveal-active')) {
+                    enterQueue.push(entry.target);
+                    if (!enterTimer) {
+                        enterTimer = setTimeout(processEnterQueue, 20);
+                    }
+                }
             } else {
                 // Reset when scrolled out of view so it animates again next time
                 entry.target.classList.remove('reveal-active');
+                entry.target.style.transitionDelay = '';
             }
         });
     }, {
