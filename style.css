@@ -500,6 +500,39 @@ h1, h2, h3, h4, h5 {
   line-height: 1.1;
   margin-bottom: 1.2rem;
   color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+}
+
+.title-line-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.title-line {
+  display: block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  will-change: transform, opacity;
+}
+
+.title-line-2 {
+  font-size: 0.58em;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.hero-loaded .title-line-1 {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.hero-loaded .title-line-2 {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.38s;
 }
 
 .hero-subtitle {
@@ -2092,5 +2125,396 @@ h1, h2, h3, h4, h5 {
   .nav-hire-btn {
     padding: 0.42rem 0.75rem !important;
     font-size: 0.8rem !important;
+  }
+}
+
+/* ==========================================================================
+   PREMIUM GAME DEVELOPER ANIMATION & INTERACTION SYSTEM
+   ========================================================================== */
+
+/* 1. Hero Sequential Reveal */
+.hero-tag {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-cta {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-stats {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-visual {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hero-loaded .hero-tag {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.08s;
+}
+
+.hero-loaded .hero-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.hero-loaded .hero-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.65s;
+}
+
+.hero-loaded .hero-stats {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+
+.hero-loaded .hero-visual {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 0.3s;
+}
+
+/* Hero Stats Sequential Stagger */
+.stat-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-loaded .stat-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.85s; }
+.hero-loaded .stat-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.95s; }
+.hero-loaded .stat-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 1.05s; }
+.hero-loaded .stat-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 1.15s; }
+.hero-loaded .stat-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 1.25s; }
+
+/* 2. Viewport Scroll Reveal System */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-active {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Staggered Grid Reveal Delays */
+.reveal-active.stagger-1 { transition-delay: 0.08s; }
+.reveal-active.stagger-2 { transition-delay: 0.16s; }
+.reveal-active.stagger-3 { transition-delay: 0.24s; }
+.reveal-active.stagger-4 { transition-delay: 0.32s; }
+.reveal-active.stagger-5 { transition-delay: 0.40s; }
+.reveal-active.stagger-6 { transition-delay: 0.48s; }
+
+/* Section Header Masked Reveals */
+.section-header .section-tag {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-header .section-title {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.1s;
+}
+
+.section-header .section-subtitle {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.2s;
+}
+
+.section-header.reveal-active .section-tag,
+.section-header.reveal-active .section-title,
+.section-header.reveal-active .section-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3. Featured Project Spotlight Animations */
+.spotlight-media {
+  clip-path: inset(0% 0% 0% 0% round var(--radius-md));
+  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.spotlight-media img {
+  transform: scale(1.05);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.featured-spotlight-card:hover .spotlight-media img {
+  transform: scale(1.08);
+}
+
+.spotlight-contrib-item {
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.spotlight-contrib-item:hover {
+  transform: translateX(4px);
+  color: var(--text-main);
+}
+
+.spotlight-actions .btn-inspect {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.spotlight-actions .btn-inspect i {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-actions .btn-inspect:hover i {
+  transform: scale(1.18);
+}
+
+/* 4. Interactive Card Spotlight Following Mouse */
+.interactive-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.interactive-spotlight::after {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, -200px);
+  left: var(--mouse-x, -200px);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(140, 94, 60, 0.12) 0%, rgba(61, 40, 23, 0) 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.interactive-spotlight:hover::after {
+  opacity: 1;
+}
+
+/* 5. Micro-Interactions on Project Cards */
+.game-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease !important;
+}
+
+.game-card .game-title {
+  transition: transform 0.28s ease, color 0.28s ease;
+}
+
+.game-card:hover .game-title {
+  transform: translateX(3px);
+  color: var(--amber-primary);
+}
+
+.game-tag-pill {
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.game-tag-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(61, 40, 23, 0.12);
+  border-color: var(--amber-primary);
+  color: var(--amber-primary);
+}
+
+.game-card-actions .btn {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.game-card:hover .game-card-actions .btn {
+  transform: translateY(-1px);
+}
+
+/* 6. Skills Interactive Badges */
+.skill-badge {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.skill-badge:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: var(--amber-primary);
+  box-shadow: 0 4px 12px var(--amber-glow);
+  background: #fdfbf7;
+}
+
+.skill-badge-highlight:hover {
+  background: var(--amber-primary);
+  color: #fff8f0;
+}
+
+.skill-points-list li {
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.skill-points-list li:hover {
+  transform: translateX(4px);
+  color: var(--text-main);
+}
+
+/* 7. Animated Filter Transition States */
+.game-card.filter-transitioning {
+  transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-filters .filter-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.portfolio-filters .filter-btn:active {
+  transform: scale(0.96);
+}
+
+/* 8. Floating Back to Top Button */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(253, 251, 247, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--amber-primary);
+  color: var(--amber-primary);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 990;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 20px rgba(61, 40, 23, 0.12);
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.back-to-top-btn:hover {
+  background: var(--amber-primary);
+  color: #fff8f0;
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 10px 25px rgba(61, 40, 23, 0.24);
+}
+
+.back-to-top-btn i {
+  transition: transform 0.25s ease;
+}
+
+.back-to-top-btn:hover i {
+  transform: translateY(-2px);
+}
+
+/* 9. Timeline Line Draw-in on Scroll */
+.career-timeline.reveal-active::before {
+  animation: lineDraw 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes lineDraw {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: top center;
+  }
+}
+
+/* 10. Subtle Atmospheric Hero Background Drift */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(229, 169, 93, 0.08) 0%, rgba(245, 239, 230, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: atmosphericDrift 20s infinite alternate ease-in-out;
+  z-index: -1;
+}
+
+@keyframes atmosphericDrift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(60px, -40px) scale(1.12);
+  }
+  100% {
+    transform: translate(-30px, 50px) scale(0.95);
+  }
+}
+
+/* 11. Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .title-line {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero-tag,
+  .hero-subtitle,
+  .hero-cta,
+  .hero-stats,
+  .hero-visual,
+  .stat-item {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

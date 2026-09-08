@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectModals();
     initProfileModal();
     initContactForm();
+    initHeroSequence();
+    initScrollReveals();
+    initInteractiveSpotlights();
+    initMagneticElements();
+    initBackToTop();
 });
 
 /* ==========================================================================
@@ -127,7 +132,7 @@ function initBgCanvas() {
    2. WEB AUDIO SYNTHESIZER
    ========================================================================== */
 let audioCtx = null;
-let soundEnabled = true;
+let soundEnabled = false;
 
 function initWebAudio() {
     const soundToggle = document.getElementById('sound-toggle');
@@ -148,13 +153,11 @@ function initWebAudio() {
         }
     });
 
-    const btns = document.querySelectorAll('.btn, .nav-link, .filter-btn, .game-card');
-    btns.forEach(btn => {
-        btn.addEventListener('mouseenter', () => {
-            if (soundEnabled) playTone(400, 'sine', 0.04, 0.04);
-        });
+    // Sound only on key interactive moments (clicks on primary CTA, inspect, filter buttons)
+    const interactiveBtns = document.querySelectorAll('.btn-primary, .btn-inspect, .filter-btn');
+    interactiveBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (soundEnabled) playTone(650, 'sine', 0.08, 0.08);
+            if (soundEnabled) playTone(580, 'sine', 0.08, 0.06);
         });
     });
 }
@@ -265,7 +268,7 @@ function initNavbarScroll() {
 }
 
 /* ==========================================================================
-   4. PORTFOLIO FILTERING SYSTEM
+   4. PORTFOLIO FILTERING SYSTEM (ANIMATED LAYOUT)
    ========================================================================== */
 function initPortfolioFilters() {
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -273,27 +276,39 @@ function initPortfolioFilters() {
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            if (btn.classList.contains('active')) return;
+
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const filter = btn.dataset.filter;
+            let matchIndex = 0;
 
             gameCards.forEach(card => {
                 const categories = (card.dataset.category || '').trim().split(/\s+/);
                 const isMatch = (filter === 'all') || categories.includes(filter);
 
+                card.classList.add('filter-transitioning');
+
                 if (isMatch) {
                     card.classList.remove('is-hidden');
                     card.style.display = 'flex';
-                    requestAnimationFrame(() => {
+                    const delay = (matchIndex * 50);
+                    matchIndex++;
+
+                    setTimeout(() => {
                         card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    });
+                        card.style.transform = 'translateY(0) scale(1)';
+                    }, delay);
                 } else {
-                    card.classList.add('is-hidden');
                     card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
-                    card.style.display = 'none';
+                    card.style.transform = 'translateY(12px) scale(0.96)';
+                    setTimeout(() => {
+                        if (!card.classList.contains('active-filter-match')) {
+                            card.classList.add('is-hidden');
+                            card.style.display = 'none';
+                        }
+                    }, 280);
                 }
             });
         });
@@ -1104,5 +1119,179 @@ function initContactForm() {
                 submitBtn.disabled = false;
             }, 4000);
         }
+    });
+}
+
+/* ==========================================================================
+   7. HERO SEQUENTIAL ENTRANCE CHOREOGRAPHY
+   ========================================================================== */
+function initHeroSequence() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    // Trigger sequential reveal on first frame
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            hero.classList.add('hero-loaded');
+        }, 120);
+    });
+}
+
+/* ==========================================================================
+   8. VIEWPORT-BASED SCROLL REVEALS (INTERSECTION OBSERVER)
+   ========================================================================== */
+function initScrollReveals() {
+    // If reduced motion is preferred, reveal elements immediately
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        document.querySelectorAll('.section-header, .discipline-card, .game-card, .skill-category-card, .career-card, .career-timeline, .contact-info-card, .contact-form').forEach(el => {
+            el.classList.add('reveal-active');
+        });
+        return;
+    }
+
+    // Set up elements with reveal-init classes
+    const targetGroups = [
+        { selector: '.section-header', stagger: false },
+        { selector: '.featured-spotlight-card', stagger: false },
+        { selector: '.disciplines-grid .discipline-card', stagger: true },
+        { selector: '.games-grid .game-card', stagger: true },
+        { selector: '.skills-grid .skill-category-card', stagger: true },
+        { selector: '.career-timeline', stagger: false },
+        { selector: '.career-timeline .career-card', stagger: true },
+        { selector: '.contact-grid > *', stagger: true }
+    ];
+
+    targetGroups.forEach(group => {
+        const elements = document.querySelectorAll(group.selector);
+        elements.forEach((el, index) => {
+            el.classList.add('reveal-init');
+            if (group.stagger) {
+                el.classList.add(`stagger-${(index % 6) + 1}`);
+            }
+        });
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-active');
+                obs.unobserve(entry.target); // Trigger once only, no annoying replaying
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.reveal-init').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+/* ==========================================================================
+   9. INTERACTIVE CARD SPOTLIGHT (MOUSE-REACTIVE)
+   ========================================================================== */
+function initInteractiveSpotlights() {
+    // Disable mouse effects on touch devices
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
+    const cards = document.querySelectorAll('.game-card, .discipline-card, .featured-spotlight-card, .skill-category-card, .career-card');
+    cards.forEach(card => {
+        card.classList.add('interactive-spotlight');
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
+/* ==========================================================================
+   10. MAGNETIC MICRO-INTERACTIONS FOR BUTTONS & SPOTLIGHT IMAGE PARALLAX
+   ========================================================================== */
+function initMagneticElements() {
+    // Disable on touch devices
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
+    // 1. Magnetic hover on primary CTA & resume buttons
+    const magneticBtns = document.querySelectorAll('.hero-cta .btn, .nav-hire-btn, .btn-resume, .spotlight-actions .btn');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - (rect.left + rect.width / 2);
+            const y = e.clientY - (rect.top + rect.height / 2);
+
+            // Subtle magnetic pull (max 5px)
+            const factor = 0.18;
+            btn.style.transform = `translate(${x * factor}px, ${y * factor - 2}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+
+    // 2. Subtle cursor parallax on Featured Spotlight Media
+    const spotlightCard = document.querySelector('.featured-spotlight-card');
+    const spotlightImg = document.querySelector('.spotlight-media img');
+    if (spotlightCard && spotlightImg) {
+        spotlightCard.addEventListener('mousemove', (e) => {
+            const rect = spotlightCard.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            // Restrained, premium depth shift
+            spotlightImg.style.transform = `scale(1.08) translate(${x * 12}px, ${y * 12}px)`;
+        });
+
+        spotlightCard.addEventListener('mouseleave', () => {
+            spotlightImg.style.transform = '';
+        });
+    }
+
+    // 3. Hero Visual subtle tilt
+    const heroVisual = document.querySelector('.hero-visual');
+    const heroFrame = document.querySelector('.hero-card-frame');
+    if (heroVisual && heroFrame) {
+        heroVisual.addEventListener('mousemove', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            heroFrame.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+        });
+
+        heroVisual.addEventListener('mouseleave', () => {
+            heroFrame.style.transform = '';
+        });
+    }
+}
+
+/* ==========================================================================
+   11. BACK TO TOP BUTTON HANDLER
+   ========================================================================== */
+function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 450) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        if (soundEnabled) playTone(600, 'sine', 0.1, 0.08);
     });
 }
