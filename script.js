@@ -286,43 +286,80 @@ function initPortfolioFilters() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const gameCards = document.querySelectorAll('.game-card');
 
+    let currentFilter = 'all';
+    let filterTimeouts = [];
+
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (btn.classList.contains('active')) return;
+            const filter = btn.dataset.filter;
+            if (filter === currentFilter) return;
 
+            // Clear any in-flight filter animation timers
+            filterTimeouts.forEach(t => clearTimeout(t));
+            filterTimeouts = [];
+
+            // Update active state on tab buttons
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            currentFilter = filter;
 
-            const filter = btn.dataset.filter;
-            let matchIndex = 0;
-
+            // Phase 1: Smoothly fade out currently visible cards
             gameCards.forEach(card => {
-                const categories = (card.dataset.category || '').trim().split(/\s+/);
-                const isMatch = (filter === 'all') || categories.includes(filter);
-
                 card.classList.add('filter-transitioning');
-
-                if (isMatch) {
-                    card.classList.remove('is-hidden');
-                    card.style.display = 'flex';
-                    const delay = (matchIndex * 50);
-                    matchIndex++;
-
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0) scale(1)';
-                    }, delay);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(12px) scale(0.96)';
-                    setTimeout(() => {
-                        if (!card.classList.contains('active-filter-match')) {
-                            card.classList.add('is-hidden');
-                            card.style.display = 'none';
-                        }
-                    }, 280);
-                }
+                card.style.transitionDelay = '0s';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(16px) scale(0.97)';
             });
+
+            // Phase 2: After fade-out (220ms), toggle visibility and stagger in matching cards
+            const phaseTimer = setTimeout(() => {
+                let matchIndex = 0;
+
+                gameCards.forEach(card => {
+                    const categories = (card.dataset.category || '').trim().split(/\s+/);
+                    const isMatch = (filter === 'all') || categories.includes(filter);
+
+                    if (isMatch) {
+                        card.classList.remove('is-hidden');
+                        card.style.display = 'flex';
+                        // Ensure card is in starting hidden state before animating
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(24px) scale(0.96)';
+
+                        const delay = matchIndex * 80;
+                        matchIndex++;
+
+                        const enterTimer = setTimeout(() => {
+                            // Trigger reflow / frame for transition
+                            requestAnimationFrame(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0) scale(1)';
+                                card.classList.add('reveal-active');
+                            });
+                        }, delay);
+                        filterTimeouts.push(enterTimer);
+                    } else {
+                        card.classList.add('is-hidden');
+                        card.style.display = 'none';
+                        card.classList.remove('reveal-active');
+                    }
+                });
+
+                // Phase 3: Clean up transitioning state once all animations finish
+                const cleanupTimer = setTimeout(() => {
+                    gameCards.forEach(card => {
+                        if (!card.classList.contains('is-hidden')) {
+                            card.classList.remove('filter-transitioning');
+                            card.style.transitionDelay = '';
+                            card.style.transform = '';
+                            card.style.opacity = '';
+                        }
+                    });
+                }, (matchIndex * 80) + 380);
+                filterTimeouts.push(cleanupTimer);
+
+            }, 220);
+            filterTimeouts.push(phaseTimer);
         });
     });
 }
